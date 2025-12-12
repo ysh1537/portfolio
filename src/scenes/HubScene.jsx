@@ -4,10 +4,137 @@ import { Text, Float, Html, useCursor, Environment, Stars, Sparkles, Billboard }
 import { useStore } from '../hooks/useStore';
 import * as THREE from 'three';
 
-const NavCubes = ({ position = [0, 0, 0], label, targetScene, color }) => {
+const CosmicNode = ({ position = [0, 0, 0], label, targetScene, color }) => {
     const setScene = useStore(state => state.setScene);
     const [hovered, setHovered] = useState(false);
+    const meshRef = useRef();
     useCursor(hovered);
+
+    useFrame((state) => {
+        if (meshRef.current) {
+            meshRef.current.rotation.y += 0.01;
+            meshRef.current.rotation.x += 0.005;
+        }
+    });
+
+    // Different geometries for different scenes
+    const getGeometry = () => {
+        switch (targetScene) {
+            case 'lab01': // SHADER - Tesseract/4D Cube
+                return (
+                    <group ref={meshRef}>
+                        {/* Outer cube */}
+                        <mesh scale={1.2}>
+                            <boxGeometry args={[1, 1, 1]} />
+                            <meshPhysicalMaterial
+                                color={color}
+                                roughness={0}
+                                metalness={1}
+                                transparent
+                                opacity={0.3}
+                                wireframe
+                            />
+                        </mesh>
+                        {/* Inner rotating cube */}
+                        <mesh scale={0.7} rotation={[Math.PI / 4, Math.PI / 4, 0]}>
+                            <boxGeometry args={[1, 1, 1]} />
+                            <meshPhysicalMaterial
+                                color={color}
+                                roughness={0.1}
+                                metalness={0.9}
+                                emissive={color}
+                                emissiveIntensity={hovered ? 2 : 0.8}
+                            />
+                        </mesh>
+                    </group>
+                );
+            case 'lab02': // PHYSICS - Planet
+                return (
+                    <mesh ref={meshRef}>
+                        <icosahedronGeometry args={[0.8, 2]} />
+                        <meshPhysicalMaterial
+                            color={color}
+                            roughness={0.4}
+                            metalness={0.6}
+                            emissive={color}
+                            emissiveIntensity={hovered ? 1.5 : 0.3}
+                            clearcoat={1}
+                            clearcoatRoughness={0.1}
+                        />
+                    </mesh>
+                );
+            case 'lab03': // AUDIO - Pulsing Sphere
+                return (
+                    <mesh ref={meshRef} scale={hovered ? 1.2 : 1}>
+                        <sphereGeometry args={[0.7, 32, 32]} />
+                        <meshPhysicalMaterial
+                            color={color}
+                            roughness={0.2}
+                            metalness={0.8}
+                            transparent
+                            opacity={0.7}
+                            emissive={color}
+                            emissiveIntensity={hovered ? 2.5 : 1}
+                        />
+                    </mesh>
+                );
+            case 'lab04': // DEBUG - Wireframe Polyhedron
+                return (
+                    <group ref={meshRef}>
+                        <mesh>
+                            <octahedronGeometry args={[0.9]} />
+                            <meshPhysicalMaterial
+                                color={color}
+                                roughness={0}
+                                metalness={1}
+                                wireframe
+                                emissive={color}
+                                emissiveIntensity={hovered ? 2 : 1}
+                            />
+                        </mesh>
+                    </group>
+                );
+            case 'profile': // PROFILE - Glowing Core
+                return (
+                    <group ref={meshRef}>
+                        <mesh>
+                            <icosahedronGeometry args={[1, 0]} />
+                            <meshPhysicalMaterial
+                                color={color}
+                                roughness={0}
+                                metalness={1}
+                                emissive={color}
+                                emissiveIntensity={hovered ? 3 : 1.5}
+                                wireframe
+                            />
+                        </mesh>
+                        <mesh scale={0.6}>
+                            <icosahedronGeometry args={[1, 0]} />
+                            <meshPhysicalMaterial
+                                color={color}
+                                roughness={0.1}
+                                metalness={0.9}
+                                emissive={color}
+                                emissiveIntensity={2}
+                            />
+                        </mesh>
+                    </group>
+                );
+            default:
+                return (
+                    <mesh ref={meshRef}>
+                        <boxGeometry args={[1, 1, 1]} />
+                        <meshPhysicalMaterial
+                            color={color}
+                            roughness={0.1}
+                            metalness={0.8}
+                            emissive={color}
+                            emissiveIntensity={hovered ? 2 : 0.5}
+                        />
+                    </mesh>
+                );
+        }
+    };
 
     return (
         <group position={position}
@@ -15,26 +142,22 @@ const NavCubes = ({ position = [0, 0, 0], label, targetScene, color }) => {
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}>
             <Float speed={2 + Math.random()} rotationIntensity={0.5} floatIntensity={0.5}>
-                {/* Holographic Cube */}
-                <mesh>
-                    <boxGeometry args={[1.2, 1.2, 1.2]} />
-                    <meshPhysicalMaterial
+                {getGeometry()}
+                {/* Enhanced Core Light */}
+                <pointLight distance={5} intensity={hovered ? 8 : 3} color={color} />
+                {/* Outer glow */}
+                <mesh scale={hovered ? 2 : 1.5}>
+                    <sphereGeometry args={[1, 16, 16]} />
+                    <meshBasicMaterial
                         color={color}
-                        roughness={0.1}
-                        metalness={0.8}
                         transparent
-                        opacity={0.5}
-                        emissive={color}
-                        emissiveIntensity={hovered ? 2 : 0.5}
-                        wireframe={hovered}
+                        opacity={hovered ? 0.15 : 0.05}
                     />
                 </mesh>
-                {/* Core Light */}
-                <pointLight distance={3} intensity={hovered ? 5 : 2} color={color} />
             </Float>
 
             <Billboard>
-                <Text position={[0, -1.2, 0]} fontSize={0.15} color="white" anchorX="center" outlineWidth={0.01} outlineColor={color}>
+                <Text position={[0, -1.5, 0]} fontSize={0.15} color="white" anchorX="center" outlineWidth={0.02} outlineColor={color}>
                     {label}
                 </Text>
             </Billboard>
@@ -47,16 +170,17 @@ const OrbitRing = ({ radius, color, speed = 0.1 }) => {
     useFrame((state, delta) => {
         if (ref.current) {
             ref.current.rotation.z += delta * speed;
-            ref.current.rotation.x = Math.PI / 2 + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+            // Tilt the ring to stay above grid
+            ref.current.rotation.x = Math.PI / 3 + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
         }
     });
 
     return (
-        <group ref={ref}>
+        <group ref={ref} position={[0, 1, 0]}>
             {/* Main Ring */}
             <mesh rotation={[Math.PI / 2, 0, 0]}>
                 <torusGeometry args={[radius, 0.02, 16, 100]} />
-                <meshBasicMaterial color={color} transparent opacity={0.3} />
+                <meshBasicMaterial color={color} transparent opacity={0.4} />
             </mesh>
             {/* Moving Particle on Ring */}
             <mesh position={[radius, 0, 0]}>
@@ -93,7 +217,7 @@ const HubScene = () => {
 
             {/* Central Identity System */}
             <group>
-                <NavCubes
+                <CosmicNode
                     position={[0, 0, 0]}
                     label="IDENTITY [PROFILE]"
                     targetScene="profile"
@@ -101,12 +225,12 @@ const HubScene = () => {
                 />
                 <spotLight position={[-10, 10, 10]} angle={0.3} penumbra={1} intensity={10} color="#06b6d4" />
 
-                {/* Floor Reflection */}
-                <mesh position={[0, -4.1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                {/* Floor Reflection - Much lower to avoid orbit overlap */}
+                <mesh position={[0, -8, 0]} rotation={[-Math.PI / 2, 0, 0]}>
                     <planeGeometry args={[100, 100]} />
                     <meshStandardMaterial color="#050505" roughness={0.4} metalness={0.8} />
                 </mesh>
-                <gridHelper args={[50, 50, 0x333333, 0x050505]} position={[0, -4, 0]} />
+                <gridHelper args={[50, 50, 0x222222, 0x050505]} position={[0, -7.9, 0]} />
             </group>
 
             {/* Orbiting Satellites System - Galaxy Structure */}
@@ -117,7 +241,7 @@ const HubScene = () => {
                         {/* Apply Rotation along the orbit */}
                         <group rotation={[0, lab.angle, 0]}>
                             <group position={[lab.radius, 0, 0]}>
-                                <NavCubes
+                                <CosmicNode
                                     label={lab.label}
                                     targetScene={lab.target}
                                     color={lab.color}

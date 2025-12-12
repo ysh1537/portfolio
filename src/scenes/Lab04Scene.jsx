@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { Text, Html, PerspectiveCamera, OrbitControls } from '@react-three/drei';
+import { Text, Html, PerspectiveCamera, OrbitControls, Float } from '@react-three/drei';
 import { useStore } from '../hooks/useStore';
 import * as THREE from 'three';
 
