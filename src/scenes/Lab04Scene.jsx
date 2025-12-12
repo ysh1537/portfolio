@@ -108,7 +108,7 @@ const Lab04Scene = () => {
                 </mesh>
 
                 {/* Header */}
-                <Text position={[0, 1.5, 0]} fontSize={0.3} color="#00ff41" font="https://fonts.gstatic.com/s/sharetechmono/v15/J7aHnp1uDWRCCytEs2UM2w.woff">
+                <Text position={[0, 1.5, 0]} fontSize={0.3} color="#00ff41">
                     LAB 04: DEBUG_ROOM
                 </Text>
 
