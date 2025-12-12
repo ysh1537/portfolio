@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Instances, Instance, Float, Text, Environment, Billboard, Html, MeshDistortMaterial } from '@react-three/drei';
+import { Instances, Instance, Float, Text, Environment, Billboard, Html } from '@react-three/drei';
 import { useStore } from '../hooks/useStore';
 import * as THREE from 'three';
 
@@ -90,14 +90,14 @@ const Lab01Scene = () => {
                     onPointerOut={() => setConfig(prev => ({ ...prev, hover: false }))}
                 >
                     <icosahedronGeometry args={[1.5, 4]} />
-                    <MeshDistortMaterial
+                    <meshStandardMaterial
                         color={config.hover ? "#00ffff" : "#00ff41"}
                         attach="material"
-                        distort={config.distort}
-                        speed={config.speed}
                         roughness={0.2}
                         metalness={0.9}
                         wireframe={config.hover}
+                        emissive={config.hover ? "#00ffff" : "#00ff41"}
+                        emissiveIntensity={0.3}
                     />
                 </mesh>
             </Float>

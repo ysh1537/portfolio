@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Float, Stars, Sparkles, Text, Html, MeshDistortMaterial, PivotControls } from '@react-three/drei';
+import { Float, Stars, Sparkles, Text, Html, PivotControls } from '@react-three/drei';
 import { useStore } from '../hooks/useStore';
 import * as THREE from 'three';
 
@@ -26,13 +26,13 @@ const ProfileScene = () => {
             <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
                 <mesh position={[0, 0, 0]}>
                     <icosahedronGeometry args={[1.5, 0]} />
-                    <MeshDistortMaterial
+                    <meshStandardMaterial
                         color="#06b6d4"
                         wireframe
-                        distort={0.4}
-                        speed={2}
                         roughness={0}
                         metalness={1}
+                        emissive="#06b6d4"
+                        emissiveIntensity={0.5}
                     />
                 </mesh>
             </Float>

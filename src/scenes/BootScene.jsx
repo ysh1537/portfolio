@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text, Float, MeshDistortMaterial } from '@react-three/drei';
+import { Text, Float } from '@react-three/drei';
 import { useStore } from '../hooks/useStore';
 import BootLogs from '../components/BootLogs';
 import * as THREE from 'three';
@@ -40,13 +40,13 @@ const BootScene = () => {
                     <Float speed={5} rotationIntensity={0.5} floatIntensity={0.5}>
                         <mesh position={[0, 0, 0]}>
                             <octahedronGeometry args={[1, 0]} />
-                            <MeshDistortMaterial
+                            <meshStandardMaterial
                                 color="#00ff41"
                                 wireframe
-                                distort={0.6}
-                                speed={3}
                                 transparent
                                 opacity={phase === 2 ? 0 : 1}
+                                emissive="#00ff41"
+                                emissiveIntensity={0.3}
                             />
                         </mesh>
                     </Float>
