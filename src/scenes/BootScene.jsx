@@ -37,16 +37,29 @@ const BootScene = () => {
             } else {
                 logoRef.current.rotation.y += 0.02;
             }
+
+            // Camera shake for intensity
+            camera.position.x = Math.sin(t * 10) * 0.02;
+            camera.position.y = Math.cos(t * 8) * 0.02;
         }
 
         // Camera zoom in on phase 2
         if (phase === 2) {
             camera.position.z = THREE.MathUtils.lerp(camera.position.z, 3, 0.05);
+            camera.position.x = THREE.MathUtils.lerp(camera.position.x, 0, 0.1);
+            camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0, 0.1);
         }
     });
 
     return (
         <group>
+            {/* Cyberpunk grid background */}
+            <mesh position={[0, -5, -10]} rotation={[-Math.PI / 3, 0, 0]}>
+                <planeGeometry args={[50, 50]} />
+                <meshBasicMaterial color="#001100" wireframe opacity={0.2} transparent />
+            </mesh>
+            <gridHelper args={[50, 50, '#00ff41', '#003311']} position={[0, -5, -5]} rotation={[0, 0, 0]} />
+
             {/* Background stars */}
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 

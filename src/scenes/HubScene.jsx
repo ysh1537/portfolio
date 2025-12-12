@@ -196,7 +196,7 @@ const HubScene = () => {
     const satelliteRef = useRef();
     useFrame((state, delta) => {
         if (satelliteRef.current) {
-            satelliteRef.current.rotation.y += delta * 0.05; // Slow orbit
+            satelliteRef.current.rotation.y += delta * 0.15; // Increased from 0.05 for visible orbit
         }
     });
 
