@@ -1,71 +1,149 @@
-import { useRef, useState, useEffect } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Text, Html, Float, Wireframe, Grid, PerspectiveCamera } from '@react-three/drei';
+import { useRef, useMemo, useState } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import { Text, Html, PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import { useStore } from '../hooks/useStore';
 import * as THREE from 'three';
 
+// --- Matrix Rain Shader Material ---
+const MatrixRainMaterial = {
+    uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color('#00ff41') },
+        uSpeed: { value: 1.0 },
+    },
+    vertexShader: `
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        varying vec2 vUv;
+        uniform float uTime;
+        uniform vec3 uColor;
+
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
+
+        void main() {
+            vec2 uv = vUv;
+            
+            // Grid columns
+            float columns = 50.0;
+            vec2 ipos = floor(uv * columns);
+            vec2 fpos = fract(uv * columns);
+
+            // Rain speed varying per column
+            float speed = 2.0 + random(vec2(ipos.x, 0.0)) * 3.0;
+            float y = mod(uv.y + uTime * speed * 0.2, 1.0);
+
+            // Trail effect
+            float strength = 1.0 - step(0.1, random(vec2(ipos.x, floor(y * 20.0)))); // Random chars
+            strength *= (1.0 - fract(y * 10.0)); // Fade trail
+            
+            // Leading bright head
+            float head = 1.0 - step(0.01, y); 
+            
+            vec3 color = uColor * strength;
+            color += vec3(0.8, 1.0, 0.8) * head; // White-ish head
+
+            gl_FragColor = vec4(color, strength);
+        }
+    `
+};
+
+const MatrixEffect = () => {
+    const mesh = useRef();
+    const { viewport } = useThree();
+
+    // Create shader material instance
+    const material = useMemo(() => {
+        return new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uColor: { value: new THREE.Color('#00ff41') },
+            },
+            vertexShader: MatrixRainMaterial.vertexShader,
+            fragmentShader: MatrixRainMaterial.fragmentShader,
+            transparent: true,
+            depthWrite: false,
+            side: THREE.DoubleSide
+        });
+    }, []);
+
+    useFrame((state) => {
+        if (mesh.current) {
+            material.uniforms.uTime.value = state.clock.getElapsedTime();
+        }
+    });
+
+    return (
+        <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]} position={[0, 0, -5]}>
+            <planeGeometry args={[1, 1]} />
+            <primitive object={material} attach="material" />
+        </mesh>
+    );
+};
+
 const Lab04Scene = () => {
     const setScene = useStore(state => state.setScene);
-    const [debugMode, setDebugMode] = useState(true);
-
-    // Matrix Rain Effect (Simulated with Text instances or Particles)
-    // For MVP, we'll use a wireframe aesthetic with floating code snippets
+    const [devMode, setDevMode] = useState(true);
 
     return (
         <group>
-            {/* Dark Grid Floor - The Construct */}
-            <Grid
-                args={[100, 100]}
-                cellSize={1}
-                cellThickness={0.5}
-                sectionSize={3}
-                sectionThickness={1}
-                sectionColor="#00ff41"
-                cellColor="#003300"
-                fadeDistance={30}
-            />
+            {/* Background: Digital Rain */}
+            <MatrixEffect />
 
-            {/* Central Debug Terminal */}
-            <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
-                <group position={[0, 1, 0]}>
-                    <mesh>
-                        <boxGeometry args={[2, 2, 2]} />
-                        <meshBasicMaterial color="black" wireframe />
-                    </mesh>
-                    <mesh>
-                        <boxGeometry args={[1.9, 1.9, 1.9]} />
-                        <meshBasicMaterial color="#00ff41" transparent opacity={0.1} />
-                    </mesh>
-                </group>
+            {/* Central Terminal Interface */}
+            <group position={[0, 0, 0]}>
+                <mesh position={[0, 0, -1]}>
+                    <planeGeometry args={[6, 4]} />
+                    <meshBasicMaterial color="#000000" transparent opacity={0.8} />
+                    <lineSegments>
+                        <edgesGeometry args={[new THREE.PlaneGeometry(6, 4)]} />
+                        <meshBasicMaterial color="#00ff41" />
+                    </lineSegments>
+                </mesh>
+
+                {/* Header */}
+                <Text position={[0, 1.5, 0]} fontSize={0.3} color="#00ff41" font="https://fonts.gstatic.com/s/sharetechmono/v15/J7aHnp1uDWRCCytEs2UM2w.woff">
+                    LAB 04: DEBUG_ROOM
+                </Text>
+
+                {/* Content Area - Simulated Logs */}
+                <Html position={[-2.5, 1, 0]} transform scale={0.5} style={{ width: '800px', height: '400px', overflow: 'hidden' }}>
+                    <div className="font-mono text-green-500 text-lg leading-relaxed">
+                        <p>> [SYSTEM] INITIALIZING DEBUG PROTOCOLS...</p>
+                        <p>> [KERNEL] LOADING MODULE: MATRIX_RENDERER_V2</p>
+                        <p>> [WARNING] UNSTABLE REALITY DETECTED</p>
+                        <p>> [INFO] MEMORY USAGE: 14GB / 16GB</p>
+                        <p>> [INFO] GPU TEMPERATURE: 72°C</p>
+                        <p>> [NETWORK] CONNECTED TO: heoyesol.kr</p>
+                        <p className="animate-pulse">> _WAITING FOR INPUT...</p>
+                    </div>
+                </Html>
+            </group>
+
+            {/* Floating Wireframe Objects */}
+            <Float speed={4} rotationIntensity={1} floatIntensity={1}>
+                <mesh position={[4, 0, 0]} rotation={[0.5, 0.5, 0]}>
+                    <icosahedronGeometry args={[1, 0]} />
+                    <meshBasicMaterial color="#00ff41" wireframe transparent opacity={0.3} />
+                </mesh>
+            </Float>
+            <Float speed={3} rotationIntensity={1} floatIntensity={1}>
+                <mesh position={[-4, -1, 0]} rotation={[0.2, 0, 0.5]}>
+                    <torusKnotGeometry args={[0.6, 0.2, 100, 16]} />
+                    <meshBasicMaterial color="#00ff41" wireframe transparent opacity={0.3} />
+                </mesh>
             </Float>
 
-            {/* Floating Stats / Logs */}
-            <Text
-                position={[0, 3, 0]}
-                fontSize={0.5}
-                color="#00ff41"
-                font="https://fonts.gstatic.com/s/sharetechmono/v15/J7aHnp1uDWRCCytEs2UM2w.woff"
-            >
-                DEBUG_MODE: ACTIVE
-            </Text>
-
-            <Html position={[3, 2, 0]} transform>
-                <div className="w-64 bg-black/90 border border-green-500 p-4 font-mono text-xs text-green-500">
-                    <div className="border-b border-green-500 mb-2 pb-1">SYSTEM_LOGS</div>
-                    <div className="opacity-80">
-                        > INITIATING LAB 04<br />
-                        > LOADING ASSETS...<br />
-                        > RENDERER: WEBGL<br />
-                        > FPS: STABLE<br />
-                        > USER: AUTHENTICATED
-                    </div>
-                </div>
-            </Html>
-
-            {/* Back Button */}
-            <group position={[0, -2, 2]} onClick={() => setScene('hub')}>
-                <Text fontSize={0.2} color="white">
-                    [ RETURN TO HUB ]
+            {/* Return Button */}
+            <group position={[0, -2.5, 0]} onClick={() => setScene('hub')}>
+                <Text fontSize={0.2} color="white" anchorX="center">
+                    [ EXIT DEBUG MODE ]
                 </Text>
             </group>
         </group>
