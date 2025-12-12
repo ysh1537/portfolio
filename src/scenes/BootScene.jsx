@@ -60,6 +60,9 @@ const BootScene = () => {
             </mesh>
             <gridHelper args={[50, 50, '#00ff41', '#003311']} position={[0, -5, -5]} rotation={[0, 0, 0]} />
 
+            {/* Matrix Rain Effect */}
+            <MatrixRain count={50} />
+
             {/* Background stars */}
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 

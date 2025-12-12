@@ -190,4 +190,7 @@ const OrbitRing = ({ radius, color, speed = 0.1 }) => {
             <mesh position={[radius, 0, 0]}>
                 <sphereGeometry args={[0.05]} />
                 <meshStandardMaterial color={color} emissive={color} emissiveIntensity={5} roughness={0} metalness={1} />
-                <
+            </mesh>
+        </group>
+    );
+};

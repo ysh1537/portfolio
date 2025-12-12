@@ -58,6 +58,9 @@ const Experience = () => {
                     minDistance={2}
                     maxDistance={30}
                     enablePan={false}
+                    enableDamping={true}
+                    dampingFactor={0.05}
+                    rotateSpeed={0.5}
                     enabled={currentScene !== 'profile' && currentScene !== 'contact'}
                 />
 
