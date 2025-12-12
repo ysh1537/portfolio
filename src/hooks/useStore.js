@@ -25,4 +25,8 @@ export const useStore = create((set) => ({
     setPerformanceMode: (mode) => set({ performanceMode: mode }),
 
     toggleAudio: () => set((state) => ({ audioMuted: !state.audioMuted })),
+
+    // Visual Settings
+    orbitSpeed: 0.15,
+    setOrbitSpeed: (speed) => set({ orbitSpeed: speed }),
 }));

@@ -25,6 +25,8 @@ const Overlay = () => {
     const toggleMute = useStore((state) => state.toggleMute);
     const currentScene = useStore((state) => state.currentScene);
     const setScene = useStore((state) => state.setScene);
+    const orbitSpeed = useStore((state) => state.orbitSpeed);
+    const setOrbitSpeed = useStore((state) => state.setOrbitSpeed);
     const { playHoverSound, playClickSound } = useAudio();
 
     // Attach global hover listener for sound
@@ -102,10 +104,39 @@ const Overlay = () => {
                 COORD: [34.5, 127.0]
             </div>
 
-            <div className="fixed bottom-10 right-10 mix-blend-difference">
-                <div className="text-right text-xs text-muted font-mono mb-2">SCROLL PROGRESS</div>
-                <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-accent w-1/3 animate-pulse" /> {/* Placeholder progress */}
+            {/* Bottom Right UI Area */}
+            <div className="fixed bottom-10 right-10 flex flex-col items-end gap-4 mix-blend-difference pointer-events-auto">
+
+                {/* Hub Orbit Control */}
+                {currentScene === 'hub' && (
+                    <div className="bg-black/50 backdrop-blur-md border border-white/10 p-4 rounded-lg text-right">
+                        <div className="text-xs text-muted font-mono mb-2 uppercase">System Speed</div>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => setOrbitSpeed(Math.max(0.05, orbitSpeed - 0.05))}
+                                className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-accent hover:text-black transition-colors rounded"
+                            >
+                                -
+                            </button>
+                            <span className="w-12 text-center font-mono text-accent">
+                                {orbitSpeed.toFixed(2)}
+                            </span>
+                            <button
+                                onClick={() => setOrbitSpeed(Math.min(0.5, orbitSpeed + 0.05))}
+                                className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-accent hover:text-black transition-colors rounded"
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {/* Scroll Progress Placeholder */}
+                <div className="text-right">
+                    <div className="text-xs text-muted font-mono mb-2">SCROLL PROGRESS</div>
+                    <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div className="h-full bg-accent w-1/3 animate-pulse" />
+                    </div>
                 </div>
             </div>
         </div>
