@@ -25,12 +25,17 @@ const Lab01Scene = () => {
 
     // Simple Control Panel UI
     const Controls = () => (
-        <Html position={[3.5, 0, 0]} transform distanceFactor={5} style={{ pointerEvents: 'auto', userSelect: 'none' }} occlude>
-            <div className="w-64 bg-black/80 border border-cyan-500/50 p-4 rounded backdrop-blur-md text-cyan-400 font-mono text-xs select-none"
-                onClick={(e) => e.stopPropagation()}
-                onPointerDown={(e) => e.stopPropagation()}
-                onPointerMove={(e) => e.stopPropagation()}
-                onPointerUp={(e) => e.stopPropagation()}>
+        <Html
+            position={[3.5, 0, 0]}
+            transform
+            distanceFactor={5}
+            zIndexRange={[100, 0]}
+            style={{ pointerEvents: 'auto', userSelect: 'none' }}
+        >
+            <div
+                className="w-64 bg-black/80 border border-cyan-500/50 p-4 rounded backdrop-blur-md text-cyan-400 font-mono text-xs select-none"
+                style={{ pointerEvents: 'auto' }}
+            >
 
                 <div className="mb-4 border-b border-cyan-500/30 pb-2 font-bold flex justify-between">
                     <span>SHADER_CONTROLLER</span>
@@ -47,6 +52,7 @@ const Lab01Scene = () => {
                         value={config.distort}
                         onChange={(e) => setConfig(prev => ({ ...prev, distort: parseFloat(e.target.value) }))}
                         className="w-full accent-cyan-500 h-1 bg-gray-700 rounded appearance-none"
+                        style={{ pointerEvents: 'auto' }}
                     />
                 </div>
 
@@ -60,6 +66,7 @@ const Lab01Scene = () => {
                         value={config.speed}
                         onChange={(e) => setConfig(prev => ({ ...prev, speed: parseFloat(e.target.value) }))}
                         className="w-full accent-cyan-500 h-1 bg-gray-700 rounded appearance-none"
+                        style={{ pointerEvents: 'auto' }}
                     />
                 </div>
             </div>

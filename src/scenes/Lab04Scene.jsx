@@ -115,13 +115,13 @@ const Lab04Scene = () => {
                 {/* Content Area - Simulated Logs */}
                 <Html position={[-2.5, 1, 0]} transform scale={0.5} style={{ width: '800px', height: '400px', overflow: 'hidden' }}>
                     <div className="font-mono text-green-500 text-lg leading-relaxed">
-                        <p>> [SYSTEM] INITIALIZING DEBUG PROTOCOLS...</p>
-                        <p>> [KERNEL] LOADING MODULE: MATRIX_RENDERER_V2</p>
-                        <p>> [WARNING] UNSTABLE REALITY DETECTED</p>
-                        <p>> [INFO] MEMORY USAGE: 14GB / 16GB</p>
-                        <p>> [INFO] GPU TEMPERATURE: 72°C</p>
-                        <p>> [NETWORK] CONNECTED TO: heoyesol.kr</p>
-                        <p className="animate-pulse">> _WAITING FOR INPUT...</p>
+                        <p>&gt; [SYSTEM] INITIALIZING DEBUG PROTOCOLS...</p>
+                        <p>&gt; [KERNEL] LOADING MODULE: MATRIX_RENDERER_V2</p>
+                        <p>&gt; [WARNING] UNSTABLE REALITY DETECTED</p>
+                        <p>&gt; [INFO] MEMORY USAGE: 14GB / 16GB</p>
+                        <p>&gt; [INFO] GPU TEMPERATURE: 72°C</p>
+                        <p>&gt; [NETWORK] CONNECTED TO: heoyesol.kr</p>
+                        <p className="animate-pulse">&gt; _WAITING FOR INPUT...</p>
                     </div>
                 </Html>
             </group>
