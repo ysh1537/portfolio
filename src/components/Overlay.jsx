@@ -106,11 +106,8 @@ const Overlay = () => {
 
             {/* Bottom Right UI Area */}
             <div className="fixed bottom-10 right-10 flex flex-col items-end gap-4 mix-blend-difference pointer-events-auto">
-                -
-            </button>
-            <span className="w-12 text-center font-mono text-accent">
-                {orbitSpeed.toFixed(2)}
-                {/* Orbit Speed Controls (visible only in 'hub' for now) */}
+
+                {/* Orbit Speed Controls (visible only in 'hub') */}
                 {currentScene === 'hub' && (
                     <div className="flex items-center gap-2 scale-150 origin-bottom-right">
                         <button
@@ -131,7 +128,14 @@ const Overlay = () => {
                     </div>
                 )}
 
-        </div >
+                {/* Scroll Progress Placeholder */}
+                <div className="text-right">
+                    <div className="text-xs text-muted font-mono mb-2">SCROLL PROGRESS</div>
+                    <div className="w-64 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div className="h-full bg-accent w-1/3 animate-pulse" />
+                    </div>
+                </div>
+            </div>
         </div >
     );
 };
