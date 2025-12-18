@@ -223,8 +223,8 @@ const HubScene = () => {
     const labs = useMemo(() => [
         { label: "LAB 01 [SHADER]", target: "lab01", color: "#06b6d4", xRadius: 6, zRadius: 4, inclination: [Math.PI / 6, 0, Math.PI / 12], speedOffset: 1.0 },
         { label: "LAB 02 [PHYSICS]", target: "lab02", color: "#7c3aed", xRadius: 5, zRadius: 7, inclination: [-Math.PI / 6, Math.PI / 12, 0], speedOffset: 0.8 },
-        { label: "LAB 03 [AUDIO]", target: "lab04", color: "#facc15", xRadius: 8, zRadius: 5, inclination: [0, 0, Math.PI / 8], speedOffset: 0.6 },
-        { label: "LAB 04 [DEBUG]", target: "lab03", color: "#00ff41", xRadius: 5, zRadius: 5, inclination: [Math.PI / 3, Math.PI / 4, 0], speedOffset: 1.2 },
+        { label: "LAB 03 [AUDIO]", target: "lab03", color: "#facc15", xRadius: 8, zRadius: 5, inclination: [0, 0, Math.PI / 8], speedOffset: 0.6 },
+        { label: "LAB 04 [DEBUG]", target: "lab04", color: "#00ff41", xRadius: 5, zRadius: 5, inclination: [Math.PI / 3, Math.PI / 4, 0], speedOffset: 1.2 },
     ], []);
 
     const groupRefs = useRef(new Array(labs.length).fill(null));
