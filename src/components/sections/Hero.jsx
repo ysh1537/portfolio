@@ -1,78 +1,44 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useStore } from '../../hooks/useStore';
 
 const Hero = () => {
-    const containerRef = useRef(null);
-    const { scrollY } = useScroll();
-    const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-    const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+    const setScene = useStore(state => state.setScene);
 
     return (
-        <section id="hero" ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-            {/* Dynamic Background Elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background z-0" />
-
-            <motion.div style={{ y: y1 }} className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-[100px] animate-pulse" />
-            <motion.div style={{ y: y2 }} className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-[100px] animate-pulse delay-1000" />
-
-            {/* Geometric Accents */}
-            <div className="absolute top-20 right-20 opacity-20 hidden md:block">
-                <div className="w-20 h-20 border border-white/20 rounded-full" />
-                <div className="w-40 h-40 border border-white/10 rounded-full -mt-30 -mr-10" />
-            </div>
-
-            <div className="container mx-auto px-6 relative z-10 text-center">
+        <section className="h-screen flex items-center justify-center relative z-10 pointer-events-none">
+            <div className="container mx-auto px-6 text-center pointer-events-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <span className="inline-block px-4 py-2 rounded-full bg-surface border border-white/10 text-accent text-sm font-medium mb-6">
-                        PM Portfolio
-                    </span>
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                        교육·공공 <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">메�?버스/XR</span><br />
-                        ?�로?�트 ?�문 PM, ?�예??
+                    <h2 className="text-xl md:text-2xl font-mono text-cyan-400 mb-4 tracking-widest">
+                        HELLO, I AM YESOL HEO
+                    </h2>
+                    <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                        Cinematic <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
+                            Metaverse Director
+                        </span>
                     </h1>
-                    <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-                        교육�?�공공기관�??�께 메�?버스/XR ?�로?�트�?기획·?�영????PM?�니??<br className="hidden md:block" />
-                        ?�장??문제�?깊이 ?�해?�고, ?�용??경험??중심???�어<br className="hidden md:block" />
-                        기술??'???��?(Better)·???�운(Easy)' 경험???�도�??�계?�니??
+                    <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+                        Three.js와 React를 활용하여 웹상에서 몰입형 3D 경험을 설계합니다.<br />
+                        상상 그 이상의 시네마틱 유니버스를 탐험해보세요.
                     </p>
-                </motion.div>
 
-                {/* KPI Cards */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto"
-                >
-                    {[
-                        { label: '메�?버스·XR·블록체인 ?�로?�트 총괄', value: '10+' },
-                        { label: '고객 만족??(?�용??중심 기획)', value: '90%' },
-                        { label: '?�로?�트 기한 준?�율', value: '100%' },
-                    ].map((item, index) => (
-                        <div key={index} className="bg-surface/50 backdrop-blur-sm border border-white/5 p-6 rounded-2xl hover:border-primary/30 transition-colors">
-                            <div className="text-4xl font-bold text-white mb-2">{item.value}</div>
-                            <div className="text-sm text-gray-400">{item.label}</div>
-                        </div>
-                    ))}
-                </motion.div>
-
-                {/* Scroll Indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1, duration: 1 }}
-                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-                >
-                    <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-2">
-                        <motion.div
-                            animate={{ y: [0, 12, 0] }}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                            className="w-1.5 h-1.5 bg-accent rounded-full"
-                        />
+                    <div className="flex justify-center gap-4">
+                        <button
+                            onClick={() => document.getElementById('work').scrollIntoView({ behavior: 'smooth' })}
+                            className="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all transform hover:scale-105"
+                        >
+                            View Projects
+                        </button>
+                        <button
+                            onClick={() => setScene('contact')}
+                            className="px-8 py-3 border border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-all backdrop-blur-sm"
+                        >
+                            Contact Me
+                        </button>
                     </div>
                 </motion.div>
             </div>
