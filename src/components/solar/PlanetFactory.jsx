@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { MeshPhysicalMaterial, Sphere, Sparkles, MeshDistortionMaterial } from '@react-three/drei';
 import * as THREE from 'three';
@@ -7,7 +7,7 @@ import * as THREE from 'three';
 const CrystalPlanet = ({ color }) => {
     const groupRef = useRef();
 
-    useFrame((state) => {
+    useFrame(() => {
         if (groupRef.current) {
             groupRef.current.rotation.y -= 0.005;
             groupRef.current.rotation.z += 0.002;

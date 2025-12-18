@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { LORE } from '../../data/lore';
 import { useStore } from '../../hooks/useStore';
@@ -16,7 +16,7 @@ const PlanetaryOrbit = ({ lab, config }) => {
     const { playClick, playHover } = useSoundFX();
 
     // Random start position
-    const startAngle = useMemo(() => Math.random() * Math.PI * 2, []);
+    const [startAngle] = useState(() => Math.random() * Math.PI * 2);
 
     useFrame((state) => {
         const t = state.clock.getElapsedTime();
