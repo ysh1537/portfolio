@@ -100,9 +100,12 @@ const Particles = ({ analyser, mode }) => {
 
         pointsRef.current.geometry.attributes.position.needsUpdate = true;
 
-        // Pulse color/size
-        pointsRef.current.material.size = 0.05 + intensity * 0.2;
-        pointsRef.current.material.color.setHSL(0.5 + intensity * 0.5, 1, 0.5); // Cyan to Purple
+        // Pulse color/size - 안전 검사 추가
+        const mat = pointsRef.current.material;
+        if (mat) {
+            mat.size = 0.05 + intensity * 0.2;
+            if (mat.color) mat.color.setHSL(0.5 + intensity * 0.5, 1, 0.5);
+        }
     });
 
     return (
@@ -141,14 +144,14 @@ const Bars = ({ analyser, mode }) => {
         }
 
         groupRef.current.children.forEach((child, i) => {
-            if (data[i] !== undefined) {
+            if (data[i] !== undefined && child.material) {
                 const value = data[i] / 255;
                 const targetScale = 0.5 + value * 5;
                 child.scale.y = THREE.MathUtils.lerp(child.scale.y, targetScale, 0.2);
                 const hue = 0.5 + value * 0.3;
-                child.material.color.setHSL(hue, 1, 0.5);
-                child.material.emissive.setHSL(hue, 1, 0.2);
-                child.material.emissiveIntensity = value * 3; // Boost for Bloom
+                if (child.material.color) child.material.color.setHSL(hue, 1, 0.5);
+                if (child.material.emissive) child.material.emissive.setHSL(hue, 1, 0.2);
+                if ('emissiveIntensity' in child.material) child.material.emissiveIntensity = value * 3;
             }
         });
     });
@@ -197,9 +200,12 @@ const WireframeWave = ({ analyser, mode }) => {
         }
         positions.needsUpdate = true;
 
-        // Flash emissive on beat
-        const targetEmissive = intensity * 3;
-        mesh.current.material.emissiveIntensity = THREE.MathUtils.lerp(mesh.current.material.emissiveIntensity, targetEmissive, 0.1);
+        // Flash emissive on beat - 안전 검사 추가
+        const mat = mesh.current.material;
+        if (mat && 'emissiveIntensity' in mat) {
+            const targetEmissive = intensity * 3;
+            mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, targetEmissive, 0.1);
+        }
     });
 
     return (

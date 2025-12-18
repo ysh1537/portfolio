@@ -74,8 +74,12 @@ const MatrixEffect = () => {
     }, []);
 
     useFrame((state) => {
-        if (mesh.current) {
-            material.uniforms.uTime.value = state.clock.getElapsedTime();
+        // mesh.current.material을 통해 uniforms에 안전하게 접근
+        if (mesh.current && mesh.current.material && mesh.current.material.uniforms) {
+            const uniforms = mesh.current.material.uniforms;
+            if (uniforms.uTime) {
+                uniforms.uTime.value = state.clock.getElapsedTime();
+            }
         }
     });
 
