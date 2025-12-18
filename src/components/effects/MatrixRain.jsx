@@ -1,73 +1,77 @@
-import React, { useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Text } from '@react-three/drei';
+import { useRef, useMemo } from 'react';
+import { useFrame, useThree } from '@react-three/fiber';
+import * as THREE from 'three';
 
-const Stream = ({ startPos, speed, length, size, initialChars }) => {
-    const ref = useRef();
+const MatrixRain = ({ opacity = 0.2 }) => {
+    const mesh = useRef();
+    const { viewport } = useThree();
 
-    useFrame((state, delta) => {
-        if (ref.current) {
-            ref.current.position.y -= speed * delta;
-            if (ref.current.position.y < -15) {
-                ref.current.position.y = 15;
-            }
+    // Create shader material with stable uniforms
+    const material = useMemo(() => {
+        return new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uColor: { value: new THREE.Color('#00ff41') },
+                uOpacity: { value: opacity },
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUv;
+                uniform float uTime;
+                uniform vec3 uColor;
+                uniform float uOpacity;
+
+                float random(vec2 st) {
+                    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+                }
+
+                void main() {
+                    vec2 uv = vUv;
+                    
+                    // Grid columns
+                    float columns = 60.0;
+                    vec2 ipos = floor(uv * columns);
+                    
+                    // Rain speed varying per column
+                    float speed = 1.0 + random(vec2(ipos.x, 1.33)) * 2.0;
+                    float y = mod(uv.y + uTime * speed * 0.1, 1.0);
+
+                    // Matrix character flickering / trail
+                    float strength = 1.0 - step(0.1, random(vec2(ipos.x, floor(y * 40.0)))); 
+                    strength *= (1.0 - fract(y * 10.0)); // Fade trail
+                    
+                    // Leading bright head
+                    float head = 1.0 - step(0.005, y); 
+                    
+                    vec3 color = uColor * (strength + head * 1.5);
+                    gl_FragColor = vec4(color, (strength + head) * uOpacity);
+                }
+            `,
+            transparent: true,
+            depthWrite: false,
+            side: THREE.DoubleSide
+        });
+    }, [opacity]); // Re-create if base opacity changes
+
+    useFrame((state) => {
+        if (mesh.current && mesh.current.material && mesh.current.material.uniforms) {
+            const u = mesh.current.material.uniforms;
+            if (u.uTime) u.uTime.value = state.clock.getElapsedTime();
+            if (u.uOpacity) u.uOpacity.value = opacity;
         }
     });
 
     return (
-        <group ref={ref} position={startPos}>
-            {initialChars.map((s, i) => (
-                <Text
-                    key={i}
-                    position={[0, s.offset, 0]}
-                    fontSize={size}
-                    color="#00ff41"
-                    fillOpacity={s.opacity}
-                    anchorX="center"
-                    anchorY="middle"
-                >
-                    {s.char}
-                </Text>
-            ))}
-        </group>
-    );
-};
-
-const MatrixRain = ({ count = 30 }) => {
-    // useState lazy init을 사용하여 Math.random()을 초기화 시에만 호출
-    const [streams] = useState(() => {
-        const chars = "XYZ01010101";
-        return Array.from({ length: count }, () => {
-            const streamLength = 5 + Math.floor(Math.random() * 10);
-            const streamSize = 0.5 + Math.random() * 0.3;
-            return {
-                x: (Math.random() - 0.5) * 40,
-                z: (Math.random() - 0.5) * 20 - 5,
-                speed: 5 + Math.random() * 5,
-                length: streamLength,
-                size: streamSize,
-                initialChars: Array.from({ length: streamLength }, (_, i) => ({
-                    char: chars[Math.floor(Math.random() * chars.length)],
-                    offset: i * streamSize * 1.2,
-                    opacity: 1 - i / streamLength
-                }))
-            };
-        });
-    });
-
-    return (
-        <group>
-            {streams.map((props, i) => (
-                <Stream
-                    key={i}
-                    startPos={[props.x, 15, props.z]}
-                    speed={props.speed}
-                    length={props.length}
-                    size={props.size}
-                    initialChars={props.initialChars}
-                />
-            ))}
-        </group>
+        <mesh ref={mesh} scale={[viewport.width * 2, viewport.height * 2, 1]} position={[0, 0, -8]}>
+            <planeGeometry args={[1, 1]} />
+            <primitive object={material} attach="material" />
+        </mesh>
     );
 };
 

@@ -77,7 +77,7 @@ const Lab01Scene = () => {
                         <span className="animate-pulse">●ONLINE</span>
                     </div>
 
-                    <div className="space-y-6">
+                    <div className="space-y-6" onPointerDown={(e) => e.stopPropagation()}>
                         <div>
                             <label className="flex justify-between mb-2 opacity-80">
                                 <span>DISTORTION</span>
@@ -87,6 +87,7 @@ const Lab01Scene = () => {
                                 type="range" min="0" max="1" step="0.01"
                                 value={config.distort}
                                 onChange={(e) => setConfig(prev => ({ ...prev, distort: parseFloat(e.target.value) }))}
+                                onPointerDown={(e) => e.stopPropagation()}
                                 className="w-full h-1 bg-[#00ff41]/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-[#00ff41] [&::-webkit-slider-thumb]:rounded-full"
                             />
                         </div>
@@ -100,6 +101,7 @@ const Lab01Scene = () => {
                                 type="range" min="0" max="10" step="0.1"
                                 value={config.speed}
                                 onChange={(e) => setConfig(prev => ({ ...prev, speed: parseFloat(e.target.value) }))}
+                                onPointerDown={(e) => e.stopPropagation()}
                                 className="w-full h-1 bg-[#00ff41]/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-[#00ff41] [&::-webkit-slider-thumb]:rounded-full"
                             />
                         </div>

@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useStore } from '../../hooks/useStore';
 
 const CustomCursor = () => {
+    const hoverState = useStore((state) => state.hoverState);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [isHovering, setIsHovering] = useState(false);
+    const [isDOMHovering, setIsDOMHovering] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+
+    // Combine DOM hover and 3D hover
+    const isHovering = isDOMHovering || hoverState;
 
     useEffect(() => {
         const mouseMove = (e) => {
@@ -19,9 +24,9 @@ const CustomCursor = () => {
 
         const handleMouseOver = (e) => {
             if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
-                setIsHovering(true);
+                setIsDOMHovering(true);
             } else {
-                setIsHovering(false);
+                setIsDOMHovering(false);
             }
         };
 

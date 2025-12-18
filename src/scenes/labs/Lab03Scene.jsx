@@ -51,7 +51,6 @@ const Particles = ({ analyser, mode }) => {
     const pointsRef = useRef();
     // 500 particles for a nice cloud
     const count = 500;
-    const [positions, setPositions] = useState(new Float32Array(count * 3));
     const [originalPositions] = useState(() => {
         const pos = new Float32Array(count * 3);
         for (let i = 0; i < count; i++) {
@@ -67,16 +66,15 @@ const Particles = ({ analyser, mode }) => {
         if (!pointsRef.current) return;
 
         let intensity = 0;
-        let data = [];
 
         if (mode === 'mic' && analyser) {
             analyser.getByteFrequencyData(dataArray);
             intensity = dataArray.reduce((a, b) => a + b, 0) / dataArray.length / 255;
-            data = dataArray;
         } else {
             const time = state.clock.elapsedTime;
             intensity = (Math.sin(time) * 0.5 + 0.5) * 0.5; // Demo intensity
         }
+
 
         const currentPositions = pointsRef.current.geometry.attributes.position.array;
 
@@ -242,20 +240,20 @@ const Lab03Scene = () => {
                 </Text>
             </Billboard>
 
-            {/* UI Controls */}
-            <Html position={[0, 3.5, 0]} center transform distanceFactor={5}>
-                <div className="flex gap-4 p-2 bg-black/80 rounded border border-cyan-500/30 backdrop-blur-md">
+            {/* UI Controls - pointerEvents로 드래그와 분리 */}
+            <Html position={[0, 3.5, 0]} center transform distanceFactor={5} style={{ pointerEvents: 'auto' }}>
+                <div className="flex gap-4 p-2 bg-black/80 rounded border border-cyan-500/30 backdrop-blur-md" style={{ pointerEvents: 'auto' }}>
                     <button
                         onClick={() => { playClick(); setMode('demo'); }}
                         onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all ${mode === 'demo' ? 'bg-cyan-600 text-white shadow-[0_0_10px_cyan]' : 'text-cyan-500 hover:bg-cyan-900/50'}`}
+                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'demo' ? 'bg-cyan-600 text-white shadow-[0_0_10px_cyan]' : 'text-cyan-500 hover:bg-cyan-900/50'}`}
                     >
                         DEMO_MODE
                     </button>
                     <button
                         onClick={() => { playClick(); setMode('mic'); }}
                         onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all ${mode === 'mic' ? 'bg-pink-600 text-white shadow-[0_0_10px_pink]' : 'text-pink-500 hover:bg-pink-900/50'}`}
+                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'mic' ? 'bg-pink-600 text-white shadow-[0_0_10px_pink]' : 'text-pink-500 hover:bg-pink-900/50'}`}
                     >
                         LIVE_INPUT
                     </button>
@@ -263,7 +261,7 @@ const Lab03Scene = () => {
                     <button
                         onClick={() => { playClick(); setScene('hub'); }}
                         onPointerEnter={playHover}
-                        className="px-4 py-1 rounded font-mono text-xs border border-white/30 text-white/70 hover:bg-white/10 hover:border-white/50 hover:text-white transition-all shadow-lg"
+                        className="px-4 py-1 rounded font-mono text-xs border border-white/30 text-white/70 hover:bg-white/10 hover:border-white/50 hover:text-white transition-all shadow-lg cursor-pointer"
                     >
                         [ EXIT LAB ]
                     </button>

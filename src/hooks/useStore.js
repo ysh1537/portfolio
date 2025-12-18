@@ -9,8 +9,10 @@ export const useStore = create((set) => ({
     // Performance & Settings
     performanceMode: 'high', // 'high', 'low'
     audioMuted: true,
+    hoverState: false,
 
     // Actions
+    setHoverState: (hovering) => set({ hoverState: hovering }),
     setScene: (scene) => set((state) => {
         if (state.currentScene === scene) return {};
         return {

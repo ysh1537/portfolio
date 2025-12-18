@@ -2,6 +2,7 @@
 import Expertise from '../sections/Expertise';
 import Career from '../sections/Career';
 import Achievements from '../sections/Achievements';
+import AdBanner from '../layout/AdBanner';
 import { useStore } from '../../hooks/useStore';
 import useSoundFX from '../../hooks/useSoundFX';
 import { motion } from 'framer-motion';
@@ -25,6 +26,9 @@ const ProfileDOM = () => {
                     <section id="work"><Career /></section>
                     <section id="expertise"><Expertise /></section>
                     <section id="achievements"><Achievements /></section>
+
+                    {/* AdSense 광고 배너 */}
+                    <AdBanner className="bg-black/20 border-y border-white/5" />
 
                     {/* Footer / CTA Area */}
                     <div className="py-20 text-center border-t border-white/5 bg-black">

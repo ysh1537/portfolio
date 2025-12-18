@@ -74,7 +74,6 @@ const MatrixEffect = () => {
     }, []);
 
     useFrame((state) => {
-        // mesh.current.material을 통해 uniforms에 안전하게 접근
         if (mesh.current && mesh.current.material && mesh.current.material.uniforms) {
             const uniforms = mesh.current.material.uniforms;
             if (uniforms.uTime) {
@@ -116,9 +115,14 @@ const Lab04Scene = () => {
                         LAB 04: DEBUG_ROOM
                     </Text>
                 </Billboard>
+                <Billboard>
+                    <Text position={[0, 1.1, 0]} fontSize={0.12} color="#00ff41" anchorX="center">
+                        시스템 상태 모니터링 - 매트릭스 쉐이더 데모
+                    </Text>
+                </Billboard>
 
                 {/* Content Area - Simulated Logs */}
-                <Html position={[-2.5, 1, 0]} transform scale={0.5} style={{ width: '800px', height: '400px', overflow: 'hidden' }}>
+                <Html position={[-2.5, 1, 0]} transform scale={0.5} style={{ width: '800px', height: '400px', overflow: 'hidden', pointerEvents: 'none' }}>
                     <div className="font-mono text-green-500 text-lg leading-relaxed">
                         <p>&gt; [SYSTEM] INITIALIZING DEBUG PROTOCOLS...</p>
                         <p>&gt; [KERNEL] LOADING MODULE: MATRIX_RENDERER_V2</p>
@@ -148,12 +152,15 @@ const Lab04Scene = () => {
             {/* Cinematic FX */}
             <Sparkles count={100} scale={10} size={2} speed={0.3} opacity={0.6} color="#00ff41" />
 
-            {/* Return Button */}
-            <group position={[0, -2.5, 0]} onClick={() => setScene('hub')}>
-                <Text fontSize={0.2} color="white" anchorX="center">
+            {/* Return Button - Html로 클릭 가능하게 */}
+            <Html position={[0, -2.5, 0]} center style={{ pointerEvents: 'auto' }}>
+                <button
+                    onClick={() => setScene('hub')}
+                    className="px-6 py-2 bg-green-900/50 border border-green-500/50 rounded font-mono text-sm text-green-400 hover:bg-green-800/50 hover:border-green-400 transition-all cursor-pointer"
+                >
                     [ EXIT DEBUG MODE ]
-                </Text>
-            </group>
+                </button>
+            </Html>
         </group>
     );
 };

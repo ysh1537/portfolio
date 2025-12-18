@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Experience from './components/sections/Experience';
 import Overlay from './components/layout/Overlay';
@@ -9,6 +9,24 @@ import { useStore } from './hooks/useStore';
 import GlobalErrorBoundary from './components/core/GlobalErrorBoundary';
 
 function App() {
+  const currentScene = useStore((state) => state.currentScene);
+  const setScene = useStore((state) => state.setScene);
+
+  // Sync Scene with URL Query
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sceneParam = params.get('scene');
+    if (sceneParam && ['boot', 'hub', 'lab01', 'lab02', 'lab03', 'lab04', 'contact', 'profile'].includes(sceneParam)) {
+      setScene(sceneParam);
+    }
+  }, [setScene]);
+
+  useEffect(() => {
+    const url = new URL(window.location);
+    url.searchParams.set('scene', currentScene);
+    window.history.pushState({}, '', url);
+  }, [currentScene]);
+
   return (
     <HelmetProvider>
       <GlobalErrorBoundary>
@@ -29,7 +47,7 @@ function App() {
           <Overlay />
 
           {/* DOM Content Layer (For Profile Scroll Reliability) */}
-          {useStore((state) => state.currentScene) === 'profile' && <ProfileDOM />}
+          {currentScene === 'profile' && <ProfileDOM />}
         </div>
       </GlobalErrorBoundary>
     </HelmetProvider>

@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float, Text, Instance, Instances } from '@react-three/drei';
 import * as THREE from 'three';
@@ -6,8 +6,8 @@ import * as THREE from 'three';
 const HeroScene = () => {
     const meshRef = useRef();
 
-    // Create particle instances
-    const particles = useMemo(() => {
+    // Create particle instances once
+    const [particles] = useState(() => {
         const temp = [];
         for (let i = 0; i < 50; i++) {
             const x = (Math.random() - 0.5) * 10;
@@ -17,7 +17,7 @@ const HeroScene = () => {
             temp.push({ position: [x, y, z], scale });
         }
         return temp;
-    }, []);
+    });
 
     useFrame((state) => {
         const t = state.clock.getElapsedTime();
@@ -64,7 +64,6 @@ const HeroScene = () => {
                 color="#ffffff"
                 anchorX="center"
                 anchorY="middle"
-                font="/Inter-Bold.ttf" // Fallback or need to load font
             >
                 YESOL HEO
             </Text>

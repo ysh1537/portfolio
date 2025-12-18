@@ -1,30 +1,33 @@
+import { Suspense, lazy } from 'react';
 import { useStore } from '../../hooks/useStore';
 
-// Scenes
-import BootScene from '../../scenes/system/BootScene';
-import HubScene from '../../scenes/main/HubScene';
-import ProfileScene from '../../scenes/main/ProfileScene';
-import Lab01Scene from '../../scenes/labs/Lab01Scene';
-import Lab02Scene from '../../scenes/labs/Lab02Scene';
-import Lab03Scene from '../../scenes/labs/Lab03Scene';
-import Lab04Scene from '../../scenes/labs/Lab04Scene';
-import ContactScene from '../../scenes/main/ContactScene';
+// Dynamic Imports for Code Splitting
+const BootScene = lazy(() => import('../../scenes/system/BootScene'));
+const HubScene = lazy(() => import('../../scenes/main/HubScene'));
+const ProfileScene = lazy(() => import('../../scenes/main/ProfileScene'));
+const Lab01Scene = lazy(() => import('../../scenes/labs/Lab01Scene'));
+const Lab02Scene = lazy(() => import('../../scenes/labs/Lab02Scene'));
+const Lab03Scene = lazy(() => import('../../scenes/labs/Lab03Scene'));
+const Lab04Scene = lazy(() => import('../../scenes/labs/Lab04Scene'));
+const ContactScene = lazy(() => import('../../scenes/main/ContactScene'));
 
 const SceneManager = () => {
     const activeScene = useStore((state) => state.currentScene);
 
     return (
-        <group>
-            {activeScene === 'boot' && <BootScene />}
-            {activeScene === 'hub' && <HubScene />}
-            {activeScene === 'profile' && <ProfileScene />}
-            {activeScene === 'lab01' && <Lab01Scene />}
-            {activeScene === 'contact' && <ContactScene />}
+        <Suspense fallback={null}>
+            <group>
+                {activeScene === 'boot' && <BootScene />}
+                {activeScene === 'hub' && <HubScene />}
+                {activeScene === 'profile' && <ProfileScene />}
+                {activeScene === 'lab01' && <Lab01Scene />}
+                {activeScene === 'contact' && <ContactScene />}
 
-            {activeScene === 'lab02' && <Lab02Scene />}
-            {activeScene === 'lab03' && <Lab03Scene />}
-            {activeScene === 'lab04' && <Lab04Scene />}
-        </group>
+                {activeScene === 'lab02' && <Lab02Scene />}
+                {activeScene === 'lab03' && <Lab03Scene />}
+                {activeScene === 'lab04' && <Lab04Scene />}
+            </group>
+        </Suspense>
     );
 };
 
