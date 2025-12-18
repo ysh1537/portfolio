@@ -1,7 +1,7 @@
 import { Canvas, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei';
 import { useEffect } from 'react';
-// import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import CinematicEffects from '../effects/CinematicEffects';
 import SceneManager from '../core/SceneManager';
 import { useStore } from '../../hooks/useStore';
 
@@ -71,9 +71,7 @@ const Experience = () => {
                 {/* Reset Fog for non-Hub scenes just in case */}
                 <fog attach="fog" args={['#000000', 50, 200]} />
 
-                {/* <EffectComposer disableNormalPass>
-                    <Bloom luminanceThreshold={1} mipmapBlur intensity={1.5} />
-                </EffectComposer> */}
+                <CinematicEffects />
             </Canvas>
         </div>
     );

@@ -2,6 +2,7 @@ import { useRef, useState, useMemo, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, Float, useCursor, Environment, Stars, Sparkles, Billboard, Html } from '@react-three/drei';
 import { useStore } from '../../hooks/useStore';
+import useSoundFX from '../../hooks/useSoundFX';
 import * as THREE from 'three';
 
 const CosmicNode = ({ position = [0, 0, 0], label, targetScene, color }) => {
@@ -9,6 +10,7 @@ const CosmicNode = ({ position = [0, 0, 0], label, targetScene, color }) => {
     const [hovered, setHovered] = useState(false);
     const meshRef = useRef();
     useCursor(hovered);
+    const { playHover, playClick } = useSoundFX();
 
     useFrame(() => {
         if (meshRef.current) {
@@ -143,9 +145,13 @@ const CosmicNode = ({ position = [0, 0, 0], label, targetScene, color }) => {
             position={position}
             onClick={(e) => {
                 e.stopPropagation();
+                playClick();
                 setScene(targetScene);
             }}
-            onPointerEnter={() => setHovered(true)}
+            onPointerEnter={() => {
+                setHovered(true);
+                playHover();
+            }}
             onPointerLeave={() => setHovered(false)}
         >
             {/* 3D Geometry */}
@@ -166,9 +172,13 @@ const CosmicNode = ({ position = [0, 0, 0], label, targetScene, color }) => {
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
+                        playClick();
                         setScene(targetScene);
                     }}
-                    onPointerEnter={() => setHovered(true)}
+                    onPointerEnter={() => {
+                        setHovered(true);
+                        playHover();
+                    }}
                     onPointerLeave={() => setHovered(false)}
                     className="px-4 py-2 rounded-full backdrop-blur-md border border-white/20 transition-all duration-300 group hover:scale-110 hover:border-white/50 hover:bg-white/10"
                     style={{
