@@ -37,7 +37,8 @@ const useAudioAnalyzer = (mode) => {
             initMic();
         } else {
             cleanup();
-            setAnalyser(null);
+            // Defer state update to avoid synchronous render warning
+            setTimeout(() => setAnalyser(null), 0);
         }
         return cleanup;
     }, [mode]);
