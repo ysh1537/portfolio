@@ -12,6 +12,8 @@ const useAudioAnalyzer = (mode) => {
     const streamRef = useRef(null);
 
     useEffect(() => {
+        let isMounted = true;
+
         const cleanup = () => {
             if (streamRef.current) streamRef.current.getTracks().forEach(track => track.stop());
             if (audioContextRef.current) audioContextRef.current.close();
@@ -27,9 +29,9 @@ const useAudioAnalyzer = (mode) => {
                     audioContextRef.current = audioCtx;
                     const source = audioCtx.createMediaStreamSource(stream);
                     const newAnalyser = audioCtx.createAnalyser();
-                    newAnalyser.fftSize = 256; // Increased for particles
+                    newAnalyser.fftSize = 256;
                     source.connect(newAnalyser);
-                    setAnalyser(newAnalyser);
+                    if (isMounted) setAnalyser(newAnalyser);
                 } catch (err) {
                     console.error("Mic Error:", err);
                 }
@@ -37,10 +39,15 @@ const useAudioAnalyzer = (mode) => {
             initMic();
         } else {
             cleanup();
-            // Defer state update to avoid synchronous render warning
-            setTimeout(() => setAnalyser(null), 0);
+            // Defer state update safely
+            setTimeout(() => {
+                if (isMounted) setAnalyser(null);
+            }, 0);
         }
-        return cleanup;
+        return () => {
+            isMounted = false;
+            cleanup();
+        };
     }, [mode]);
 
     return analyser;
