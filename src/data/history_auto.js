@@ -5,6 +5,7 @@ export const autoHistory = [
     "date": "2025-12-19",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🛠️ 업데이트: 수정(hub): Restore dynamic camera focus during warp and cleanup syntax",
         "🛠️ 업데이트: 수정(hub): 해결 warp 로직 race condition and syntax checks",
         "🛠️ 업데이트: 수정(hub): 제거 warp visuals & 수정 Identity 클릭 interaction",
         "🛠️ 업데이트: 수정(hub): 해결 critical 충돌 on planet interaction (Vector3 mismatch)",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "🔧 수정: 오디오 자동재생 (클릭 to Start), 업데이트 History Data, Expand 기획 철학",
         "♻️ 구조 개선: 수정 오디오 음소거, 2D Boot로그s, Navbar 이름, and 추가 기획 철학",
         "⚙️ 시스템: Push latest build 산출물 for 배포ment (DPR/Mobile 수정)",
-        "⚙️ 시스템: Enforce gitignore to 제거 보안 파일",
-        "⚙️ 시스템: 제거 보안 파일 and 수정 사운드FX 로직"
+        "⚙️ 시스템: Enforce gitignore to 제거 보안 파일"
     ]
 }
 ];

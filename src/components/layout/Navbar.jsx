@@ -91,7 +91,7 @@ const Navbar = () => {
 
                 {/* Mobile Menu Button (SVG replacement) */}
                 <button
-                    className="md:hidden text-white pointer-events-auto"
+                    className="md:hidden text-white pointer-events-auto p-2"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? (
@@ -122,7 +122,7 @@ const Navbar = () => {
                             {navLinks.map((link) => (
                                 <button
                                     key={link.name}
-                                    className="text-gray-300 hover:text-white block py-2 text-left"
+                                    className="text-gray-300 hover:text-white block py-3 text-left"
                                     onClick={() => {
                                         link.action();
                                         setIsOpen(false);

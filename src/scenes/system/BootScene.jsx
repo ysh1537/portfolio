@@ -116,7 +116,7 @@ const BootScene = () => {
                     <Html position={[0, -2, 0]} center zIndexRange={[100, 0]}>
                         <button
                             onClick={handleBootComplete}
-                            className="px-6 py-2 border border-white/20 bg-black/40 text-white/50 text-xs font-mono hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm rounded-full tracking-widest pointer-events-auto"
+                            className="px-8 py-3 border border-white/20 bg-black/40 text-white/50 text-xs font-mono hover:bg-white/10 hover:text-white transition-all backdrop-blur-sm rounded-full tracking-widest pointer-events-auto active:scale-95"
                         >
                             SKIP SEQUENCE
                         </button>
