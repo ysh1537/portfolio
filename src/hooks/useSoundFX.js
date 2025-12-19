@@ -94,33 +94,42 @@ const useSoundFX = () => {
         } catch (e) {
             console.warn('Audio FX Error:', e);
         }
-        osc.frequency.setValueAtTime(100, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(2000, ctx.currentTime + 1.5);
+    }, [getContext]);
 
-        osc.type = 'sawtooth';
+    const playWarp = useCallback(() => {
+        try {
+            const ctx = getContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
 
-        gain.gain.setValueAtTime(0, ctx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.5);
-        gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
+            // Warp Engine Sound (Power up)
+            osc.frequency.setValueAtTime(100, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(2000, ctx.currentTime + 1.5);
 
-        // Add reverb-ish effect (Low pass opening)
-        const filter = ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(200, ctx.currentTime);
-        filter.frequency.exponentialRampToValueAtTime(5000, ctx.currentTime + 1.0);
+            osc.type = 'sawtooth';
 
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(ctx.destination);
+            gain.gain.setValueAtTime(0, ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 0.5);
+            gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
 
-        osc.start();
-        osc.stop(ctx.currentTime + 1.5);
-    } catch (e) {
-        console.warn('Audio FX Error:', e);
-    }
-}, [getContext]);
+            // Add reverb-ish effect (Low pass opening)
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(200, ctx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(5000, ctx.currentTime + 1.0);
 
-return { playHover, playClick, playTransition, playWarp };
-    };
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start();
+            osc.stop(ctx.currentTime + 1.5);
+        } catch (e) {
+            console.warn('Audio FX Error:', e);
+        }
+    }, [getContext]);
+
+    return { playHover, playClick, playTransition, playWarp };
+};
 
 export default useSoundFX;
