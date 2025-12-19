@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Physics, usePlane, useBox, useSphere } from '@react-three/cannon';
 import { useStore } from '../../hooks/useStore';
-import { Text, Html, Environment, Float, Billboard, Sparkles } from '@react-three/drei';
+import { Text, Html, Environment, Float, Billboard, Sparkles, Cloud } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Floor = () => {
@@ -9,7 +9,7 @@ const Floor = () => {
     return (
         <mesh ref={ref} receiveShadow>
             <planeGeometry args={[100, 100]} />
-            <meshStandardMaterial color="#050505" transparent opacity={0.5} roughness={0.1} mirrorness={1} />
+            <meshStandardMaterial color="#064e3b" transparent opacity={0.8} roughness={0.8} />
         </mesh>
     );
 };
@@ -64,19 +64,19 @@ const InteractiveShape = ({ api, manualRef, children, color }) => {
         >
             {children}
             <meshPhysicalMaterial
-                color={clicked ? "#ffffff" : (hovered ? "#00ff41" : color)}
-                emissive={clicked ? "#ffffff" : (hovered ? "#00ff41" : color)}
-                emissiveIntensity={clicked ? 2 : (hovered ? 0.5 : 0.2)}
-                metalness={0.8}
-                roughness={0.2}
-                clearcoat={1}
+                color={clicked ? "#ffffff" : (hovered ? "#34d399" : color)}
+                emissive={clicked ? "#ffffff" : (hovered ? "#34d399" : color)}
+                emissiveIntensity={clicked ? 2 : (hovered ? 0.5 : 0.1)}
+                metalness={0.1}
+                roughness={0.8}
+                clearcoat={0.5}
             />
         </mesh>
     );
 };
 
 const Lab02Scene = () => {
-    const setScene = useStore(state => state.setScene);
+    const startWarp = useStore(state => state.startWarp);
     const [gravity, setGravity] = useState([0, -9.8, 0]);
     const [zeroG, setZeroG] = useState(false);
 
@@ -90,10 +90,10 @@ const Lab02Scene = () => {
         }
     };
 
-    // Generate random objects with stable reference
+    // Generate random objects with organic colors
     const [objects] = useState(() => {
         const objs = [];
-        const colors = ['#7c3aed', '#06b6d4', '#facc15', '#ec4899'];
+        const colors = ['#059669', '#10b981', '#34d399', '#6ee7b7', '#86efac']; // Forest/Emerald Palette
         for (let i = 0; i < 15; i++) {
             const x = (Math.random() - 0.5) * 6;
             const y = 5 + Math.random() * 10;
@@ -107,19 +107,21 @@ const Lab02Scene = () => {
 
     return (
         <group>
-            <color attach="background" args={['#05020b']} />
-            <Environment preset="warehouse" />
+            {/* Dark Green Atmosphere */}
+            <color attach="background" args={['#022c22']} />
+            <fogExp2 attach="fog" args={['#064e3b', 0.05]} />
+            <Environment preset="forest" />
 
             <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
                 <Billboard>
                     <Text
                         position={[0, 4, -5]}
                         fontSize={0.5}
-                        color="#7c3aed"
+                        color="#10b981"
                         anchorX="center"
                         anchorY="middle"
                     >
-                        LAB 02 : PHYSICS SIMULATION
+                        THE TERRARIUM [EVOLUTION]
                     </Text>
                 </Billboard>
             </Float>
@@ -133,10 +135,11 @@ const Lab02Scene = () => {
                 ))}
             </Physics>
 
-            {/* Cinematic FX */}
-            <Sparkles count={100} scale={15} size={3} speed={0.6} opacity={0.4} color="#7c3aed" />
+            {/* Cinematic FX: Spores */}
+            <Sparkles count={300} scale={20} size={5} speed={0.4} opacity={0.6} color="#6ee7b7" />
+            <Cloud opacity={0.3} seed={2} position={[0, 5, -10]} speed={0.2} color="#064e3b" />
 
-            {/* Physics Controls Panel */}
+            {/* Physics Controls Panel - Emerald Theme */}
             <Html
                 position={[3.5, 0, 0]}
                 transform
@@ -144,16 +147,16 @@ const Lab02Scene = () => {
                 zIndexRange={[100, 0]}
                 style={{ pointerEvents: 'auto', userSelect: 'none' }}
             >
-                <div className="w-72 bg-black/90 border border-[#7c3aed]/50 p-6 rounded-lg backdrop-blur-xl text-[#7c3aed] font-mono text-xs shadow-[0_0_30px_rgba(124,58,237,0.2)]">
-                    <div className="mb-6 border-b border-[#7c3aed]/30 pb-2 font-bold flex justify-between tracking-widest">
-                        <span>PHYSICS_ENGINE</span>
-                        <span className="animate-pulse">●ACTIVE</span>
+                <div className="w-72 bg-black/60 border border-emerald-500/50 p-6 rounded-lg backdrop-blur-xl text-emerald-400 font-mono text-xs shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <div className="mb-6 border-b border-emerald-500/30 pb-2 font-bold flex justify-between tracking-widest">
+                        <span>ECOSYSTEM_ENGINE</span>
+                        <span className="animate-pulse text-white">● ACTIVE</span>
                     </div>
 
                     <div className="space-y-4">
-                        <div className="flex justify-between items-center bg-[#7c3aed]/10 p-3 rounded">
-                            <span>GRAVITY_STATUS</span>
-                            <span className={zeroG ? "text-cyan-400 font-bold" : "text-white opacity-50"}>
+                        <div className="flex justify-between items-center bg-emerald-500/10 p-3 rounded">
+                            <span className="text-white opacity-80">GRAVITY_FIELD</span>
+                            <span className={zeroG ? "text-cyan-400 font-bold" : "text-emerald-500 opacity-50"}>
                                 {zeroG ? "[ZERO-G]" : "[NORMAL]"}
                             </span>
                         </div>
@@ -162,21 +165,21 @@ const Lab02Scene = () => {
                             onClick={toggleGravity}
                             className={`w-full py-3 border transition-all font-bold tracking-widest hover:scale-105 active:scale-95 ${zeroG
                                 ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)]'
-                                : 'bg-transparent text-[#7c3aed] border-[#7c3aed] hover:bg-[#7c3aed] hover:text-black'
+                                : 'bg-transparent text-emerald-500 border-emerald-500 hover:bg-emerald-500 hover:text-black'
                                 }`}
                         >
                             {zeroG ? 'RESTORE GRAVITY' : 'INITIATE ZERO-G'}
                         </button>
 
-                        <div className="text-[10px] opacity-70 mt-2 text-center">
-                            &gt; CLICK OBJECTS TO APPLY IMPULSE
+                        <div className="text-[10px] opacity-70 mt-2 text-center text-white">
+                            &gt; INTERACT WITH ORGANIC MATTER
                         </div>
 
                         <button
-                            onClick={() => setScene('hub')}
-                            className="w-full mt-4 py-2 border border-[#7c3aed]/50 text-[#7c3aed] hover:bg-[#7c3aed]/20 rounded transition-all font-mono text-xs tracking-widest"
+                            onClick={() => startWarp('hub')}
+                            className="w-full mt-4 py-2 border border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/20 rounded transition-all font-mono text-xs tracking-widest bg-black/50"
                         >
-                            [ RETURN TO SYSTEM ]
+                            [ WARP TO NEXUS ]
                         </button>
                     </div>
                 </div>

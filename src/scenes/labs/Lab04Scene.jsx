@@ -63,7 +63,7 @@ const MatrixEffect = () => {
         return new THREE.ShaderMaterial({
             uniforms: {
                 uTime: { value: 0 },
-                uColor: { value: new THREE.Color('#00ff41') },
+                uColor: { value: new THREE.Color('#ef4444') }, // Red
             },
             vertexShader: MatrixRainMaterial.vertexShader,
             fragmentShader: MatrixRainMaterial.fragmentShader,
@@ -91,74 +91,74 @@ const MatrixEffect = () => {
 };
 
 const Lab04Scene = () => {
-    const setScene = useStore(state => state.setScene);
+    const startWarp = useStore(state => state.startWarp);
 
     return (
         <group>
-            {/* Background: Digital Rain */}
+            {/* Background: Digital Rain (Red) */}
             <MatrixEffect />
 
             {/* Central Terminal Interface */}
             <group position={[0, 0, 0]}>
                 <mesh position={[0, 0, -1]}>
                     <planeGeometry args={[6, 4]} />
-                    <meshBasicMaterial color="#000000" transparent opacity={0.8} />
+                    <meshBasicMaterial color="#000000" transparent opacity={0.9} />
                     <lineSegments>
                         <edgesGeometry args={[new THREE.PlaneGeometry(6, 4)]} />
-                        <meshBasicMaterial color="#00ff41" />
+                        <meshBasicMaterial color="#ef4444" />
                     </lineSegments>
                 </mesh>
 
                 {/* Header */}
                 <Billboard>
-                    <Text position={[0, 1.5, 0]} fontSize={0.3} color="#00ff41">
-                        LAB 04: DEBUG_ROOM
+                    <Text position={[0, 1.5, 0]} fontSize={0.3} color="#ef4444">
+                        THE GLITCH [FATAL ERROR]
                     </Text>
                 </Billboard>
                 <Billboard>
-                    <Text position={[0, 1.1, 0]} fontSize={0.12} color="#00ff41" anchorX="center">
-                        시스템 상태 모니터링 - 매트릭스 쉐이더 데모
+                    <Text position={[0, 1.1, 0]} fontSize={0.12} color="#ef4444" anchorX="center">
+                        UNSTABLE SECTOR - CAUTION
                     </Text>
                 </Billboard>
 
                 {/* Content Area - Simulated Logs */}
                 <Html position={[-2.5, 1, 0]} transform scale={0.5} style={{ width: '800px', height: '400px', overflow: 'hidden', pointerEvents: 'none' }}>
-                    <div className="font-mono text-green-500 text-lg leading-relaxed">
-                        <p>&gt; [SYSTEM] INITIALIZING DEBUG PROTOCOLS...</p>
-                        <p>&gt; [KERNEL] LOADING MODULE: MATRIX_RENDERER_V2</p>
-                        <p>&gt; [WARNING] UNSTABLE REALITY DETECTED</p>
-                        <p>&gt; [INFO] MEMORY USAGE: 14GB / 16GB</p>
-                        <p>&gt; [INFO] GPU TEMPERATURE: 72°C</p>
-                        <p>&gt; [NETWORK] CONNECTED TO: heoyesol.kr</p>
-                        <p className="animate-pulse">&gt; _WAITING FOR INPUT...</p>
+                    <div className="font-mono text-red-500 text-lg leading-relaxed shadow-red-500/20 drop-shadow-lg">
+                        <p>&gt; [SYSTEM] CRITICAL FAILURE IN SECTOR 04</p>
+                        <p>&gt; [KERNEL] REALITY INTEGRITY: 12% </p>
+                        <p>&gt; [WARNING] DATA CORRUPTION DETECTED</p>
+                        <p>&gt; [ERROR] 0x8291F - SEGMENTATION FAULT</p>
+                        <p>&gt; [INFO] ATTEMPTING CONTAINMENT...</p>
+                        <p>&gt; [NETWORK] CONNECTION UNSTABLE</p>
+                        <p className="animate-pulse font-bold mt-4">&gt; _SYSTEM BREACH IMMINENT_</p>
                     </div>
                 </Html>
             </group>
 
             {/* Floating Wireframe Objects */}
-            <Float speed={4} rotationIntensity={1} floatIntensity={1}>
+            <Float speed={5} rotationIntensity={2} floatIntensity={1}>
                 <mesh position={[4, 0, 0]} rotation={[0.5, 0.5, 0]}>
                     <icosahedronGeometry args={[1, 0]} />
-                    <meshBasicMaterial color="#00ff41" wireframe transparent opacity={0.3} />
+                    <meshBasicMaterial color="#ef4444" wireframe transparent opacity={0.5} />
                 </mesh>
             </Float>
-            <Float speed={3} rotationIntensity={1} floatIntensity={1}>
+            <Float speed={3} rotationIntensity={3} floatIntensity={1}>
                 <mesh position={[-4, -1, 0]} rotation={[0.2, 0, 0.5]}>
                     <torusKnotGeometry args={[0.6, 0.2, 100, 16]} />
-                    <meshBasicMaterial color="#00ff41" wireframe transparent opacity={0.3} />
+                    <meshBasicMaterial color="#ef4444" wireframe transparent opacity={0.5} />
                 </mesh>
             </Float>
 
             {/* Cinematic FX */}
-            <Sparkles count={100} scale={10} size={2} speed={0.3} opacity={0.6} color="#00ff41" />
+            <Sparkles count={50} scale={10} size={5} speed={0.8} opacity={0.8} color="#ef4444" />
 
             {/* Return Button - Html로 클릭 가능하게 */}
             <Html position={[0, -2.5, 0]} center style={{ pointerEvents: 'auto' }}>
                 <button
-                    onClick={() => setScene('hub')}
-                    className="px-6 py-2 bg-green-900/50 border border-green-500/50 rounded font-mono text-sm text-green-400 hover:bg-green-800/50 hover:border-green-400 transition-all cursor-pointer"
+                    onClick={() => startWarp('hub')}
+                    className="px-6 py-2 bg-red-900/50 border border-red-500/50 rounded font-mono text-sm text-red-400 hover:bg-red-800/80 hover:border-red-400 hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(239,68,68,0.5)]"
                 >
-                    [ EXIT DEBUG MODE ]
+                    [ EMERGENCY EXIT ]
                 </button>
             </Html>
         </group>

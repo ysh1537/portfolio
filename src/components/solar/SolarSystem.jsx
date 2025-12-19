@@ -12,7 +12,7 @@ import { Billboard, Html } from '@react-three/drei';
 const PlanetaryOrbit = ({ lab, config }) => {
     const groupRef = useRef();
     const planetRef = useRef();
-    const setScene = useStore(state => state.setScene);
+    const startWarp = useStore(state => state.startWarp);
     const { playClick, playHover } = useSoundFX();
 
     // Random start position
@@ -46,7 +46,7 @@ const PlanetaryOrbit = ({ lab, config }) => {
                 onClick={(e) => {
                     e.stopPropagation();
                     playClick();
-                    setScene(config.target);
+                    startWarp(config.target); // Changed to startWarp
                 }}
                 onPointerEnter={(e) => {
                     e.stopPropagation();

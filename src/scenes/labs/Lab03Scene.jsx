@@ -223,47 +223,48 @@ const WireframeWave = ({ analyser, mode }) => {
 };
 
 const Lab03Scene = () => {
-    const setScene = useStore(state => state.setScene);
+    const startWarp = useStore(state => state.startWarp);
     const [mode, setMode] = useState('demo');
     const analyser = useAudioAnalyzer(mode);
     const { playClick, playHover } = useSoundFX();
 
     return (
         <group>
-            {/* Thematic Background */}
-            <color attach="background" args={['#02040b']} />
-            <Environment preset="night" />
+            {/* Thematic Background - Deep Sonic Void */}
+            <color attach="background" args={['#0f172a']} />
+            <fogExp2 attach="fog" args={['#0f172a', 0.05]} />
+            <Environment preset="studio" />
 
             <Billboard>
-                <Text position={[0, 6, -5]} fontSize={0.6} color="white" anchorX="center">
-                    AUDIO LAB [SYNTHETIC]
+                <Text position={[0, 6, -5]} fontSize={0.6} color="#f59e0b" anchorX="center">
+                    THE RESONANCE [HARMONICS]
                 </Text>
             </Billboard>
 
             {/* UI Controls - pointerEvents로 드래그와 분리 */}
             <Html position={[0, 3.5, 0]} center transform distanceFactor={5} style={{ pointerEvents: 'auto' }}>
-                <div className="flex gap-4 p-2 bg-black/80 rounded border border-cyan-500/30 backdrop-blur-md" style={{ pointerEvents: 'auto' }}>
+                <div className="flex gap-4 p-4 bg-black/80 rounded border border-amber-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)]" style={{ pointerEvents: 'auto' }}>
                     <button
                         onClick={() => { playClick(); setMode('demo'); }}
                         onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'demo' ? 'bg-cyan-600 text-white shadow-[0_0_10px_cyan]' : 'text-cyan-500 hover:bg-cyan-900/50'}`}
+                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'demo' ? 'bg-amber-600 text-white shadow-[0_0_10px_orange]' : 'text-amber-500 hover:bg-amber-900/50'}`}
                     >
-                        DEMO_MODE
+                        DEMO_FREQUENCY
                     </button>
                     <button
                         onClick={() => { playClick(); setMode('mic'); }}
                         onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'mic' ? 'bg-pink-600 text-white shadow-[0_0_10px_pink]' : 'text-pink-500 hover:bg-pink-900/50'}`}
+                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'mic' ? 'bg-blue-600 text-white shadow-[0_0_10px_blue]' : 'text-blue-500 hover:bg-blue-900/50'}`}
                     >
                         LIVE_INPUT
                     </button>
 
                     <button
-                        onClick={() => { playClick(); setScene('hub'); }}
+                        onClick={() => { playClick(); startWarp('hub'); }}
                         onPointerEnter={playHover}
-                        className="px-4 py-1 rounded font-mono text-xs border border-white/30 text-white/70 hover:bg-white/10 hover:border-white/50 hover:text-white transition-all shadow-lg cursor-pointer"
+                        className="px-4 py-1 rounded font-mono text-xs border border-white/30 text-white/70 hover:bg-white/10 hover:border-white/50 hover:text-white transition-all shadow-lg cursor-pointer bg-black/50"
                     >
-                        [ EXIT LAB ]
+                        [ WARP TO NEXUS ]
                     </button>
                 </div>
             </Html>
@@ -276,8 +277,8 @@ const Lab03Scene = () => {
 
             <Particles analyser={analyser} mode={mode} />
 
-            {/* Floor Reflection Grid */}
-            <gridHelper args={[50, 50, 0x333333, 0x050505]} position={[0, -4, 0]} />
+            {/* Floor Reflection Grid - Gold */}
+            <gridHelper args={[50, 50, 0xf59e0b, 0x1e293b]} position={[0, -4, 0]} />
         </group>
     );
 };

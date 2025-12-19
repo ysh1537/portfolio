@@ -71,6 +71,7 @@ const Experience = () => {
                 {/* Reset Fog for non-Hub scenes just in case */}
                 <fog attach="fog" args={['#000000', 50, 200]} />
 
+                <WarpController />
                 <CinematicEffects />
             </Canvas>
         </div>
