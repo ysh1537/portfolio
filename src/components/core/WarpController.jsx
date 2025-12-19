@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from '../../hooks/useStore';
 import gsap from 'gsap';
@@ -49,13 +49,7 @@ const WarpController = () => {
                 y: targetPos.y * 0.8, // Adjust to be slightly above or aligned
                 z: targetPos.z * 0.8,
                 duration: 2.5,
-                ease: "power2.in",
-                onUpdate: () => {
-                    // Update ref is not strictly needed for gsap but for useFrame if we used it.
-                    // But here we can simply lookAt in the useFrame or update.
-                    // Let's rely on useFrame for continuous lookAt.
-                    targetRef.current.copy(targetPos);
-                }
+                ease: "power2.in"
             });
 
             return () => {
