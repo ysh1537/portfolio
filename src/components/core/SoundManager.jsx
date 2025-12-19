@@ -65,6 +65,17 @@ const SoundManager = () => {
         }
     }, [isMuted]);
 
+    // Unlock Audio Context on Interaction (Browser Policy Fix)
+    useEffect(() => {
+        const unlockAudio = () => {
+            if (audioRef.current && audioRef.current.paused && !isMuted) {
+                audioRef.current.play().catch(e => console.log("Audio resume failed", e));
+            }
+        };
+        window.addEventListener('click', unlockAudio);
+        return () => window.removeEventListener('click', unlockAudio);
+    }, [isMuted]);
+
     return null;
 };
 

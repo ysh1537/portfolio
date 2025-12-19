@@ -1,5 +1,17 @@
 export const patchNotes = [
     {
+        version: "v1.5.0",
+        date: "2025-12-19",
+        title: "FINAL POLISH & UX REFINEMENT",
+        changes: [
+            "Implemented User Interaction requirement for Audio Autoplay",
+            "Added 'Planning Philosophy' section to Profile",
+            "Refined Navbar naming to match Content (Assignments -> Awards)",
+            "Optimized Boot Log visualization",
+            "Fixed History update synchronization"
+        ]
+    },
+    {
         version: "v1.4.0",
         date: "2025-12-19",
         title: "MULTIVERSE LABS EXPANSION",
