@@ -33,16 +33,16 @@ const Overlay = () => {
             {/* Top Navigation Bar */}
             <Navbar />
 
-            {/* Sound Toggle */}
-            <div className="fixed top-24 right-10 flex flex-col gap-2 pointer-events-auto z-50">
+            {/* Sound Toggle & Perf Toggle */}
+            <div className="fixed top-20 right-6 md:top-24 md:right-10 flex flex-col gap-2 pointer-events-auto z-50 items-end">
                 <button
                     onClick={toggleMute}
-                    className="px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[140px]"
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[110px] md:min-w-[140px]"
                 >
-                    <span className="text-xs">AUDIO</span>
+                    <span className="text-[10px] md:text-xs">AUDIO</span>
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] text-white/50">{isMuted ? 'OFF' : 'ON'}</span>
-                        <div className={`w-2 h-2 rounded-full ${isMuted ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`} />
+                        <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${isMuted ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`} />
                     </div>
                 </button>
 
@@ -51,12 +51,12 @@ const Overlay = () => {
                         const newMode = performanceMode === 'high' ? 'low' : 'high';
                         useStore.getState().setPerformanceMode(newMode);
                     }}
-                    className="px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[140px]"
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[110px] md:min-w-[140px]"
                 >
-                    <span className="text-xs">PERF</span>
+                    <span className="text-[10px] md:text-xs">PERF</span>
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] text-white/50">{performanceMode === 'high' ? 'HIGH' : 'LOW'}</span>
-                        <div className={`w-2 h-2 rounded-full ${performanceMode === 'low' ? 'bg-yellow-500' : 'bg-cyan-500 animate-pulse'}`} />
+                        <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${performanceMode === 'low' ? 'bg-yellow-500' : 'bg-cyan-500 animate-pulse'}`} />
                     </div>
                 </button>
             </div>

@@ -54,6 +54,7 @@ const PlanetaryOrbit = ({ lab, config }) => {
             </mesh>
 
             {/* 2. The Planet */}
+            {/* 2. The Planet */}
             <group
                 ref={planetRef}
                 onClick={(e) => {
@@ -62,7 +63,8 @@ const PlanetaryOrbit = ({ lab, config }) => {
                     const targetPos = new THREE.Vector3();
                     planetRef.current.getWorldPosition(targetPos);
 
-                    const safePos = { x: targetPos.x, y: targetPos.y, z: targetPos.z };
+                    // Pass as Array [x, y, z] to satisfy WarpController's "new Vector3(...pos)"
+                    const safePos = [targetPos.x, targetPos.y, targetPos.z];
                     startWarp(config.target, safePos);
                 }}
                 onPointerEnter={(e) => {
@@ -76,6 +78,12 @@ const PlanetaryOrbit = ({ lab, config }) => {
                     document.body.style.cursor = 'auto';
                 }}
             >
+                {/* Invisible Hit Box (Larger Target for Touch) */}
+                <mesh visible={false}>
+                    <sphereGeometry args={[2.5, 16, 16]} />
+                    <meshBasicMaterial transparent opacity={0} />
+                </mesh>
+
                 {/* Planet Mesh */}
                 <PlanetFactory type={lab.type} color={lab.visual.color} />
 

@@ -73,13 +73,14 @@ const WarpController = () => {
 
     // Force camera to look at target during warp
     useFrame(() => {
-        if (isWarping) {
-            // Dynamically get planet position if possible, otherwise use static target
-            const dynamicPos = getPlanetWorldPosition(warpTarget);
+        if (isWarping && warpTarget) {
+            // Dynamically get planet position (Pass targetRef.current to avoid undefined crash)
+            const dynamicPos = getPlanetWorldPosition(warpTarget, targetRef.current);
+
+            // If dynamicPos returns valid vector (which is targetRef.current), look at it
             if (dynamicPos) {
-                targetRef.current.copy(dynamicPos);
+                camera.lookAt(targetRef.current);
             }
-            camera.lookAt(targetRef.current);
         }
     }, 100); // High priority
 

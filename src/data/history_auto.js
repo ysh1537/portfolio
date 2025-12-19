@@ -5,6 +5,7 @@ export const autoHistory = [
     "date": "2025-12-19",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "✨ 기능 구현: Hub UI Enhancements (Identity Label, Planet Interactions)",
         "🔧 수정: 제거 시스템UI, 수정 오디오 filename, 다듬기 기획 철학",
         "🔧 수정: 오디오 자동재생 (클릭 to Start), 업데이트 History Data, Expand 기획 철학",
         "♻️ 구조 개선: 수정 오디오 음소거, 2D Boot로그s, Navbar 이름, and 추가 기획 철학",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "⚙️ 시스템: 제거 보안 파일 and 수정 사운드FX 로직",
         "✨ 기능 구현: 구현 사운드scape Phase 3 (사운드Manager & Warp SFX)",
         "🔧 수정: 추가 isMounted check to use오디오Analyzer for 안전장치",
-        "🔧 수정: 해결 lint error in Lab03씬 (setState in useEffect)",
-        "✨ 기능 구현: 구현 씬 몰입감 Phase 2 (Warp 전환s & Lab Interiors)"
+        "🔧 수정: 해결 lint error in Lab03씬 (setState in useEffect)"
     ]
 }
 ];
