@@ -5,6 +5,7 @@ export const autoHistory = [
     "date": "2025-12-19",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🛠️ 업데이트: 수정(hub): 제거 warp visuals & 수정 Identity 클릭 interaction",
         "🛠️ 업데이트: 수정(hub): 해결 critical 충돌 on planet interaction (Vector3 mismatch)",
         "✨ 기능 구현: Hub UI Enhancements (Identity Label, Planet Interactions)",
         "🔧 수정: 제거 시스템UI, 수정 오디오 filename, 다듬기 기획 철학",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "⚙️ 시스템: Push latest build 산출물 for 배포ment (DPR/Mobile 수정)",
         "⚙️ 시스템: Enforce gitignore to 제거 보안 파일",
         "⚙️ 시스템: 제거 보안 파일 and 수정 사운드FX 로직",
-        "✨ 기능 구현: 구현 사운드scape Phase 3 (사운드Manager & Warp SFX)",
-        "🔧 수정: 추가 isMounted check to use오디오Analyzer for 안전장치"
+        "✨ 기능 구현: 구현 사운드scape Phase 3 (사운드Manager & Warp SFX)"
     ]
 }
 ];

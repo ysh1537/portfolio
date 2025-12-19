@@ -58,7 +58,10 @@ const WarpController = () => {
                 }
             });
 
-            if (controls) controls.enabled = true;
+            return () => {
+                tl.kill();
+                if (controls) controls.enabled = true;
+            };
         }
     }, [isWarping, camera, finishWarp, warpTargetPosition, controls]);
 
