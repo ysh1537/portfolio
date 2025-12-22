@@ -70,7 +70,20 @@ npm install
 # 3. Initialize Server
 
 npm run dev
-\`\`\`
+
+## 🚀 Deployment (Automated)
+
+이 프로젝트는 **GitHub Actions**를 통해 자동 배포됩니다.
+`main` 브랜치에 코드가 푸시되면(push), 자동으로 빌드되어 `docs/` 폴더가 업데이트되고 라이브 서버(`heoyesol.kr`)에 반영됩니다.
+
+### 수동 배포가 필요한 경우 (비권장)
+
+```bash
+npm run build
+git add docs
+git commit -m "Manual deploy"
+git push
+```\`\`
 
 ---
 
