@@ -26,7 +26,7 @@ const CameraHandler = () => {
         gsap.killTweensOf(camera.position);
 
         if (currentScene === 'hub') {
-            const defaultPos = new THREE.Vector3(0, 5, 32);
+            const defaultPos = new THREE.Vector3(0, 40, 45); // Zoomed out to see Black Box at [28, 10, -20]
 
             const spawnPoints = {
                 'lab01': new THREE.Vector3(4, 2, 10),
@@ -91,21 +91,25 @@ const Experience = () => {
                     powerPreference: "high-performance",
                     preserveDrawingBuffer: true
                 }}
+                // Lab 씬 UI 패널 클릭 이벤트 정상화
+                style={{ touchAction: 'none' }}
+                onPointerMissed={() => { }} // 빈 캔버스 클릭 시 이벤트 전파 방지
             >
                 <CameraHandler />
                 <PerspectiveCamera makeDefault position={[0, 0, 18]} />
-                <OrbitControls
-                    makeDefault
-                    minPolarAngle={0}
-                    maxPolarAngle={Math.PI - 0.1}
-                    minDistance={2}
-                    maxDistance={30}
-                    enablePan={false}
-                    enableDamping={true}
-                    dampingFactor={0.05}
-                    rotateSpeed={0.5}
-                    enabled={currentScene !== 'profile' && currentScene !== 'contact' && !isWarping}
-                />
+                {currentScene === 'hub' && !isWarping && (
+                    <OrbitControls
+                        makeDefault
+                        minPolarAngle={0}
+                        maxPolarAngle={Math.PI - 0.1}
+                        minDistance={2}
+                        maxDistance={100}
+                        enablePan={false}
+                        enableDamping={true}
+                        dampingFactor={0.05}
+                        rotateSpeed={0.5}
+                    />
+                )}
 
                 <color attach="background" args={['#000000']} />
                 <ambientLight intensity={1} />

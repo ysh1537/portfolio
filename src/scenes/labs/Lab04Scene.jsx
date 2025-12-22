@@ -188,15 +188,10 @@ const Lab04Scene = () => {
             {/* Cinematic FX */}
             <Sparkles count={50} scale={10} size={5} speed={0.8} opacity={0.8} color="#ef4444" />
 
-            {/* Return Button - Html로 클릭 가능하게 */}
-            <Html position={[0, -2.5, 0]} center style={{ pointerEvents: 'auto' }}>
-                <button
-                    onClick={() => startWarp('hub')}
-                    className="px-6 py-2 bg-red-900/50 border border-red-500/50 rounded font-mono text-sm text-red-400 hover:bg-red-800/80 hover:border-red-400 hover:text-white transition-all cursor-pointer shadow-[0_0_15px_rgba(239,68,68,0.5)]"
-                >
-                    [ EMERGENCY EXIT ]
-                </button>
-            </Html>
+            {/* Cinematic FX */}
+            <Sparkles count={50} scale={10} size={5} speed={0.8} opacity={0.8} color="#ef4444" />
+
+            {/* Return Button moved to LabUI (Overlay) */}
         </group>
     );
 };

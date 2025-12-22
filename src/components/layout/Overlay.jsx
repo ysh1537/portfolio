@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useStore } from '../../hooks/useStore';
 import HistoryPanel from './HistoryPanel';
 import Navbar from './Navbar';
 import NavigationDock from './NavigationDock';
+import LabUI from '../ui/LabUI';
 
 const Overlay = () => {
     const currentScene = useStore((state) => state.currentScene);
@@ -9,6 +11,17 @@ const Overlay = () => {
     const isMuted = useStore((state) => state.isMuted);
     const toggleMute = useStore((state) => state.toggleMute);
     const performanceMode = useStore((state) => state.performanceMode);
+
+    // ESC 키로 Hub로 돌아가기
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape' && currentScene !== 'boot' && currentScene !== 'hub') {
+                setScene('hub');
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentScene, setScene]);
 
     return (
         <div className="fixed inset-0 pointer-events-none z-40 text-xs font-mono select-none">
@@ -31,6 +44,9 @@ const Overlay = () => {
 
             {/* Top Navigation Bar */}
             <Navbar />
+
+            {/* Lab Specific UI Controls */}
+            <LabUI />
 
             {/* Sound Toggle & Perf Toggle */}
             <div className="fixed top-20 right-6 md:top-24 md:right-10 flex flex-col gap-3 pointer-events-auto z-50 items-end">

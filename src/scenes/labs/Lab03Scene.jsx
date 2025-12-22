@@ -274,8 +274,10 @@ const PulsatingCore = ({ analyser, mode }) => {
 };
 
 const Lab03Scene = () => {
-    const startWarp = useStore(state => state.startWarp);
-    const [mode, setMode] = useState('demo');
+    // Global Config from useStore
+    const config = useStore(state => state.lab03Config);
+    const mode = config.mode;
+
     const analyser = useAudioAnalyzer(mode);
     const { playClick, playHover } = useSoundFX();
 
@@ -291,34 +293,6 @@ const Lab03Scene = () => {
                     SONIC GIANT [HARMONICS]
                 </Text>
             </Billboard>
-
-            {/* UI Controls */}
-            <Html position={[0, 3.5, 0]} center transform distanceFactor={5} style={{ pointerEvents: 'auto' }}>
-                <div className="flex gap-4 p-4 bg-black/80 rounded-xl border border-purple-500/30 backdrop-blur-md shadow-[0_0_30px_rgba(139,92,246,0.3)]" style={{ pointerEvents: 'auto' }}>
-                    <button
-                        onClick={() => { playClick(); setMode('demo'); }}
-                        onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'demo' ? 'bg-purple-600 text-white shadow-[0_0_15px_#7c3aed]' : 'text-purple-500 hover:bg-purple-900/50'}`}
-                    >
-                        DEMO_FREQUENCY
-                    </button>
-                    <button
-                        onClick={() => { playClick(); setMode('mic'); }}
-                        onPointerEnter={playHover}
-                        className={`px-4 py-1 rounded font-mono text-xs transition-all cursor-pointer ${mode === 'mic' ? 'bg-cyan-600 text-white shadow-[0_0_15px_#0891b2]' : 'text-cyan-500 hover:bg-cyan-900/50'}`}
-                    >
-                        LIVE_INPUT
-                    </button>
-
-                    <button
-                        onClick={() => { playClick(); startWarp('hub'); }}
-                        onPointerEnter={playHover}
-                        className="px-4 py-1 rounded font-mono text-xs border border-white/30 text-white/70 hover:bg-white/10 hover:border-white/50 hover:text-white transition-all shadow-lg cursor-pointer bg-black/50"
-                    >
-                        [ WARP TO NEXUS ]
-                    </button>
-                </div>
-            </Html>
 
             <Float speed={2} rotationIntensity={0.2} floatIntensity={0.5}>
                 <PulsatingCore analyser={analyser} mode={mode} />

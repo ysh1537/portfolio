@@ -150,22 +150,23 @@ const PlanetaryOrbit = ({ lab, config }) => {
 
 const SolarSystem = () => {
     // Mapping LORE data to orbit configs
+    // Phase 35: 궤도 반경 및 속도 조정 - 행성 충돌 방지
     const planets = [
         {
             lab: LORE.SECTORS.LAB_01,
-            config: { target: 'lab01', color: LORE.SECTORS.LAB_01.visual.color, xRadius: 6, zRadius: 6, inclination: [0, 0, 0], speedOffset: 1.0 }
+            config: { target: 'lab01', color: LORE.SECTORS.LAB_01.visual.color, xRadius: 7, zRadius: 7, inclination: [0, 0, 0], speedOffset: 0.8 }
         },
         {
             lab: LORE.SECTORS.LAB_02,
-            config: { target: 'lab02', color: LORE.SECTORS.LAB_02.visual.color, xRadius: 9, zRadius: 9, inclination: [Math.PI / 8, 0, 0], speedOffset: 0.7 }
+            config: { target: 'lab02', color: LORE.SECTORS.LAB_02.visual.color, xRadius: 11, zRadius: 11, inclination: [Math.PI / 10, 0, 0], speedOffset: 0.5 }
         },
         {
             lab: LORE.SECTORS.LAB_03,
-            config: { target: 'lab03', color: LORE.SECTORS.LAB_03.visual.color, xRadius: 12, zRadius: 12, inclination: [-Math.PI / 12, 0, 0], speedOffset: 0.5 }
+            config: { target: 'lab03', color: LORE.SECTORS.LAB_03.visual.color, xRadius: 16, zRadius: 16, inclination: [-Math.PI / 14, 0, 0], speedOffset: 0.35 }
         },
         {
             lab: LORE.SECTORS.LAB_04,
-            config: { target: 'lab04', color: LORE.SECTORS.LAB_04.visual.color, xRadius: 15, zRadius: 15, inclination: [Math.PI / 6, 0, Math.PI / 12], speedOffset: 1.2 }
+            config: { target: 'lab04', color: LORE.SECTORS.LAB_04.visual.color, xRadius: 22, zRadius: 22, inclination: [Math.PI / 8, 0, Math.PI / 16], speedOffset: 0.25 }
         },
     ];
 

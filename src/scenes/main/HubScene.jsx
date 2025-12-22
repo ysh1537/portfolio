@@ -1,6 +1,7 @@
 import { Environment, Stars, Sparkles, Cloud, MeshReflectorMaterial } from '@react-three/drei';
 import SolarSystem from '../../components/solar/SolarSystem';
 import TechConstellation from '../../components/solar/TechConstellation';
+import BlackBoxSatellite from '../../components/solar/BlackBoxSatellite';
 import { useStore } from '../../hooks/useStore';
 import CinematicEffects from '../../components/effects/CinematicEffects';
 import StarField from '../../components/solar/StarField';
@@ -61,6 +62,9 @@ const HubScene = () => {
 
             {/* Background Skills */}
             <TechConstellation />
+
+            {/* Phase 35: Black Box Satellite (DevLog Entry Point) */}
+            <BlackBoxSatellite position={[28, 10, -20]} />
 
             {/* Premium Reflective Floor - REMOVED for Deep Space Feel (Phase 27) */}
             {/* 

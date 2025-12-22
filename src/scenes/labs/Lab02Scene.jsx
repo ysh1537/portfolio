@@ -103,19 +103,8 @@ const TechBubble = ({ position, node }) => {
 // ... (InteractiveShape remains)
 
 const Lab02Scene = () => {
-    const startWarp = useStore(state => state.startWarp);
-    const [gravity, setGravity] = useState([0, -0.5, 0]); // Default slightly floaty for "Living Planet"
-    const [zeroG, setZeroG] = useState(false);
-
-    const toggleGravity = () => {
-        if (zeroG) {
-            setGravity([0, -0.5, 0]);
-            setZeroG(false);
-        } else {
-            setGravity([0, 0.2, 0]); // Upward float
-            setZeroG(true);
-        }
-    };
+    // Global Config from useStore
+    const config = useStore(state => state.lab02Config);
 
     // Initialize tech nodes with random positions
     const [nodes] = useState(() => {
@@ -151,7 +140,7 @@ const Lab02Scene = () => {
                 </Billboard>
             </Float>
 
-            <Physics gravity={gravity} iterations={10}>
+            <Physics gravity={config.gravity} iterations={10}>
                 <Floor />
                 {nodes.map((node) => (
                     <TechBubble key={node.id} position={node.position} node={node} />
@@ -162,52 +151,6 @@ const Lab02Scene = () => {
             {/* Cinematic FX: Spores */}
             <Sparkles count={300} scale={20} size={5} speed={0.4} opacity={0.6} color="#6ee7b7" />
             <Cloud opacity={0.3} seed={2} position={[0, 5, -10]} speed={0.2} color="#064e3b" />
-
-            {/* Physics Controls Panel - Emerald Theme */}
-            <Html
-                position={[3.5, 0, 0]}
-                transform
-                distanceFactor={5}
-                zIndexRange={[100, 0]}
-                style={{ pointerEvents: 'auto', userSelect: 'none' }}
-            >
-                <div className="w-72 bg-black/60 border border-emerald-500/50 p-6 rounded-lg backdrop-blur-xl text-emerald-400 font-mono text-xs shadow-[0_0_30px_rgba(16,185,129,0.2)]">
-                    <div className="mb-6 border-b border-emerald-500/30 pb-2 font-bold flex justify-between tracking-widest">
-                        <span>ECOSYSTEM_ENGINE</span>
-                        <span className="animate-pulse text-white">● ACTIVE</span>
-                    </div>
-
-                    <div className="space-y-4">
-                        <div className="flex justify-between items-center bg-emerald-500/10 p-3 rounded">
-                            <span className="text-white opacity-80">GRAVITY_FIELD</span>
-                            <span className={zeroG ? "text-cyan-400 font-bold" : "text-emerald-500 opacity-50"}>
-                                {zeroG ? "[ZERO-G]" : "[NORMAL]"}
-                            </span>
-                        </div>
-
-                        <button
-                            onClick={toggleGravity}
-                            className={`w-full py-3 border transition-all font-bold tracking-widest hover:scale-105 active:scale-95 ${zeroG
-                                ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)]'
-                                : 'bg-transparent text-emerald-500 border-emerald-500 hover:bg-emerald-500 hover:text-black'
-                                }`}
-                        >
-                            {zeroG ? 'RESTORE GRAVITY' : 'INITIATE ZERO-G'}
-                        </button>
-
-                        <div className="text-[10px] opacity-70 mt-2 text-center text-white">
-                            &gt; INTERACT WITH ORGANIC MATTER
-                        </div>
-
-                        <button
-                            onClick={() => startWarp('hub')}
-                            className="w-full mt-4 py-2 border border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/20 rounded transition-all font-mono text-xs tracking-widest bg-black/50"
-                        >
-                            [ WARP TO NEXUS ]
-                        </button>
-                    </div>
-                </div>
-            </Html>
         </group>
     );
 };

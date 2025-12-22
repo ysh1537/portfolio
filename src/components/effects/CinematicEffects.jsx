@@ -37,34 +37,18 @@ const CinematicEffects = () => {
     return (
         <BloomErrorBoundary>
             <EffectComposer disableNormalPass>
-                {/* 1. Toned Down Bloom for Balanced Visuals - Adjusted Phase 27 */}
-                <Bloom
-                    luminanceThreshold={0.8} // Much higher threshold: only bright neon glows
-                    mipmapBlur
-                    intensity={0.2} // Further reduced intensity for comfort
-                    radius={0.4} // Tighter glow
-                    levels={8}
-                />
+                {/* Bloom 효과 제거 - 시각적 쨍함 개선 */}
 
-                {/* 2. Chromatic Aberration */}
-                <ChromaticAberration
-                    offset={[0.001, 0.001]} // Very subtle
-                    radialModulation={false}
-                    modulationOffset={0}
-                />
-
-                {/* 3. Vignette */}
+                {/* Vignette - 화면 가장자리 어둡게 */}
                 <Vignette
                     offset={0.4}
-                    darkness={0.5}
+                    darkness={0.4}
                     eskil={false}
                 />
 
-
-
-                {/* 5. Tone Mapping for Color Depth */}
+                {/* Tone Mapping for Color Depth */}
                 <ToneMapping
-                    adaptive={true} // Use adaptive tone mapping if supported
+                    adaptive={true}
                     resolution={256}
                     middleGrey={0.6}
                     maxLuminance={16.0}

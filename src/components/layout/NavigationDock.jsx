@@ -6,6 +6,7 @@ import useSoundFX from '../../hooks/useSoundFX';
 const NavigationDock = () => {
     const setScene = useStore(state => state.setScene);
     const setHoveredPlanet = useStore(state => state.setHoveredPlanet);
+    const openBlackBox = useStore(state => state.openBlackBox);
     const playHover = useSoundFX().playHover;
     const playClick = useSoundFX().playClick;
 
@@ -16,6 +17,7 @@ const NavigationDock = () => {
         { id: 'lab02', label: 'TERRARIUM', icon: '☘', color: LORE.SECTORS.LAB_02.visual.color, target: 'lab02' },
         { id: 'lab03', label: 'RESONANCE', icon: '♬', color: LORE.SECTORS.LAB_03.visual.color, target: 'lab03' },
         { id: 'lab04', label: 'GLITCH', icon: '⚡', color: LORE.SECTORS.LAB_04.visual.color, target: 'lab04' },
+        { id: 'blackbox', label: 'BLACK BOX', icon: '◼', color: '#06b6d4', target: 'blackbox', isModal: true },
     ];
 
     const handleHover = (id) => {
@@ -29,21 +31,14 @@ const NavigationDock = () => {
 
     const handleClick = (item) => {
         playClick();
+        // Black Box는 모달로 열기
+        if (item.isModal && item.target === 'blackbox') {
+            openBlackBox();
+            return;
+        }
         if (item.target === 'profile') {
             setScene('profile');
         } else {
-            // For warping, we need a position. 
-            // Since we can't easily get the Vector3 from here without ref access,
-            // we will let the WarpController or SolarSystem handle the warp via store if possible,
-            // OR we just use setScene('name') and let the scene load normally if not warping.
-            // BUT, the goal is "Click initiates warp".
-            // Since `startWarp` needs a position to look at, and we don't have it here...
-            // Let's rely on simple scene switching for the Dock for now, 
-            // OR implement a "Find Planet" mechanism in SolarSystem that detects this store change.
-            //
-            // BETTER UX: The dock mimics the "Selection". 
-            // If we just switch scene, it fades out. That's actually fine and faster.
-            // Let's stick to setScene for immediate navigation, treating it as "Fast Travel".
             setScene(item.target);
         }
     };

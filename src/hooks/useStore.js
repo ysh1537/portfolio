@@ -34,6 +34,13 @@ export const useStore = create((set) => ({
     openMissionModal: (data) => set({ missionModalData: data }),
     closeMissionModal: () => set({ missionModalData: null }),
 
+    // Phase 35: Black Box Modal State (DevLog)
+    blackBoxOpen: false,
+    currentLogId: null,
+    openBlackBox: (logId = null) => set({ blackBoxOpen: true, currentLogId: logId }),
+    closeBlackBox: () => set({ blackBoxOpen: false, currentLogId: null }),
+    setCurrentLog: (logId) => set({ currentLogId: logId }),
+
     // Warp Transition Logic
     isWarping: false,
     warpTarget: null,
@@ -71,4 +78,13 @@ export const useStore = create((set) => ({
     // Visual Settings
     orbitSpeed: 0.05,
     setOrbitSpeed: (speed) => set({ orbitSpeed: speed }),
+    // Lab Local Configs (Global State)
+    lab01Config: { distort: 0.4, speed: 1.5, color: '#06b6d4' },
+    setLab01Config: (config) => set((state) => ({ lab01Config: { ...state.lab01Config, ...config } })),
+
+    lab02Config: { zeroG: false, gravity: [0, -0.5, 0] },
+    setLab02Config: (config) => set((state) => ({ lab02Config: { ...state.lab02Config, ...config } })),
+
+    lab03Config: { mode: 'demo' },
+    setLab03Config: (mode) => set({ lab03Config: { mode } }),
 }));

@@ -6,6 +6,7 @@ import CustomCursor from './components/layout/CustomCursor';
 import SoundManager from './components/core/SoundManager';
 import ProfileDOM from './components/dom/ProfileDOM';
 import MissionModal from './components/ui/MissionModal';
+import BlackBoxModal from './components/ui/BlackBoxModal';
 import { useStore } from './hooks/useStore';
 
 import GlobalErrorBoundary from './components/core/GlobalErrorBoundary';
@@ -54,6 +55,9 @@ function App() {
 
           {/* Phase 34: Mission Modal (Planetary Archives) */}
           <MissionModal />
+
+          {/* Phase 35: Black Box Modal (DevLog) */}
+          <BlackBoxModal />
         </div>
       </GlobalErrorBoundary>
     </HelmetProvider>
