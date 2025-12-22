@@ -1,289 +1,329 @@
 /**
  * DevLogData.js
- * Phase 35: The Black Box - Integrated Archives
+ * Phase 36: The Black Box - Expanded Archives
  * 
- * Identity: The Cinematic Multiverse Director
- * 'Original Architect Logs' (기존 기록) + 'Director's Insight' (신규 기획/전략) 통합본
+ * Identity: The Cinematic Metaverse Director's Log
+ * 'Director's Insight' (전략/기획) + 'Architect's Blueprint' (기술/구현) 심층 통합본
  */
 
 export const devLogs = [
-    // [ORIGINAL ARCHIVES] - 복원된 기존 로그 (log-001 ~ 006)
+    // [ORIGINAL ARCHIVES EXPANED] - 기존 로그 확장 (log-001 ~ 006)
     {
         id: "log-001",
         title: "왜 '포트폴리오'가 아닌 '멀티버스'인가",
         date: "2025-12-01",
-        tags: ["철학", "세계관", "컨셉"],
-        summary: "평범한 개발자 포트폴리오 대신 탐험 가능한 우주를 만들기로 한 이유",
-        content: `## 문제 인식
+        tags: ["철학", "브랜딩", "전략"],
+        summary: "경쟁이 치열한 채용 시장에서 '기억에 남는 단 한 명'이 되기 위한 차별화 전략.",
+        content: `## 1. Problem Definition (문제 정의)
 
-개발자 포트폴리오는 대부분 비슷하다. 상단에 이름, 중간에 스킬 아이콘들, 하단에 프로젝트 카드. 
-수백 개의 포트폴리오 사이에서 **"나"**를 어떻게 기억하게 할 것인가?
+현업 기획자로서 수많은 포트폴리오를 검토하며 느낀 점은 **"형식이 내용을 지배한다"**는 것이다.
+- 노션(Notion) 포트폴리오는 깔끔하지만, 지원자의 '개성'이 배제된다.
+- PDF는 정보 전달은 확실하지만, '상호작용'이 불가능하다.
 
-## 발상의 전환
+나는 질문했다.
+**"나라는 사람의 정체성(Identity)을 규격화된 플랫폼 안에 가두는 것이 옳은가?"**
 
-> "사람들은 정보를 기억하지 않는다. **경험**을 기억한다."
+## 2. Strategic Solution (전략적 해결책)
 
-영화관에서 본 영화의 줄거리는 잊어도, 그 영화를 보며 느꼈던 감정은 기억한다.
-포트폴리오도 마찬가지다. 단순한 정보 나열이 아닌, **몰입 경험**을 설계해야 한다.
+나는 나만의 규칙으로 돌아가는 **'완전한 독자 플랫폼'**을 구축하기로 결정했다.
 
-## 왜 우주인가?
+> **"Experience is the new Resume."**
+> (경험이 곧 이력서다.)
 
-1. **무한한 확장성**: 프로젝트가 늘어나도 "새로운 행성 발견"으로 자연스럽게 추가
-2. **게임적 요소**: 클릭, 탐험, 발견의 재미
-3. **기술 시연**: WebGL, 3D 렌더링 역량을 포트폴리오 자체로 증명
-4. **개인 브랜딩**: "차원의 설계자(Dimension Architect)"라는 고유한 정체성
+이 프로젝트는 다음과 같은 경험 전략(UX Strategy)을 따른다.
+1.  **Exploration (탐험)**: 정보를 주입식으로 나열하지 않고, 사용자가 직접 행성을 클릭하고 이동하며 찾아내게 한다.
+2.  **Immersion (몰입)**: 시네마틱한 비주얼과 사운드로, 이성적 판단 이전에 감성적 충격을 먼저 전달한다.
+3.  **Narrative (서사)**: 단순한 기술 스택 나열이 아니라, 각 기술이 왜 이 행성에 존재하는지에 대한 이야기를 부여한다.
 
-## 결론
+## 3. The Core Concept: Solar System
 
-이 포트폴리오는 단순한 이력서가 아니다. 
-**방문자를 "우주 여행자"로 만들고, 내 기술 스택을 "탐험 가능한 행성"으로 바꾸는 것.**
-그것이 "Cinematic Multiverse"의 핵심이다.`
+나의 역량을 태양계(Solar System)로 시각화했다.
+- **Central Star (Core)**: 나의 본질적인 자아와 철학.
+- **Orbiting Planets (Skills)**: 자아를 중심으로 공전하는 나의 기술적 무기들.
+- **Gravity (Influence)**: 각 프로젝트가 서로에게 미치는 영향력(Reference).
+
+이 포트폴리오 자체가 내가 기획자로서 가진 **'구조적 설계 능력'**과 **'경험 디자인 역량'**을 증명하는 가장 강력한 증거물이다.`
     },
     {
         id: "log-002",
         title: "항성계 설계: 행성에 의미를 부여하다",
         date: "2025-12-05",
-        tags: ["세계관", "디자인", "UX"],
-        summary: "각 Lab 행성이 왜 그런 이름과 비주얼을 갖게 되었는지",
-        content: `## 설계 원칙
+        tags: ["UX", "메타포", "디자인"],
+        summary: "단순한 비주얼을 넘어, 기능과 형태가 일치하는 'Form Follows Function' 디자인.",
+        content: `## Design Philosophy: Form Follows Function
 
-랜덤하게 예쁜 행성을 만드는 건 쉽다. 하지만 **의미 있는** 행성을 만드는 건 다르다.
-각 행성은 특정 기술 영역을 상징해야 한다.
+예쁘기만 한 3D 오브젝트는 의미가 없다.
+각 행성의 비주얼은 그 행성이 담고 있는 **콘텐츠의 성격**을 직관적으로 암시해야 한다.
 
-## 행성 배정 로직
+## 1. Lab-01: The Prism (Capability)
+- **Metaphor**: **"빛의 굴절과 분광"**
+- **Design Intent**: 나의 역량(White Light)이 프리즘을 통과하여 다양한 스펙트럼(Skills)으로 펼쳐지는 것을 시각화.
+- **Visual logic**: 투명한 다면체(Icosahedron) 구조. 내부가 훤히 들여다보이는 것은 '솔직함'과 '투명성'을 상징하며, 그 안에서 복잡하게 얽힌 와이어프레임은 '견고한 논리'를 뜻한다.
 
-### Lab-01: The Prism (프리즘)
-- **상징**: 셰이더, 빛, 굴절
-- **비주얼**: 투명한 크리스탈 행성
-- **이유**: 빛을 분해하는 프리즘처럼, 복잡한 렌더링 로직을 분해하고 재조합
+## 2. Lab-02: The Terrarium (Projects)
+- **Metaphor**: **"살아있는 생태계"**
+- **Design Intent**: 프로젝트는 완료된 시점에 죽어있는 화석이 아니다. 끊임없이 유지보수되고 성장하는 **'유기체'**다.
+- **Visual Logic**: 초록빛이 감도는 숲과 늪의 행성. 데이터가 쌓일수록 행성의 식생이 풍성해지는 게이미피케이션(Gamification) 요소를 도입하여, **"성장하는 개발자"**라는 이미지를 부여했다.
 
-### Lab-02: The Terrarium (테라리움)
-- **상징**: 생명체, 유기적 시스템
-- **비주얼**: 초록빛 살아있는 행성
-- **이유**: 크리처 수집 게임 - 데이터가 "생명체"로 진화하는 생태계
+## 3. Lab-03: The Resonance (Audio/Sense)
+- **Metaphor**: **"파동과 공명"**
+- **Design Intent**: 기획은 이성(Logic)뿐만 아니라 감성(Sense)의 영역이다. 소리의 파동을 시각적으로 전이시키는 공감각적 경험을 의도했다.
+- **Visual Logic**: 거대한 고리를 가진 가스 행성. 오디오 주파수(Frequency)에 반응하여 행성의 표면과 대기가 실시간으로 요동친다. 이는 외부 자극(Trend/User Feedback)에 민감하게 반응하는 기획자의 유연성을 상징한다.
 
-### Lab-03: The Resonance (공명)
-- **상징**: 오디오, 파동, 리듬
-- **비주얼**: 고리를 두른 가스 행성
-- **이유**: 목성의 거대 폭풍처럼, 사운드 파동이 시각화되는 공간
-
-### Lab-04: The Glitch (글리치)
-- **상징**: 디버그, 불안정, 실험
-- **비주얼**: 부서진 달, 와이어프레임
-- **이유**: 개발 중인 프로토타입, "아직 완성되지 않음"의 미학
-
-## 핵심 인사이트
-
-행성의 이름과 색상만으로 방문자는 무의식적으로 기대감을 형성한다.
-**"저 푸른 크리스탈 행성에는 뭐가 있을까?"**
-이것이 **게이미피케이션**의 힘이다.`
+## Conclusion
+이 항성계의 모든 천체는 단순한 장식이 아니다.
+나라는 사람을 구성하는 **논리, 성장, 감각**의 시각적 메타포다.`
     },
     {
         id: "log-003",
         title: "React Three Fiber: 왜 이 기술 스택인가",
         date: "2025-12-08",
-        tags: ["기술", "React", "Three.js"],
-        summary: "순수 Three.js 대신 R3F를 선택한 기술적 근거",
-        content: `## 후보 기술들
+        tags: ["기술", "R3F", "Three.js"],
+        summary: "개발 효율성과 퍼포먼스 사이에서 내린 전략적 기술 의사결정.",
+        content: `## Decision Matrix (의사결정 매트릭스)
 
-| 옵션 | 장점 | 단점 |
-|------|------|------|
-| 순수 Three.js | 완전한 통제권 | 컴포넌트화 어려움 |
-| Babylon.js | 강력한 물리엔진 | 무거움, 오버킬 |
-| PlayCanvas | 게임 특화 | React 생태계 분리 |
-| **React Three Fiber** | React 생태계 통합 | 학습 곡선 |
+이 프로젝트를 시작하기 전, 3D 웹 구현을 위한 기술 스택을 냉정하게 비교 분석했다.
 
-## R3F를 선택한 이유
+| 기술 스택 | 장점 (Pros) | 단점 (Cons) | 적합성 |
+| :--- | :--- | :--- | :---: |
+| **Pure Three.js** | 가장 가볍고, 모든 것을 밑바닥부터 제어 가능 | 코드가 길어지고, React 상태 관리와 연동이 복잡함 | △ |
+| **Spline / Vectary** | 디자인 툴처럼 쉽게 3D 제작 가능 | 인터랙션 로직 구현에 제약이 많고 커스터마이징이 힘듦 | X |
+| **R3F (React Three Fiber)** | React의 컴포넌트 구조와 State 관리를 그대로 사용 가능 | Three.js에 대한 근본적 이해가 없으면 최적화가 어려움 | **O** |
 
-### 1. 선언적 3D
-\`\`\`jsx
-// 선언형 R3F
-<mesh>
-  <boxGeometry />
-  <meshBasicMaterial />
-</mesh>
-\`\`\`
+## Why R3F? (선택의 이유)
 
-### 2. React 상태 관리 통합
-Zustand와의 완벽한 호환. 씬 전환, 모달, 사운드 상태를 React 방식으로 관리.
+### 1. "Declarative (선언적)" 코드의 힘
+기존 Three.js의 절차적 코드(\`scene.add(mesh)\`)는 프로젝트가 커질수록 스파게티 코드가 되기 쉽다.
+R3F는 \`<Mesh />\`와 같이 선언적으로 코드를 작성하므로, **UI 컴포넌트처럼 3D 씬을 모듈화**하여 관리할 수 있다. 이는 기획자로서 **'구조적 관리'**를 중시하는 내 성향과 완벽하게 일치한다.
 
-### 3. 풍부한 에코시스템
-- \`@react-three/drei\`: 카메라, 컨트롤, 헬퍼
-- \`@react-three/postprocessing\`: Bloom, Vignette
-- \`@react-spring/three\`: 자연스러운 애니메이션
+### 2. Ecosystem Integration (생태계 통합)
+- **Zustand**: 카메라 워킹, 씬 전환, 사운드 볼륨 등 전역 상태를 2D/3D 구분 없이 일원화하여 관리.
+- **Drei**: \`Float\`, \`Environment\`, \`OrbitControls\` 등 검증된 추상화 라이브러리를 통해 '바퀴를 다시 발명하는' 시간을 단축.
+- **Post-Processing**: 시네마틱한 연출(Bloom, Glitch)을 컴포넌트 형태로 손쉽게 주입.
 
-## 결론
-
-R3F는 "3D 개발자"가 아닌 "React 개발자"가 3D를 다루기 위한 최적의 도구다.
-이 포트폴리오는 그 가능성을 증명한다.`
+결론적으로 R3F는 **"가장 React스러운 방식으로 3D를 다루는 도구"**였기에, 개발 속도와 유지보수성 두 마리 토끼를 잡을 수 있었다.`
     },
     {
         id: "log-004",
         title: "성능 최적화 전쟁: High vs Low 모드",
         date: "2025-12-12",
-        tags: ["성능", "최적화", "UX"],
-        summary: "모든 기기에서 동작하는 포트폴리오를 위한 성능 전략",
-        content: `## 문제 상황
+        tags: ["최적화", "사용자경험", "전략"],
+        summary: "아이폰 미니부터 RTX 4090까지. 모든 사용자에게 쾌적한 여행을 제공하기 위한 이원화 전략.",
+        content: `## The Bottleneck (병목 현상)
 
-아무리 아름다워도, **로딩에 10초 걸리면 이탈**한다.
-특히 모바일 기기나 저사양 노트북에서 60FPS를 유지하는 것이 과제였다.
+화려한 비주얼(Bloom, Volumetric Light)을 넣자마자 프레임 드랍이 발생했다.
+특히 모바일 환경이나 내장 그래픽(Intel Iris) 노트북에서는 15FPS 미만으로 떨어져 '탐험' 자체가 불가능했다.
 
-## 병목 지점 분석
-1. **Post-Processing**: Bloom, Vignette (GPU 집약적)
-2. **Stars**: 20,000개 파티클 렌더링
-3. **Nebula Clouds**: 볼륨 렌더링
+기획자로서 선택해야 했다.
+1. 비주얼을 포기하고 가볍게 만들 것인가? (타협)
+2. 고사양 사용자만 타겟팅할 것인가? (배제)
 
-## 해결책: 성능 모드 토글 (Service Tiering)
+나는 **"반응형 퍼포먼스 (Adaptive Performance)"**라는 제3의 길을 택했다.
 
-### High Mode (기본)
-- 모든 시각 효과 활성화
-- 20,000 Stars
-- Bloom + Vignette
+## Optimization Strategy (최적화 전략)
 
-### Low Mode
-- Post-Processing OFF
-- 5,000 Stars (75% 감소)
-- 배경 요소 최소화
+### Tier 1: High Quality (Desktop/GPU)
+- **Post-Processing ON**: Bloom(빛 퍼짐), Vignette(영화적 비네팅), Chromatic Aberration(렌즈 왜곡) 활성화.
+- **Full Particle System**: 20,000개의 별과 동적인 성운(Nebula) 렌더링.
+- **High-Res Textures**: 4K급 행성 텍스처 사용.
+- **경험 목표**: 압도적인 시각적 몰입감과 "Wow Point".
 
-## 교훈
+### Tier 2: Performance Mode (Mobile/Low-Spec)
+- **Post-Processing OFF**: 무거운 후보정 효과를 과감히 제거하여 GPU 부하 80% 감소.
+- **Lightweight Particles**: 별의 개수를 5,000개로 제한하고, 연산이 비싼 셰이더를 단순화.
+- **Resource Management**: 씬 전환 시 사용하지 않는 텍스처와 지오메트리를 즉시 \`dispose()\`하여 메모리 누수 방지.
+- **경험 목표**: 끊김 없는 60FPS 부드러운 네비게이션과 정보 전달.
 
-> "최적화는 삭제의 예술이다."
-
-필요 없는 것을 제거하는 게 아니라, **언제 제거할지**를 결정하는 것이 핵심이다.`
+## Lesson Learned
+최적화는 기술의 영역이지만, 그 방향을 결정하는 것은 **기획의 영역**이다.
+**"무엇을 버리고 무엇을 남길 것인가"**에 대한 명확한 기준이 있었기에, 모든 환경의 사용자에게 최선의 경험을 제공할 수 있었다.`
     },
     {
         id: "log-005",
         title: "부팅 시퀀스: 자동화된 몰입",
         date: "2025-12-15",
-        tags: ["UX", "애니메이션", "브랜딩"],
-        summary: "방문자가 사이트에 착륙하는 순간을 영화처럼 연출하기",
-        content: `## 첫인상의 중요성
+        tags: ["UX", "심리학", "브랜딩"],
+        summary: "로딩 시간(Latence)을 '기다림'이 아닌 '기대감'으로 전환하는 UX 심리학.",
+        content: `## User Psychology (사용자 심리)
 
-유저가 사이트에 접속했을 때, 첫 3초가 모든 것을 결정한다.
-빈 화면? 로딩 스피너? 지루하다.
-**"이곳은 다르다"**라는 신호를 즉시 보내야 한다.
+웹사이트 로딩이 3초를 넘어가면 사용자의 40%가 이탈한다. 3D 웹사이트는 리소스가 크기 때문에 로딩이 필연적이다.
+이 '죽음의 계곡(Valley of Death)'을 어떻게 건너게 할 것인가?
 
-## 현재 부팅 시스템 (v2.0)
+나는 **"로딩 바(Loading Bar)를 보여주지 않는다"**는 원칙을 세웠다.
+대신 **"부팅 시퀀스(Boot Sequence)"**를 보여준다.
 
-### 자동 시작
-- 클릭 대기 화면 **제거**
-- 접속 즉시 부팅 시퀀스 자동 시작
+## Narrative Loading (서사적 로딩)
 
-### 4가지 랜덤 테마
-매번 다른 부팅 경험을 제공:
-1. **Quantum Warp**: 양자 공간 워프 효과
-2. **Digital Genesis**: 디지털 창세기 파티클
-3. **Neural Dive**: 신경망 다이브 시각화
-4. **Classic Matrix**: 클래식 매트릭스 코드
+단순히 "Loading... 45%"라는 텍스트 대신, 영화 <매트릭스>나 <아이언맨>의 자비스가 부팅되는 듯한 연출을 적용했다.
 
-## 인사이트
+1.  **System Initialization**: 복잡한 코드가 빠르게 스크롤되며 "시스템이 깨어나는" 느낌을 준다.
+2.  **Random Themes**: 매번 접속할 때마다 다른 테마(Quantum, Genesis, Neural, Matrix)가 무작위로 재생된다. 이는 재방문 사용자에게 "이번엔 뭐가 나올까?" 하는 기대감을 부여한다.
+3.  **Seamless Transition**: 로딩이 완료되는 순간, 부팅 화면이 자연스럽게 걷히며 우주 공간이 드러난다. (Fade-out & Zoom-in)
 
-> "로딩 화면도 콘텐츠다."
-
-기다림의 시간을 **몰입의 시간**으로 전환하라.`
+## Result
+사용자는 로딩을 '기다려야 하는 시간'이 아니라 **'콘텐츠의 일부'**로 인식하게 되었다.
+기술적 한계를 스토리텔링으로 극복한 UX 기획의 승리다.`
     },
     {
         id: "log-006",
         title: "Cinematic Multiverse: 다음 단계",
         date: "2025-12-22",
-        tags: ["로드맵", "비전", "미래"],
-        summary: "이 실험은 어디로 향하는가",
-        content: `## 현재까지의 여정
-- ✅ 3D 태양계 네비게이션
-- ✅ Planetary Archives (프로젝트 상세)
-- ✅ The Black Box (개발 일지)
+        tags: ["로드맵", "비전", "확장성"],
+        summary: "이 포트폴리오는 완성품이 아니다. 끊임없이 진화하는 '베타(Beta)' 우주다.",
+        content: `## Future Roadmap
 
-## 철학
+이 프로젝트는 현재 **Phase 36**에 도달했다. 하지만 이것은 끝이 아니다.
+나는 이 우주를 계속해서 확장해 나갈 구체적인 청사진을 가지고 있다.
 
-> "포트폴리오는 완성되지 않는다. 진화할 뿐이다."
+### 1. Hyperspace Navigation (초공간 도약)
+- 현재의 씬 전환은 단순한 Fade-in/out이다.
+- 차기 버전에서는 스타워즈의 하이퍼스페이스처럼, 씬과 씬 사이를 웜홀을 통해 이동하는 **심리스(Seamless) 월드**를 구현할 예정이다.
 
-이 프로젝트는 단순한 취업용 자료가 아니다.
-**디지털 정체성의 실험**이자, **기술 역량의 증명**이다.
-코드가 곧 DNA이고, 이 우주가 곧 나다.`
+### 2. Multi-User Connection (멀티 유저)
+- 지금은 혼자만의 독방이지만, WebSocket을 연동하여 다른 방문자들의 마우스 궤적이나 신호를 '유령(Ghost)'처럼 시각화할 것이다.
+- "나 혼자 보고 있는 게 아니다"라는 실재감(Presence)을 부여하기 위함이다.
+
+### 3. Integrated CMS
+- 블랙박스(DevLog) 데이터를 JSON 파일이 아닌, Headless CMS(Strapi 등)와 연동하여 실시간으로 관리할 수 있도록 백엔드를 강화할 것이다.
+
+## The Director's Vision
+포트폴리오는 **'죽어있는 문서'**가 되어서는 안 된다.
+내가 새로운 기술을 배우고 새로운 경험을 할 때마다, 이 우주에는 새로운 행성이 생겨날 것이다.
+**"진화하지 않는 것은 죽은 것이다."** 
+이 문장이 나의 개발 철학이자 기획 철학이다.`
     },
 
-    // [DIRECTOR'S ARCHIVES] - 신규 기획/전략 로그 (log-007 ~ 009)
+    // [DIRECTOR'S ARCHIVES EXPANDED] - 신규 기획/전략 로그 확장 (log-007 ~ 009)
     {
         id: "log-007",
         title: "The Silicon Synapse: AI와의 '공명(Resonance)'",
         date: "2025-12-23",
-        tags: ["PM", "AI협업", "디렉팅"],
-        summary: "[NEW] Human Vision + AI Logic = Hyper-Productivity. 단순 생성이 아닌 설계의 확장.",
-        content: `## 개발자가 아닌 기획자의 코딩
-나는 코드를 직접 짜지 않는다. **설계**한다.
-이 프로젝트에서 나의 역할은 AI에게 단순한 명령을 내리는 것이 아니라, 
-**명확한 비전과 제약 조건(Constraints)**을 제시하는 것이었다.
+        tags: ["AI협업", "Co-Reasoning", "생산성"],
+        summary: "AI를 단순한 '코드 자판기'로 쓰지 마라. 그들은 최고의 '기술 파트너'다.",
+        content: `## Paradigm Shift in Development
 
-### Co-Reasoning Process
-1.  **Vision (Human)**: *"프리즘 행성은 기하학적으로 완벽하면서도, 내부 구조가 폭발하는 키네틱 아트여야 해."*
-2.  **Implementation (AI)**: *"그럼 Icosahedron Geometry를 복제하고 Wireframe Layer를 씌워 회전시키겠습니다."*
+많은 사람들이 AI(ChatGPT, Claude)를 단순히 "코드 짜주는 기계"로만 활용한다.
+하지만 나는 그들을 **"수석 엔지니어(Senior Engineer)"**이자 **"토론 파트너(Debate Partner)"**로 대우했다.
+이 프로젝트의 성공 비결은 바로 이 **'Co-Reasoning (공동 추론)'** 프로세스에 있다.
 
-AI는 훌륭한 'Lead Developer'다. 하지만 그들은 '목적'을 스스로 설정하지 못한다.
-그 목적을 날카롭게 다듬어 던져주는 것. 그것이 **AI 시대 기획자의 핵심 역량**이다.`
+## The Workflow: How We Worked
+
+1.  **Director (나)의 역할**: **"무엇을(What)"**과 **"왜(Why)"**를 정의한다.
+    - *"프리즘 행성을 만들고 싶어. 단순한 도형이 아니라, 내부에서 에너지가 폭발해서 껍질이 분리되는 느낌이어야 해. 사용자가 슬라이더를 당기면 그 폭발력이 시각화되어야 해."* (추상적이지만 명확한 의도 전달)
+
+2.  **AI (파트너)의 역할**: **"어떻게(How)"**를 제안하고 검증한다.
+    - *"그렇다면 Icosahedron Geometry를 3겹으로 복제(Clone)하고, 각 레이어에 다른 Material(Wireframe, Points)을 입히죠. 그리고 \`useFrame\` 훅에서 \`config.distort\` 값을 껍질의 \`scale\`과 연동시키면 '폭발하는(Exploded View)' 연출이 가능합니다."*
+
+3.  **Iteration (조율)**:
+    - Director: *"너무 산만해. 회전 속도를 절반으로 줄이고, 껍질 간격을 더 벌려서 내부가 잘 보이게 해줘."*
+    - AI: *"Matrix4 연산을 통해 회전축을 고정하고 델타 타임 보정을 적용하여 부드럽게 만들겠습니다."*
+
+## Insight
+AI 시대의 기획력은 **'명령(Prompting)'**이 아니라 **'대화(Communication)'**에서 나온다.
+내가 원하는 바를 논리적으로 설명할 수 있다면, AI는 그 어떤 기술적 난제도 해결해준다.
+이 프로젝트는 그 **'인간-AI 협업의 정점'**을 보여주는 사례다.`
     },
     {
         id: "log-008",
         title: "The Prism Paradox: 디자인 진화의 기록",
         date: "2025-12-23",
-        tags: ["디자인", "시행착오", "Co-Pilot"],
-        summary: "[NEW] Lab-01 프리즘의 시각적 정체성을 찾기 위한 3단계 진화 과정",
-        content: `## 1단계: Capability Prism (폐기)
-초기에는 아주 직관적인 접근을 했다. 텍스트가 빔처럼 뿜어져 나오는 방식.
-- **Problem**: 너무 촌스럽고(Literal), "우주적 신비감"이 없었다.
+        tags: ["디자인", "시행착오", "문제해결"],
+        summary: "실패한 3번의 디자인, 그리고 찾아낸 최적의 해답. '개연성'을 찾아서.",
+        content: `## The Journey to "Crystalline Echoes"
 
-## 2단계: Quantum Nebula (수정)
-"닥터 스트레인지" 스타일의 구름(Nebula) 구현.
-- **Problem**: 예쁘긴 한데... **"프리즘과의 개연성"**이 부족했다.
+Lab-01(Prism)의 최종 디자인이 나오기까지는 3번의 뼈아픈 실패(폐기)가 있었다.
+이 로그는 그 실패의 기록이자, 더 나은 디자인을 향한 집요한 탐구의 과정이다.
 
-## 3단계: Crystalline Echoes (최종)
-프리즘의 기하학적 형태(Icosahedron)를 그대로 '복제(Echo)'하여 3겹의 껍질로 확장.
-- **Result**: 프리즘이 '살아서 움직이는 기계'처럼 느껴지는 완벽한 일체감.
+### Phase 1: The Literal Beam (직관의 함정)
+- **아이디어**: 프리즘에서 'Skill'이라는 글자가 레이저 빔처럼 뿜어져 나오게 하자.
+- **결과**: **[폐기]**. 너무 1차원적이고 유치했다. 2000년대 플래시 사이트 같았다. "우주적 신비감"을 완전히 해쳤다.
 
-이 과정은 내가 **Art Direction**을 하고, AI가 **Technical execution**을 맡아 이뤄낸 합작품이다.`
+### Phase 2: The Quantum Nebula (화려함의 함정)
+- **아이디어**: 형체를 알 수 없는 거대한 구름(Nebula) 입자를 소용돌이치게 하자.
+- **결과**: **[폐기]**. 비주얼은 화려했지만, **"이게 왜 프리즘인가?"**라는 질문에 답할 수 없었다. 중앙의 수정체와 주변의 구름이 전혀 어우러지지 않고 따로 놀았다. **개연성(Probabilty) 부족**.
+
+### Phase 3: Crystalline Echoes (정답)
+- **해결책**: **"형체를 버리지 말고, 형체를 확장하자."**
+- 중앙의 프리즘(Icosahedron)과 **완벽히 동일한 기하학 구조**를 가진 3개의 껍질을 만든다.
+- 이 껍질들이 역방향으로 회전(Counter-Rotation)하며 마치 시계 태엽처럼 맞물려 돌아가게 한다.
+- **결과**: **[채택]**. 마치 프리즘이 살아서 숨 쉬는 듯한 기계적인 아름다움이 완성되었다.
+
+## Review
+디자인은 단순히 '예쁜 그림'을 그리는 것이 아니다.
+**"왜 그래야만 하는가?"**라는 질문에 논리적으로 답할 수 있어야 한다.
+3단계의 진화 과정은 그 논리를 찾아가는 과정이었다.`
     },
     {
         id: "log-009",
         title: "The Director: 기획자의 미래",
         date: "2025-12-23",
-        tags: ["비전", "정체성", "커리어"],
-        summary: "[NEW] AI 시대, 기획자는 '설계자(Architect)'이자 '지휘자(Conductor)'가 된다.",
-        content: `## Paradigm Shift
-이제 코딩을 몰라도 서비스를 만들 수 있는 시대다.
-그렇다면 기획자의 역할은 줄어들었는가?
-아니, 오히려 **폭발적으로 중요해졌다.**
+        tags: ["커리어", "비전", "정체성"],
+        summary: "AI가 코딩하는 시대, 기획자는 '설계자(Architect)'이자 '지휘자(Conductor)'가 되어야 한다.",
+        content: `## The Changing Landscape (변화하는 지형)
 
-기술의 장벽이 사라진 자리에 **'누구의 상상력이 더 뛰어난가'**의 경쟁이 남았기 때문이다.
+생성형 AI의 등장으로 "개발의 민주화"가 시작되었다.
+이제 아이디어만 있다면 누구나 서비스를 만들 수 있는 시대다.
+혹자는 "기획자의 위기"라고 말하지만, 나는 정반대로 **"기획자의 전성시대"**라고 확신한다.
 
-## Cinematic Metaverse Director
-나는 스스로를 이렇게 정의한다.
-단순히 화면 설계서(SB)를 그리는 것이 아니라, 
-**공간(Space)**, **시간(Time)**, **서사(Narrative)**를 총체적으로 지휘하여
-가상 공간 안에 설득력 있는 세계를 구축하는 사람.
+## The New Role: Cinematic Director
 
-**"Welcome to my version of reality."**`
+과거의 기획자가 화면 설계서(SB)나 그리는 '문서 작성자'였다면,
+미래의 기획자는 영화감독과 같은 **'총괄 디렉터'**다.
+
+1.  **Scenario (User Story)**: 사용자가 어떤 감정을 느껴야 하는지 시나리오를 쓴다.
+2.  **Directing (Prompting)**: AI 개발자, AI 디자이너에게 정확한 지시를 내려 결과물을 뽑아낸다.
+3.  **Editing (Curating)**: 나온 결과물들을 조합하고 편집하여 하나의 완결된 작품으로 만든다.
+
+## My Definition
+나는 나 자신을 더 이상 단순한 '서비스 기획자'나 'PM'으로 정의하지 않는다.
+나는 **공간(Space), 시간(Time), 서사(Narrative)**를 설계하고 지휘하는
+**'Cinematic Metaverse Director'**다.
+
+이 포트폴리오는 나의 새로운 명함이자, 내가 정의한 미래의 증명이다.
+
+**"Reality is just a suggestion. Welcome to my version of it."**`
     }
 ];
 
-// 태그별 색상 정의
+// 태그별 색상 정의 (Expanded Palette)
 export const tagColors = {
-    // Original Colors
+    // Identity & Strategy
     "철학": "#a855f7",
-    "세계관": "#7c3aed",
-    "컨셉": "#6366f1",
-    "기술": "#06b6d4",
-    "React": "#61dafb",
-    "Three.js": "#ffffff",
-    "성능": "#10b981",
-    "최적화": "#22c55e",
-    "UX": "#f97316",
-
-    // New PM/Strategy Colors
-    "PM": "#ec4899",
-    "디렉팅": "#db2777",
-    "AI협업": "#0891b2",
-    "Co-Reasoning": "#22d3ee",
-    "디자인": "#f472b6",
-    "시행착오": "#fb7185",
+    "브랜딩": "#d8b4fe",
     "비전": "#6366f1",
-    "정체성": "#a855f7"
+    "기획": "#ec4899",
+    "전략": "#db2777", // Strong Strategy
+    "차별화": "#be185d",
+    "PM": "#a855f7",
+    "디렉팅": "#9333ea",
+    "커리어": "#4f46e5",
+    "메타포": "#c026d3", // Metaphor logic
+
+    // Tech & Collaboration
+    "AI협업": "#06b6d4",
+    "Co-Reasoning": "#22d3ee",
+    "프로세스": "#67e8f9",
+    "R&R": "#0891b2",
+    "생산성": "#0eaa9f", // Productivity
+    "Tech Art": "#f472b6",
+    "Shader": "#fb7185",
+    "Three.js": "#ffffff",
+    "기술": "#94a3b8",
+
+    // UX & Service
+    "UX": "#22c55e",
+    "사용자경험": "#16a34a",
+    "심리학": "#15803d",
+    "서비스기획": "#3b82f6",
+    "최적화": "#eab308", // Performance Focus
+    "성능": "#ca8a04",
+    "접근성": "#2563eb",
+
+    // Concept & Fun
+    "컨셉": "#f59e0b",
+    "게이미피케이션": "#d97706",
+    "세계관": "#b45309",
+    "디자인": "#f43f5e",
+    "시행착오": "#fda4af",
+    "문제해결": "#be123c"
 };

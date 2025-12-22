@@ -5,6 +5,8 @@ export const autoHistory = [
     "date": "2025-12-22",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "⚙️ 시스템: 업데이트 README and Docs for Phase 36 release",
+        "🛠️ 업데이트: 35 & 36 Complete: Black Box Archives & Lab 01 Crystalline Redesign",
         "✨ 기능 구현: Phase 34 - Planetary Archives Modal",
         "🎨 스타일: Optimize mobile UI (enlarge toggles, hide status overlap)",
         "📝 문서: Translate README to Korean per user request",
@@ -12,9 +14,7 @@ export const autoHistory = [
         "📝 문서: Professionalize repo with README overhaul, CI, and governance 파일",
         "🛠️ 업데이트: 추가 GitHub Action for automated 배포ment",
         "⚙️ 시스템: RECOVERY - Force 업데이트 docs and source after git lock clear",
-        "🛠️ 업데이트: 기능(hub): 구현 Quick Nav Dock and overhaul visuals (Phase 25)",
-        "🛠️ 업데이트: 기능(mobile): Enhance touch targets for Planets, Nav, and Boot",
-        "🛠️ 업데이트: 수정(hub): Restore dynamic camera focus during warp and cleanup syntax"
+        "🛠️ 업데이트: 기능(hub): 구현 Quick Nav Dock and overhaul visuals (Phase 25)"
     ]
 }
 ];
