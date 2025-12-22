@@ -33,12 +33,13 @@ const Overlay = () => {
             <Navbar />
 
             {/* Sound Toggle & Perf Toggle */}
-            <div className="fixed top-20 right-6 md:top-24 md:right-10 flex flex-col gap-2 pointer-events-auto z-50 items-end">
+            <div className="fixed top-20 right-6 md:top-24 md:right-10 flex flex-col gap-3 pointer-events-auto z-50 items-end">
                 <button
                     onClick={toggleMute}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[110px] md:min-w-[140px]"
+                    className="px-4 py-3 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-3 justify-between min-w-[120px] md:min-w-[140px] shadow-lg focus:ring-2 focus:ring-accent/50 active:scale-95"
+                    aria-label="Toggle Audio"
                 >
-                    <span className="text-[10px] md:text-xs">AUDIO</span>
+                    <span className="text-[10px] md:text-xs font-bold tracking-wider">AUDIO</span>
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] text-white/50">{isMuted ? 'OFF' : 'ON'}</span>
                         <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${isMuted ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`} />
@@ -50,9 +51,10 @@ const Overlay = () => {
                         const newMode = performanceMode === 'high' ? 'low' : 'high';
                         useStore.getState().setPerformanceMode(newMode);
                     }}
-                    className="px-3 py-1.5 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-2 justify-between min-w-[110px] md:min-w-[140px]"
+                    className="px-4 py-3 md:px-4 md:py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 hover:border-accent text-white transition-colors flex items-center gap-3 justify-between min-w-[120px] md:min-w-[140px] shadow-lg focus:ring-2 focus:ring-accent/50 active:scale-95"
+                    aria-label="Toggle Performance Mode"
                 >
-                    <span className="text-[10px] md:text-xs">PERF</span>
+                    <span className="text-[10px] md:text-xs font-bold tracking-wider">PERF</span>
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] text-white/50">{performanceMode === 'high' ? 'HIGH' : 'LOW'}</span>
                         <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${performanceMode === 'low' ? 'bg-yellow-500' : 'bg-cyan-500 animate-pulse'}`} />
@@ -63,8 +65,8 @@ const Overlay = () => {
             {/* Quick Navigation Dock (Visible only in Hub) */}
             {currentScene === 'hub' && <NavigationDock />}
 
-            {/* Bottom Left Status */}
-            <div className="fixed bottom-10 left-10 text-xs text-muted font-mono mix-blend-difference">
+            {/* Bottom Left Status - Hidden on mobile to avoid Dock overlap */}
+            <div className="hidden md:block fixed bottom-10 left-10 text-xs text-muted font-mono mix-blend-difference">
                 SYSTEM: ONLINE <br />
                 FPS: 60 <br />
                 COORD: [34.5, 127.0]
