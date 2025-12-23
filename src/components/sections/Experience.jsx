@@ -27,7 +27,7 @@ const CameraHandler = () => {
         gsap.killTweensOf(camera.position);
 
         if (currentScene === 'hub') {
-            const defaultPos = new THREE.Vector3(0, 40, 45); // Zoomed out to see Black Box at [28, 10, -20]
+            const defaultPos = new THREE.Vector3(0, 50, 60); // Zoomed out to see Black Box at [28, 10, -20]
 
             const spawnPoints = {
                 'lab01': new THREE.Vector3(4, 2, 10),
@@ -107,8 +107,8 @@ const Experience = () => {
                         maxDistance={100}
                         enablePan={false}
                         enableDamping={true}
-                        dampingFactor={0.05}
-                        rotateSpeed={0.5}
+                        dampingFactor={0.08}
+                        rotateSpeed={1.2}
                     />
                 )}
 
@@ -119,13 +119,8 @@ const Experience = () => {
                 {/* Reset Fog for non-Hub scenes just in case - Disabled to avoid conflict with Lab fogs */}
                 {/* <fog attach="fog" args={['#000000', 50, 200]} /> */}
 
-                {/* Phase 38: Hyperspace Navigation */}
-                {isWarping && (
-                    <>
-                        <WarpController />
-                        <HyperspaceTunnel />
-                    </>
-                )}
+                {/* Phase 38: Premium Warp - 카메라 이동 + Radial Blur (CinematicEffects) */}
+                {isWarping && <WarpController />}
 
                 <CinematicEffects />
             </Canvas>

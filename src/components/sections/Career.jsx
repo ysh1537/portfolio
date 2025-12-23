@@ -73,12 +73,12 @@ const Career = () => {
 
                             <div className="flex flex-col md:flex-row gap-8">
                                 {/* Left: Period & Company */}
-                                <div className="md:w-[200px] flex-shrink-0 md:text-right pt-2">
+                                <div className="md:w-fit flex-shrink-0 md:text-right pt-2">
                                     <div className="flex items-center gap-2 md:justify-end text-cyan-400 font-mono font-bold mb-1">
                                         <Calendar className="w-4 h-4" />
                                         <span>{item.period}</span>
                                     </div>
-                                    <h3 className="text-xl font-bold text-white mb-1">{item.company}</h3>
+                                    <h3 className="text-xl font-bold text-white mb-1 whitespace-nowrap">{item.company}</h3>
                                     <p className="text-sm text-gray-400 mb-2">{item.team}</p>
                                 </div>
 

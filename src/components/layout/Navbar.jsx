@@ -55,20 +55,20 @@ const Navbar = () => {
 
     // Reordered to match ProfileScene: Work -> Expertise -> Process(Achievements)
     const navLinks = [
-        { name: 'Home', action: () => handleNav('hub'), id: 'hub' },
-        { name: 'About', action: () => handleNav('profile', 'about'), id: 'about' },
-        { name: 'Experience', action: () => handleNav('profile', 'work'), id: 'work' }, // Work -> Experience
-        { name: 'Expertise', action: () => handleNav('profile', 'expertise'), id: 'expertise' },
-        { name: 'Awards', action: () => handleNav('profile', 'achievements'), id: 'achievements' }, // Process -> Awards
-        { name: 'Contact', action: () => handleNav('contact'), id: 'contact' },
-        { name: 'History', action: () => setScene('history'), id: 'history' },
+        { name: '메인', action: () => handleNav('hub'), id: 'hub' },
+        { name: '소개', action: () => handleNav('profile', 'about'), id: 'about' },
+        { name: '경력', action: () => handleNav('profile', 'work'), id: 'work' },
+        { name: '기술력', action: () => handleNav('profile', 'expertise'), id: 'expertise' },
+        { name: '수상/성과', action: () => handleNav('profile', 'achievements'), id: 'achievements' },
+        { name: '연락처', action: () => handleNav('contact'), id: 'contact' },
+        { name: '히스토리', action: () => setScene('history'), id: 'history' },
     ];
 
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 pointer-events-none bg-black/60 backdrop-blur-md border-b border-white/10 ${scrolled ? 'py-3' : 'py-4'}`}>
             <div className="container mx-auto px-6 flex justify-between items-center">
-                <button onClick={() => setScene('hub')} className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent pointer-events-auto">
-                    Yesol Heo
+                <button onClick={() => setScene('hub')} className="text-2xl font-black font-orbitron tracking-tighter bg-gradient-to-r from-cyan-400 via-primary to-accent bg-clip-text text-transparent pointer-events-auto hover:scale-105 transition-transform">
+                    YESOL HEO
                 </button>
 
                 {/* Desktop Menu */}
@@ -77,14 +77,28 @@ const Navbar = () => {
                         <button
                             key={link.name}
                             onClick={link.action}
-                            className={`transition-colors text-sm font-medium ${currentScene === 'history' && link.name === 'History'
-                                ? 'text-primary font-bold'
+                            className={`relative transition-all duration-300 text-[13px] font-bold tracking-widest px-2 py-1 uppercase font-sans ${currentScene === 'history' && link.name === 'History'
+                                ? 'text-cyan-400 font-black'
                                 : activeSection === link.id
-                                    ? 'text-primary font-bold shadow-[0_0_10px_rgba(6,182,212,0.5)]'
-                                    : 'text-gray-300 hover:text-white hover:text-glow'
+                                    ? 'text-cyan-400 font-black'
+                                    : 'text-gray-400 hover:text-white'
                                 }`}
                         >
-                            {link.name}
+                            <span className="relative z-10">{link.name}</span>
+
+                            {/* Premium Active Indicator */}
+                            {(activeSection === link.id || (currentScene === 'history' && link.id === 'history')) && (
+                                <motion.div
+                                    layoutId="nav-glow"
+                                    className="absolute inset-0 bg-cyan-500/10 blur-md rounded-lg pointer-events-none"
+                                />
+                            )}
+                            {(activeSection === link.id || (currentScene === 'history' && link.id === 'history')) && (
+                                <motion.div
+                                    layoutId="nav-border"
+                                    className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent"
+                                />
+                            )}
                         </button>
                     ))}
                 </div>

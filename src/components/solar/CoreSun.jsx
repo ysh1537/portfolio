@@ -6,21 +6,31 @@ import { LORE } from '../../data/lore';
 import useSoundFX from '../../hooks/useSoundFX';
 import { useStore } from '../../hooks/useStore';
 
-const CoreSun = () => {
+const CoreSun = ({ isActive }) => {
+    const groupRef = useRef();
     const meshRef = useRef();
     const glowRef = useRef();
     const [hovered, setHovered] = useState(false);
     const { playHover, playClick } = useSoundFX();
 
-    useFrame((state) => {
+    const isHovered = isActive !== undefined ? isActive : hovered;
+
+    useFrame((state, delta) => {
         const t = state.clock.getElapsedTime();
+
+        // Scale Animation
+        if (groupRef.current) {
+            const targetScale = isHovered ? 1.6 : 1;
+            groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 4);
+        }
+
         if (meshRef.current) {
             // 태양 자전 및 일렁임 보조
             meshRef.current.rotation.y = t * 0.1;
         }
         if (glowRef.current) {
             // 글로우 펄스 효과
-            const baseScale = hovered ? 1.4 : 1.2;
+            const baseScale = isHovered ? 1.4 : 1.2;
             glowRef.current.scale.setScalar(baseScale + Math.sin(t * 3) * 0.05);
             glowRef.current.rotation.z -= 0.01;
         }
@@ -31,6 +41,7 @@ const CoreSun = () => {
 
     return (
         <group
+            ref={groupRef}
             onPointerEnter={(e) => {
                 e.stopPropagation();
                 setHovered(true);
@@ -42,54 +53,51 @@ const CoreSun = () => {
                 document.body.style.cursor = 'auto';
             }}
         >
-            {/* 1. Main Plasma Core - Relaxed (Clickable Target) */}
+            {/* 1. Main Neural Core - High Poly Cyan Star */}
             <Sphere
                 ref={meshRef}
-                args={[2.2, 64, 64]}
+                args={[5.5, 128, 128]}
                 onClick={(e) => {
                     e.stopPropagation();
                     playClick();
-                    // Call parent handler via bubbling or direct store access if needed
-                    // Since SolarSystem wraps this in a Group with onClick, we must ensure propagation or handle it here.
-                    // The user reported "Identity is not clickable".
-                    // The safest bet is to handle navigation directly here.
-                    const setScene = useStore.getState().setScene;
-                    setScene('profile');
+                    useStore.getState().setScene('profile');
                 }}
+                onPointerOver={() => setHovered(true)}
+                onPointerOut={() => setHovered(false)}
             >
                 <MeshDistortMaterial
-                    color={coreColor}
-                    emissive={coreColor}
-                    emissiveIntensity={hovered ? 2.0 : 1.5}
-                    roughness={0.2}
-                    metalness={0.1}
-                    distort={0.4}
-                    speed={5}
+                    color={"#00f2ff"}
+                    emissive={"#0066ff"}
+                    emissiveIntensity={4}
+                    distort={0.3}
+                    speed={2}
+                    roughness={0}
+                    metalness={1}
                     toneMapped={false}
                 />
             </Sphere>
 
-            {/* 2. Inner Light Source - Softened */}
-            <pointLight distance={40} intensity={8} color={coreColor} decay={2} />
+            {/* 2. Primary Light Source - Deep Blue/Cyan */}
+            <pointLight distance={100} intensity={30} color={"#00f2ff"} decay={2} />
 
-            {/* 3. Primary Volumetric Glow (Inner Halo) - Reduced Opacity */}
-            <mesh ref={glowRef} scale={[1.2, 1.2, 1.2]}>
-                <sphereGeometry args={[2.2, 32, 32]} />
+            {/* 3. Neural Aura (High Precision Glow) */}
+            <mesh ref={glowRef} scale={[1.15, 1.15, 1.15]}>
+                <sphereGeometry args={[5.5, 64, 64]} />
                 <meshBasicMaterial
-                    color={glowColor}
+                    color="#0066ff"
                     transparent
-                    opacity={hovered ? 0.25 : 0.15}
+                    opacity={0.25}
                     side={THREE.BackSide}
                     blending={THREE.AdditiveBlending}
                     depthWrite={false}
                 />
             </mesh>
 
-            {/* 4. Secondary Soft Glow (Outer Aura) */}
+            {/* 4. Secondary Soft Outer Glow */}
             <mesh scale={[1.6, 1.6, 1.6]}>
-                <sphereGeometry args={[2.3, 32, 32]} />
+                <sphereGeometry args={[5.5, 64, 32]} />
                 <meshBasicMaterial
-                    color={coreColor}
+                    color={"#0033ff"}
                     transparent
                     opacity={0.15}
                     side={THREE.BackSide}
@@ -98,22 +106,9 @@ const CoreSun = () => {
                 />
             </mesh>
 
-            {/* 5. Rays / Coronal Loops (Sparkles) - Densified */}
-            <Sparkles count={150} scale={10} size={15} speed={0.6} opacity={0.6} color="#fbbf24" noise={2} />
-
-            {/* 6. Identity Label */}
-            <Billboard position={[0, -3.5, 0]}>
-                <Html transform center distanceFactor={15} style={{ pointerEvents: 'none' }}>
-                    <div className={`flex flex-col items-center transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-70'}`}>
-                        <div className="px-3 py-1 text-sm font-bold font-mono tracking-[0.2em] border border-white/20 bg-black/60 backdrop-blur-md rounded-full whitespace-nowrap text-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.3)]">
-                            IDENTITY
-                        </div>
-                        <div className={`mt-2 text-[10px] text-white/50 font-mono tracking-widest transition-all duration-300 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
-                            CLICK TO VIEW
-                        </div>
-                    </div>
-                </Html>
-            </Billboard>
+            {/* 5. Core Particles (Sparkles) - Refined Density */}
+            <Sparkles count={120} scale={20} size={20} speed={1.2} opacity={0.7} color="#00f2ff" noise={3} />
+            <Sparkles count={40} scale={15} size={35} speed={0.8} opacity={0.4} color="#ffffff" noise={2} />
         </group >
     );
 };

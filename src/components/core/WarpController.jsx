@@ -1,9 +1,12 @@
+/**
+ * WarpController.jsx
+ * Phase 38: 프리미엄 워프 전환 - 행성 중심으로 정확히 카메라 이동
+ */
 import { useRef, useEffect } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
 import { useStore } from '../../hooks/useStore';
 import gsap from 'gsap';
 import * as THREE from 'three';
-import QuantumWarp from '../boot/QuantumWarp';
 import { getPlanetWorldPosition } from '../../utils/planetRegistry';
 
 const WarpController = () => {
@@ -11,66 +14,52 @@ const WarpController = () => {
     const isWarping = useStore((state) => state.isWarping);
     const warpTargetPosition = useStore((state) => state.warpTargetPosition);
     const warpTarget = useStore((state) => state.warpTarget);
-    const finishWarp = useStore((state) => state.finishWarp);
 
-    // Store only has startWarp/finishWarp. 
-
-    // We need playWarp sound
-    // import useSoundFX but can't use hook inside loop, need to use it in event or effect.
-    // Actually we handle sound in the effect.
-
-    // Re-implementing sound here or relying on previously imported context? 
-    // The previous code used useSoundFX inside the component.
-
-    // Let's import useSoundFX
-    // Wait, useSoundFX is a hook.
-
-    // Target position ref to avoid closure staleness in useFrame
     const targetRef = useRef(new THREE.Vector3());
+    const timelineRef = useRef(null);
 
     useEffect(() => {
         if (isWarping && warpTargetPosition) {
-            // Disable controls
+            // Disable orbit controls during warp
             if (controls) controls.enabled = false;
 
             const targetPos = new THREE.Vector3(...warpTargetPosition);
+            targetRef.current.copy(targetPos);
 
-            // Animation
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    finishWarp();
-                    if (controls) controls.enabled = true;
+            // Kill any existing animation
+            if (timelineRef.current) timelineRef.current.kill();
+
+            // Create smooth camera animation
+            timelineRef.current = gsap.timeline();
+
+            // Phase 1: Quick approach to planet (1.5s)
+            timelineRef.current.to(camera.position, {
+                x: targetPos.x * 0.15, // Very close to planet center
+                y: targetPos.y * 0.15,
+                z: targetPos.z * 0.15,
+                duration: 1.5,
+                ease: "power3.in",
+                onUpdate: () => {
+                    camera.lookAt(targetRef.current);
                 }
             });
 
-            // Camera movement
-            tl.to(camera.position, {
-                x: targetPos.x * 0.8, // Stop slightly before the planet
-                y: targetPos.y * 0.8, // Adjust to be slightly above or aligned
-                z: targetPos.z * 0.8,
-                duration: 2.5,
-                ease: "power2.in"
-            });
-
             return () => {
-                tl.kill();
+                if (timelineRef.current) timelineRef.current.kill();
                 if (controls) controls.enabled = true;
             };
         }
-    }, [isWarping, camera, finishWarp, warpTargetPosition, controls]);
+    }, [isWarping, camera, warpTargetPosition, controls]);
 
-    // Force camera to look at target during warp
+    // Continuously look at target during warp
     useFrame(() => {
         if (isWarping && warpTarget) {
-            // Dynamically get planet position (Pass targetRef.current to avoid undefined crash)
             const dynamicPos = getPlanetWorldPosition(warpTarget, targetRef.current);
-
-            // If dynamicPos returns valid vector (which is targetRef.current), look at it
             if (dynamicPos) {
                 camera.lookAt(targetRef.current);
             }
         }
-    }, 100); // High priority
+    }, 100);
 
     return null;
 };

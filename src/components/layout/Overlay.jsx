@@ -25,13 +25,15 @@ const WelcomeOverlay = ({ onDismiss }) => (
             onClick={(e) => e.stopPropagation()}
         >
             <div className="text-4xl mb-4">🌌</div>
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-2 font-orbitron tracking-wide">
-                WELCOME TO THE METAVERSE
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2 font-sans tracking-wide">
+                [ 포트폴리오 유니버스에 오신 것을 환영합니다 ]
             </h2>
-            <p className="text-white/60 text-sm md:text-base mb-4 leading-relaxed">
-                각 <span className="text-cyan-400 font-bold">행성</span>을 클릭하여 프로젝트를 탐험하세요.
-                <br />
-                중앙의 <span className="text-yellow-400 font-bold">태양</span>은 저의 프로필입니다.
+            <p className="text-white/70 text-sm md:text-base mb-2 leading-relaxed font-sans">
+                이곳은 저의 여정과 기술이 담긴 <strong>시네마틱 메타버스</strong>입니다.
+            </p>
+            <p className="text-white/60 text-xs md:text-sm mb-6 leading-relaxed font-sans">
+                각 <span className="text-cyan-400 font-bold">행성</span>을 클릭하여 프로젝트와 방명록을 탐험하고,<br />
+                중앙의 <span className="text-yellow-400 font-bold">태양(프로필)</span>을 눌러 저에 대해 알아보세요.
             </p>
 
             {/* Settings Guide */}

@@ -67,8 +67,8 @@ const MissionModal = () => {
                             <div className="text-3xl md:text-4xl font-black font-orbitron mb-1 tracking-tighter" style={{ color: config.color }}>
                                 {lab.id}
                             </div>
-                            <div className="text-xs font-mono text-white/50 mb-6 tracking-widest">
-                                STATUS: <span className="text-emerald-400">{lab.status || 'ACTIVE'}</span>
+                            <div className="text-xs font-mono text-white/50 mb-6 tracking-widest uppercase">
+                                STATUS: <span className="text-emerald-400">활성 (ACTIVE)</span>
                             </div>
 
                             {/* 미디어 영역 */}
@@ -81,8 +81,8 @@ const MissionModal = () => {
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center text-white/20 font-mono text-xs text-center p-4">
-                                        [ NO VISUAL DATA ]<br />
-                                        SCANNING...
+                                        [ 시각적 데이터 없음 ]<br />
+                                        스캐닝...
                                     </div>
                                 )}
                             </div>
@@ -90,11 +90,11 @@ const MissionModal = () => {
                             {/* 퀵 스탯 */}
                             <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                                 <div className="p-2 border border-white/10 rounded bg-white/5">
-                                    <div className="text-white/40 mb-1">TECH</div>
+                                    <div className="text-white/40 mb-1">기술기반</div>
                                     <div className="text-white font-bold">{lab.tech}</div>
                                 </div>
                                 <div className="p-2 border border-white/10 rounded bg-white/5">
-                                    <div className="text-white/40 mb-1">TYPE</div>
+                                    <div className="text-white/40 mb-1">유형</div>
                                     <div className="text-white font-bold text-[10px]">{lab.type}</div>
                                 </div>
                             </div>
@@ -129,13 +129,13 @@ const MissionModal = () => {
                             {/* 기능 목록 */}
                             {details.features && details.features.length > 0 && (
                                 <div className="mb-6">
-                                    <h4 className="text-xs font-bold font-orbitron text-white/80 mb-3 border-b border-white/10 pb-2 uppercase flex items-center gap-2">
+                                    <h4 className="text-xs font-bold font-sans text-white/80 mb-3 border-b border-white/10 pb-2 uppercase flex items-center gap-2">
                                         <span className="w-1 h-3 bg-emerald-500 rounded-full" />
-                                        Mission Objectives
+                                        탐험 목표 (Mission Objectives)
                                     </h4>
                                     <ul className="grid grid-cols-1 gap-2">
                                         {details.features.map((feature, idx) => (
-                                            <li key={idx} className="flex items-center text-xs text-white/60 bg-white/5 px-3 py-2 rounded border border-white/5">
+                                            <li key={idx} className="flex items-center text-xs text-white/70 bg-white/5 px-3 py-2 rounded border border-white/5">
                                                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2 flex-shrink-0" />
                                                 {feature}
                                             </li>
@@ -147,9 +147,9 @@ const MissionModal = () => {
                             {/* 기술 스택 */}
                             {details.techStack && details.techStack.length > 0 && (
                                 <div className="mb-auto">
-                                    <h4 className="text-xs font-bold font-orbitron text-white/80 mb-3 border-b border-white/10 pb-2 uppercase flex items-center gap-2">
+                                    <h4 className="text-xs font-bold font-sans text-white/80 mb-3 border-b border-white/10 pb-2 uppercase flex items-center gap-2">
                                         <span className="w-1 h-3 bg-blue-500 rounded-full" />
-                                        Technical Schematics
+                                        사용 기술 (Technical Schematics)
                                     </h4>
                                     <div className="flex flex-wrap gap-2">
                                         {details.techStack.map((tech, idx) => (
@@ -167,21 +167,21 @@ const MissionModal = () => {
                                 <button
                                     onClick={closeMissionModal}
                                     onMouseEnter={playHover}
-                                    className="px-4 py-2 rounded text-xs font-bold text-white/50 hover:text-white transition-colors uppercase font-mono tracking-wider"
+                                    className="px-4 py-2 rounded text-xs font-bold text-white/50 hover:text-white transition-colors uppercase font-sans tracking-wider"
                                 >
-                                    Close
+                                    닫기
                                 </button>
                                 <button
                                     onClick={handleWarp}
                                     onMouseEnter={playHover}
-                                    className="px-6 py-2 rounded text-xs font-bold tracking-widest uppercase font-orbitron flex items-center gap-2 transition-all hover:scale-105"
+                                    className="px-6 py-2 rounded text-xs font-bold tracking-widest uppercase font-sans flex items-center gap-2 transition-all hover:scale-105"
                                     style={{
                                         background: config.color,
                                         color: '#000',
                                         boxShadow: `0 0 20px ${config.color}50`
                                     }}
                                 >
-                                    <span>Enter Sector</span>
+                                    <span>섹터 진입하기</span>
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>

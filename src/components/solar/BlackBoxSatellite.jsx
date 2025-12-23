@@ -4,34 +4,56 @@
  * 
  * 클릭 시 Black Box DevLog 모달 열림
  */
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float, Text, MeshTransmissionMaterial } from '@react-three/drei';
 import { useStore } from '../../hooks/useStore';
 import useSoundFX from '../../hooks/useSoundFX';
 import * as THREE from 'three';
 
-const BlackBoxSatellite = ({ position = [25, 8, -15] }) => {
+const BlackBoxSatellite = ({ position = [16, 6, 8] }) => {
     const groupRef = useRef();
     const cubeRef = useRef();
     const glowRef = useRef();
+    const pulseRef = useRef();
     const openBlackBox = useStore(state => state.openBlackBox);
     const setHoverState = useStore(state => state.setHoverState);
     const performanceMode = useStore(state => state.performanceMode);
     const { playHover, playClick } = useSoundFX();
+    const [localHover, setLocalHover] = useState(false);
 
     const isHighPerf = performanceMode === 'high';
 
-    // 큐브 회전 애니메이션
+    // 큐브 회전 및 펄스 애니메이션
     useFrame((state) => {
+        const time = state.clock.elapsedTime;
+
+        // Hover Zoom Effect
+        if (groupRef.current) {
+            const targetScale = localHover ? 4 : 1;
+            groupRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.1);
+        }
+
         if (cubeRef.current) {
             cubeRef.current.rotation.x += 0.005;
             cubeRef.current.rotation.y += 0.008;
         }
+
+        // Inner Glow Pulse (Breathing)
         if (glowRef.current) {
-            // 펄스 효과
-            const pulse = Math.sin(state.clock.elapsedTime * 2) * 0.2 + 1;
-            glowRef.current.scale.setScalar(pulse);
+            const glowScale = Math.sin(time * 2) * 0.1 + 1;
+            glowRef.current.scale.setScalar(glowScale);
+        }
+
+        // Outer Signal Wave (Expanding)
+        if (pulseRef.current) {
+            const pulseSpeed = 1.5;
+            const cycle = (time * pulseSpeed) % 1; // 0 to 1
+            const scale = 1.5 + cycle * 2; // 1.5 -> 3.5
+            const opacity = 0.6 * (1 - cycle); // 0.6 -> 0
+
+            pulseRef.current.scale.setScalar(scale);
+            pulseRef.current.material.opacity = opacity;
         }
     });
 
@@ -39,12 +61,14 @@ const BlackBoxSatellite = ({ position = [25, 8, -15] }) => {
     const handlePointerOver = (e) => {
         e.stopPropagation();
         setHoverState(true);
+        setLocalHover(true);
         playHover();
         document.body.style.cursor = 'pointer';
     };
 
     const handlePointerOut = () => {
         setHoverState(false);
+        setLocalHover(false);
         document.body.style.cursor = 'none';
     };
 
@@ -74,17 +98,23 @@ const BlackBoxSatellite = ({ position = [25, 8, -15] }) => {
                 rotationIntensity={0.3}
                 floatIntensity={0.5}
             >
-                {/* 히트박스 (투명) */}
+                {/* HITBOX: Large Interactable Area (Fix: No Rendering Artifacts) */}
                 <mesh
+                    onClick={handleClick}
                     onPointerOver={handlePointerOver}
                     onPointerOut={handlePointerOut}
-                    onClick={handleClick}
                 >
-                    <boxGeometry args={[4, 4, 4]} />
-                    <meshBasicMaterial transparent opacity={0} />
+                    <boxGeometry args={[5, 5, 5]} />
+                    <meshBasicMaterial transparent opacity={0} depthWrite={false} colorWrite={false} />
                 </mesh>
 
-                {/* 메인 큐브 */}
+                {/* Selection Ring (Hover Effect) */}
+                <mesh visible={localHover} rotation={[-Math.PI / 2, 0, 0]}>
+                    <ringGeometry args={[3, 3.2, 64]} />
+                    <meshBasicMaterial color="#00ffff" transparent opacity={0.6} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} />
+                </mesh>
+
+                {/* Main Cube */}
                 <mesh ref={cubeRef}>
                     <boxGeometry args={[1.5, 1.5, 1.5]} />
                     {isHighPerf ? (
@@ -100,58 +130,36 @@ const BlackBoxSatellite = ({ position = [25, 8, -15] }) => {
                             color="#06b6d4"
                         />
                     ) : (
-                        <meshStandardMaterial
-                            color="#06b6d4"
-                            transparent
-                            opacity={0.8}
-                            metalness={0.9}
-                            roughness={0.1}
-                        />
+                        <meshStandardMaterial color="#06b6d4" transparent opacity={0.8} metalness={0.9} roughness={0.1} />
                     )}
                 </mesh>
 
-                {/* 내부 코어 */}
+                {/* Inner Core */}
                 <mesh>
                     <boxGeometry args={[0.5, 0.5, 0.5]} />
                     <meshBasicMaterial color="#00ffff" />
                 </mesh>
 
-                {/* 글로우 이펙트 */}
+                {/* Glow Sphere */}
                 <mesh ref={glowRef}>
-                    <sphereGeometry args={[2, 16, 16]} />
-                    <meshBasicMaterial
-                        color="#06b6d4"
-                        transparent
-                        opacity={0.1}
-                        side={THREE.BackSide}
-                    />
+                    <sphereGeometry args={[1.8, 16, 16]} />
+                    <meshBasicMaterial color="#06b6d4" transparent opacity={0.15} side={THREE.BackSide} />
                 </mesh>
 
-                {/* 데이터 스트림 라인 (High Perf Only) */}
+                {/* Signal Pulse Wave */}
+                <mesh ref={pulseRef}>
+                    <sphereGeometry args={[1, 32, 32]} />
+                    <meshBasicMaterial color="#00ffff" transparent opacity={0} side={THREE.DoubleSide} />
+                </mesh>
+
                 {isHighPerf && dataLines.map((line, i) => (
                     <DataLine key={i} start={line.start} end={line.end} delay={i * 0.2} />
                 ))}
 
-                {/* 라벨 */}
-                <Text
-                    position={[0, -2.5, 0]}
-                    fontSize={0.3}
-                    color="#06b6d4"
-                    anchorX="center"
-                    anchorY="middle"
-                >
+                <Text position={[0, -2.5, 0]} fontSize={0.3} color="#06b6d4" anchorX="center" anchorY="middle">
                     BLACK BOX
                 </Text>
-
-                {/* 서브 라벨 */}
-                <Text
-                    position={[0, -3, 0]}
-                    fontSize={0.15}
-                    color="#06b6d4"
-                    anchorX="center"
-                    anchorY="middle"
-                    fillOpacity={0.6}
-                >
+                <Text position={[0, -3, 0]} fontSize={0.15} color="#06b6d4" anchorX="center" anchorY="middle" fillOpacity={0.6}>
                     [CLICK TO ACCESS ARCHIVE]
                 </Text>
             </Float>

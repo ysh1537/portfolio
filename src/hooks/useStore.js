@@ -58,7 +58,7 @@ export const useStore = create((set, get) => ({
             warpTargetPosition: position
         });
 
-        // 2. Scene Switch (Hidden behind warp effect)
+        // 2. Scene Switch (블러 최대일 때 - 1.5초 후)
         setTimeout(() => {
             set((state) => ({
                 prevScene: state.currentScene,
@@ -66,15 +66,15 @@ export const useStore = create((set, get) => ({
                 isTransitioning: true
             }));
 
-            // 3. Warp Disengage (Visuals OFF)
+            // 3. Warp Disengage (블러 해제 시간 확보 - 1.5초 더 유지)
             setTimeout(() => {
                 set({
                     isWarping: false,
                     warpTarget: null,
                     warpTargetPosition: null
                 });
-            }, 1000);
-        }, 1200);
+            }, 1500); // 더 긴 페이드아웃
+        }, 1500); // 블러가 충분히 올라간 후
     },
 
     // Legacy compat for WarpController

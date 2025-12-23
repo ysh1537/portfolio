@@ -1,32 +1,29 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { useStore } from '../../hooks/useStore';
 import * as THREE from 'three';
 
-const STAR_COUNT = 600; // Reduced density for reduced visual clutter
+const STAR_COUNT = 800;
 
 export default function HyperspaceTunnel() {
     const meshRef = useRef();
     const isWarping = useStore((state) => state.isWarping);
-    const speedRef = useRef(0.2); // Base cruising speed
+    const speedRef = useRef(0.2);
+    const warpTimeRef = useRef(0);
 
-    // 1. Setup Instanced Attributes (Positions & Colors)
-    const { positions, randoms } = useMemo(() => {
+    // Star positions - start in front of camera, fly backwards past it
+    const { positions } = useMemo(() => {
         const pos = new Float32Array(STAR_COUNT * 3);
-        const rnd = new Float32Array(STAR_COUNT);
 
         for (let i = 0; i < STAR_COUNT; i++) {
-            // Tunnel shape: Random angle, random radius
             const angle = Math.random() * Math.PI * 2;
-            const radius = 15 + Math.random() * 40; // Slightly wider tunnel
+            const radius = 3 + Math.random() * 40; // Tunnel radius
 
-            pos[i * 3] = Math.cos(angle) * radius;     // x
-            pos[i * 3 + 1] = Math.sin(angle) * radius; // y
-            pos[i * 3 + 2] = (Math.random() - 0.5) * 400; // z (depth)
-
-            rnd[i] = Math.random();
+            pos[i * 3] = Math.cos(angle) * radius;
+            pos[i * 3 + 1] = Math.sin(angle) * radius;
+            pos[i * 3 + 2] = Math.random() * -300; // Start in front (negative Z)
         }
-        return { positions: pos, randoms: rnd };
+        return { positions: pos };
     }, []);
 
     const dummyRef = useRef(new THREE.Object3D());
@@ -34,24 +31,28 @@ export default function HyperspaceTunnel() {
     useFrame((state, delta) => {
         if (!meshRef.current) return;
 
-        // --- Logic: Acceleration / Deceleration ---
-        // Slower, softer warp (30.0 instead of 80.0)
-        const targetSpeed = isWarping ? 30.0 : 0.5;
+        // Warp time tracking
+        if (isWarping) {
+            warpTimeRef.current += delta;
+        } else {
+            warpTimeRef.current = 0;
+        }
 
-        // Smooth interpolation (Lerp)
-        speedRef.current = THREE.MathUtils.lerp(speedRef.current, targetSpeed, delta * 2.0);
+        // Speed acceleration
+        const targetSpeed = isWarping ? 150.0 : 0.5;
+        speedRef.current = THREE.MathUtils.lerp(speedRef.current, targetSpeed, delta * 3.0);
 
-        // Move stars logic (JS CPU side for maximum compatibility)
         const speed = speedRef.current;
+        const stretchProgress = Math.min(warpTimeRef.current / 0.6, 1.0);
 
         for (let i = 0; i < STAR_COUNT; i++) {
             let z = positions[i * 3 + 2];
 
-            // Move fast
-            z += speed * (isWarping ? 50 : 10) * delta;
+            // Stars fly BACKWARDS past camera (z increases)
+            z += speed * delta * 2;
 
-            // Reset if passed camera
-            if (z > 200) z -= 400;
+            // Reset when past camera
+            if (z > 100) z = -300 - Math.random() * 100;
 
             positions[i * 3 + 2] = z;
 
@@ -61,11 +62,10 @@ export default function HyperspaceTunnel() {
                 z
             );
 
-            // Stretch based on speed (Warp Effect)
-            // Less stretch (15.0 instead of 40.0)
-            const stretch = 1.0 + (isWarping ? 15.0 : 0.0);
-            dummyRef.current.scale.set(0.2, 0.2, stretch); // Thin streaks
-            dummyRef.current.rotation.x = 0; // Cylinder orientation
+            // Stretch in Z direction (line effect)
+            const stretch = 1.0 + (isWarping ? 30.0 * stretchProgress : 0.0);
+            dummyRef.current.scale.set(0.08, 0.08, stretch);
+            dummyRef.current.rotation.x = Math.PI / 2;
 
             dummyRef.current.updateMatrix();
             meshRef.current.setMatrixAt(i, dummyRef.current.matrix);
@@ -75,14 +75,13 @@ export default function HyperspaceTunnel() {
 
     return (
         <instancedMesh ref={meshRef} args={[null, null, STAR_COUNT]}>
-            {/* Very thin cylinder for elegant streaks */}
-            <cylinderGeometry args={[0.1, 0.1, 1, 4]} />
+            <cylinderGeometry args={[0.04, 0.04, 1, 4]} />
             <meshBasicMaterial
-                color={isWarping ? "#a5f3fc" : "#4fd1c5"} // Softer Cyan/White
+                color={"#a5f3fc"}
                 transparent
-                opacity={0.3} // Much more transparent (ghostly)
+                opacity={0.6}
                 blending={THREE.AdditiveBlending}
-                depthWrite={false} // Prevent z-fighting
+                depthWrite={false}
             />
         </instancedMesh>
     );

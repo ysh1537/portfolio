@@ -12,12 +12,12 @@ const NavigationDock = () => {
 
     // Define items based on Lore
     const dockItems = [
-        { id: 'profile', label: 'IDENTITY', icon: '✦', color: LORE.SECTORS.PROFILE.visual.color, target: 'profile' },
-        { id: 'lab01', label: 'PRISM', icon: '◈', color: LORE.SECTORS.LAB_01.visual.color, target: 'lab01' },
-        { id: 'lab02', label: 'TERRARIUM', icon: '☘', color: LORE.SECTORS.LAB_02.visual.color, target: 'lab02' },
-        { id: 'lab03', label: 'RESONANCE', icon: '♬', color: LORE.SECTORS.LAB_03.visual.color, target: 'lab03' },
-        { id: 'lab04', label: 'GLITCH', icon: '⚡', color: LORE.SECTORS.LAB_04.visual.color, target: 'lab04' },
-        { id: 'blackbox', label: 'BLACK BOX', icon: '◼', color: '#06b6d4', target: 'blackbox', isModal: true },
+        { id: 'profile', label: '프로필', icon: '✦', color: LORE.SECTORS.PROFILE.visual.color, target: 'profile' },
+        { id: 'lab01', label: '프로젝트', icon: '◈', color: LORE.SECTORS.LAB_01.visual.color, target: 'lab01' },
+        { id: 'lab02', label: '기술연구', icon: '☘', color: LORE.SECTORS.LAB_02.visual.color, target: 'lab02' },
+        { id: 'lab03', label: '커리어', icon: '♬', color: LORE.SECTORS.LAB_03.visual.color, target: 'lab03' },
+        { id: 'lab04', label: '방명록', icon: '⚡', color: LORE.SECTORS.LAB_04.visual.color, target: 'lab04' },
+        { id: 'blackbox', label: '개발일지', icon: '◼', color: '#06b6d4', target: 'blackbox', isModal: true },
     ];
 
     const handleHover = (id) => {
@@ -83,9 +83,9 @@ const Item = ({ item, onHover, onLeave, onClick }) => {
                 {item.icon}
             </span>
 
-            {/* Label Tooltip - Floating Above */}
-            <div className="absolute -top-12 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 pointer-events-none">
-                <div className="px-3 py-1 text-[10px] md:text-xs font-bold font-mono tracking-widest bg-black/90 backdrop-blur text-white border-l-2 shadow-xl whitespace-nowrap"
+            {/* Label Tooltip - Floating Above (Enhanced) */}
+            <div className="absolute -top-14 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 pointer-events-none">
+                <div className="px-4 py-1.5 text-[12px] font-bold font-sans tracking-[0.2em] bg-black/90 backdrop-blur-xl text-white border-l-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] whitespace-nowrap rounded-sm"
                     style={{ borderLeftColor: item.color }}>
                     {item.label}
                 </div>
