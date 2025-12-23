@@ -9,29 +9,29 @@ import * as THREE from 'three';
 import { Billboard, Html } from '@react-three/drei';
 import { registerPlanet, unregisterPlanet } from '../../utils/planetRegistry';
 
-// TextLabel Component - Moved up to avoid hoisting issues
+// TextLabel Component - 항상 보이는 라벨 (줌아웃 시에도 가독성 확보)
 const TextLabel = ({ text, color, hovered }) => (
-    <Html transform center distanceFactor={12} style={{ pointerEvents: 'none' }}>
-        <div className={`transition-all duration-300 flex flex-col items-center ${hovered ? 'scale-110' : 'scale-95 opacity-60'}`}>
+    <Html transform center distanceFactor={8} style={{ pointerEvents: 'none' }}>
+        <div className={`transition-all duration-300 flex flex-col items-center ${hovered ? 'scale-110' : 'scale-100'}`}>
 
-            {/* HUD Line - Fixed gradient syntax for dynamic color */}
-            <div className={`w-[1px] transition-all duration-300 ${hovered ? 'h-12 opacity-100' : 'h-4 opacity-30'}`}
+            {/* HUD Line - 항상 표시 */}
+            <div className={`w-[1px] transition-all duration-300 ${hovered ? 'h-12 opacity-100' : 'h-6 opacity-50'}`}
                 style={{
                     background: `linear-gradient(to top, transparent, ${color}, transparent)`
                 }} />
 
-            {/* Label Container */}
-            <div className="px-3 py-1 text-xs font-bold font-mono tracking-widest border border-white/10 bg-black/80 backdrop-blur-md rounded shadow-xl whitespace-nowrap"
+            {/* Label Container - 항상 보임 (호버 시 더 밝게) */}
+            <div className={`px-3 py-1 text-xs font-bold font-mono tracking-widest border bg-black/80 backdrop-blur-md rounded shadow-xl whitespace-nowrap transition-all duration-300 ${hovered ? 'opacity-100 border-opacity-100' : 'opacity-70 border-opacity-30'}`}
                 style={{
                     color: color,
                     textShadow: `0 0 15px ${color}`,
-                    borderColor: hovered ? color : 'rgba(255,255,255,0.1)',
+                    borderColor: hovered ? color : 'rgba(255,255,255,0.2)',
                     boxShadow: hovered ? `0 0 20px ${color}40` : 'none'
                 }}>
                 {text}
             </div>
 
-            {/* Click Hint */}
+            {/* Click Hint - 호버 시에만 */}
             <div className={`mt-1 overflow-hidden transition-all duration-300 ${hovered ? 'h-auto opacity-100' : 'h-0 opacity-0'}`}>
                 <div className="text-[8px] text-white/70 font-mono tracking-widest animate-pulse">
                     [ ACCESS SYSTEM ]

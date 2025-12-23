@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import useSoundFX from '../../hooks/useSoundFX';
 
 const NavigationDock = () => {
-    const setScene = useStore(state => state.setScene);
+    const warpTo = useStore(state => state.warpTo); // Use warpTo instead of setScene
     const setHoveredPlanet = useStore(state => state.setHoveredPlanet);
     const openBlackBox = useStore(state => state.openBlackBox);
     const playHover = useSoundFX().playHover;
@@ -36,11 +36,8 @@ const NavigationDock = () => {
             openBlackBox();
             return;
         }
-        if (item.target === 'profile') {
-            setScene('profile');
-        } else {
-            setScene(item.target);
-        }
+        // warpTo action handles state transition with delay
+        warpTo(item.target);
     };
 
     return (

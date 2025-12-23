@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export const useStore = create((set) => ({
+export const useStore = create((set, get) => ({
     // Core System State
     currentScene: 'boot', // 'boot', 'hub', 'lab01', 'lab02', 'lab03', 'lab04', 'contact', 'history'
     prevScene: null,
@@ -8,7 +8,7 @@ export const useStore = create((set) => ({
 
     // Performance & Settings
     performanceMode: 'high', // 'high', 'low'
-    isMuted: false, // Renamed from audioMuted
+    isMuted: false,
 
     // Persistence Data
     systemLogs: [],
@@ -41,23 +41,47 @@ export const useStore = create((set) => ({
     closeBlackBox: () => set({ blackBoxOpen: false, currentLogId: null }),
     setCurrentLog: (logId) => set({ currentLogId: logId }),
 
-    // Warp Transition Logic
+    // Phase 38: Hyperspace Navigation Logic
     isWarping: false,
     warpTarget: null,
-    warpTargetPosition: null, // [x, y, z] or Vector3
+    warpTargetPosition: null, // [x, y, z] for camera animation
 
-    startWarp: (scene, position = null) => set({ isWarping: true, warpTarget: scene, warpTargetPosition: position }),
+    // Unified Warp Action - accepts optional position for camera movement
+    warpTo: (targetScene, position = null) => {
+        const state = get();
+        if (state.currentScene === targetScene) return;
 
-    finishWarp: () => set((state) => {
-        // Actual Scene Switch
-        return {
-            prevScene: state.currentScene,
-            currentScene: state.warpTarget,
-            isTransitioning: true,
-            isWarping: false,
-            warpTarget: null,
-            warpTargetPosition: null
-        };
+        // 1. Warp Engage (Visuals ON, set target)
+        set({
+            isWarping: true,
+            warpTarget: targetScene,
+            warpTargetPosition: position
+        });
+
+        // 2. Scene Switch (Hidden behind warp effect)
+        setTimeout(() => {
+            set((state) => ({
+                prevScene: state.currentScene,
+                currentScene: targetScene,
+                isTransitioning: true
+            }));
+
+            // 3. Warp Disengage (Visuals OFF)
+            setTimeout(() => {
+                set({
+                    isWarping: false,
+                    warpTarget: null,
+                    warpTargetPosition: null
+                });
+            }, 1000);
+        }, 1200);
+    },
+
+    // Legacy compat for WarpController
+    finishWarp: () => set({
+        isWarping: false,
+        warpTarget: null,
+        warpTargetPosition: null
     }),
 
     setScene: (scene) => set((state) => {
@@ -73,7 +97,7 @@ export const useStore = create((set) => ({
 
     setPerformanceMode: (mode) => set({ performanceMode: mode }),
 
-    toggleMute: () => set((state) => ({ isMuted: !state.isMuted })), // Renamed from toggleAudio
+    toggleMute: () => set((state) => ({ isMuted: !state.isMuted })),
 
     // Visual Settings
     orbitSpeed: 0.05,

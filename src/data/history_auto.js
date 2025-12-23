@@ -2,9 +2,10 @@
 export const autoHistory = [
     {
     "version": "Recent Dev Stream",
-    "date": "2025-12-22",
+    "date": "2025-12-23",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🛠️ 업데이트: 업데이트: Expanded Black Box 로그s with strategic depth and Director persona",
         "⚙️ 시스템: 업데이트 README and Docs for Phase 36 release",
         "🛠️ 업데이트: 35 & 36 Complete: Black Box Archives & Lab 01 Crystalline Redesign",
         "✨ 기능 구현: Phase 34 - Planetary Archives Modal",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "📝 문서: 업데이트 guidelines to reflect personal portfolio nature",
         "📝 문서: Professionalize repo with README overhaul, CI, and governance 파일",
         "🛠️ 업데이트: 추가 GitHub Action for automated 배포ment",
-        "⚙️ 시스템: RECOVERY - Force 업데이트 docs and source after git lock clear",
-        "🛠️ 업데이트: 기능(hub): 구현 Quick Nav Dock and overhaul visuals (Phase 25)"
+        "⚙️ 시스템: RECOVERY - Force 업데이트 docs and source after git lock clear"
     ]
 }
 ];

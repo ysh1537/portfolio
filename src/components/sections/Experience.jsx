@@ -5,7 +5,8 @@ import gsap from 'gsap'; // Added GSAP
 import CinematicEffects from '../effects/CinematicEffects';
 import SceneManager from '../core/SceneManager';
 import { useStore } from '../../hooks/useStore';
-import WarpController from '../core/WarpController';
+import WarpController from '../core/WarpController'; // Restored for camera animation
+import HyperspaceTunnel from '../effects/HyperspaceTunnel';
 import * as THREE from 'three';
 
 const CameraHandler = () => {
@@ -118,7 +119,14 @@ const Experience = () => {
                 {/* Reset Fog for non-Hub scenes just in case - Disabled to avoid conflict with Lab fogs */}
                 {/* <fog attach="fog" args={['#000000', 50, 200]} /> */}
 
-                <WarpController />
+                {/* Phase 38: Hyperspace Navigation */}
+                {isWarping && (
+                    <>
+                        <WarpController />
+                        <HyperspaceTunnel />
+                    </>
+                )}
+
                 <CinematicEffects />
             </Canvas>
         </div>

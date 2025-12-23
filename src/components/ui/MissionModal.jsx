@@ -10,7 +10,7 @@ import useSoundFX from '../../hooks/useSoundFX';
 const MissionModal = () => {
     const missionModalData = useStore((state) => state.missionModalData);
     const closeMissionModal = useStore((state) => state.closeMissionModal);
-    const startWarp = useStore((state) => state.startWarp);
+    const warpTo = useStore((state) => state.warpTo);
     const { playHover, playClick } = useSoundFX();
 
     // ESC 키로 모달 닫기
@@ -28,11 +28,11 @@ const MissionModal = () => {
     const { lab, config, warpPos } = missionModalData;
     const details = lab.details || {};
 
-    // 행성으로 워프 (모달 닫고 씬 전환)
+    // 행성으로 워프 (모달 닫고 씬 전환 + 카메라 이동)
     const handleWarp = () => {
         playClick();
         closeMissionModal();
-        startWarp(config.target, warpPos);
+        warpTo(config.target, warpPos); // warpPos 전달하여 카메라 애니메이션 활성화
     };
 
     return (

@@ -1,35 +1,43 @@
 /**
  * BlackBoxModal.jsx
- * Phase 35: The Black Box - 터미널 스타일 DevLog 리더 모달
+ * Phase 37: Integrated CMS - Headless Fetching
  * 
  * 개발 로그를 읽는 CRT 터미널 스타일의 몰입형 UI
+ * Local Data와 Sanity CMS를 모두 지원하는 하이브리드 리더
  */
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../../hooks/useStore';
 import useSoundFX from '../../hooks/useSoundFX';
-import { devLogs, tagColors } from '../../data/DevLogData';
+import { tagColors } from '../../data/DevLogData'; // Colors only
+import { useDevLogs } from '../../hooks/useDevLogs'; // Hook Import
 
 const BlackBoxModal = () => {
     const blackBoxOpen = useStore((state) => state.blackBoxOpen);
     const currentLogId = useStore((state) => state.currentLogId);
     const closeBlackBox = useStore((state) => state.closeBlackBox);
-    const setCurrentLog = useStore((state) => state.setCurrentLog);
     const { playHover, playClick } = useSoundFX();
+
+    // Data Fetching
+    const { logs: devLogs, isLoading, source } = useDevLogs();
 
     // 선택된 로그
     const [selectedLogId, setSelectedLogId] = useState(null);
     // 태그 필터
     const [activeTag, setActiveTag] = useState(null);
 
-    // 초기 로그 설정
+    // 초기 로그 설정 (로딩 완료 후)
     useEffect(() => {
-        if (blackBoxOpen && currentLogId) {
-            setSelectedLogId(currentLogId);
-        } else if (blackBoxOpen && !currentLogId) {
-            setSelectedLogId(devLogs[0]?.id);
+        if (!isLoading && blackBoxOpen) {
+            if (currentLogId) {
+                // 특정 로그 ID가 지정된 경우
+                setSelectedLogId(currentLogId);
+            } else if (!selectedLogId && devLogs.length > 0) {
+                // 지정되지 않았으면 최신 로그(첫번째) 선택
+                setSelectedLogId(devLogs[0]?.id);
+            }
         }
-    }, [blackBoxOpen, currentLogId]);
+    }, [blackBoxOpen, currentLogId, isLoading, devLogs]);
 
     // ESC 키로 모달 닫기
     useEffect(() => {
@@ -44,16 +52,19 @@ const BlackBoxModal = () => {
 
     // 필터된 로그 목록
     const filteredLogs = useMemo(() => {
+        if (!devLogs) return [];
         if (!activeTag) return devLogs;
         return devLogs.filter(log => log.tags.includes(activeTag));
-    }, [activeTag]);
+    }, [activeTag, devLogs]);
 
     // 모든 태그 추출
     const allTags = useMemo(() => {
         const tags = new Set();
-        devLogs.forEach(log => log.tags.forEach(tag => tags.add(tag)));
+        if (devLogs) {
+            devLogs.forEach(log => log.tags.forEach(tag => tags.add(tag)));
+        }
         return Array.from(tags);
-    }, []);
+    }, [devLogs]);
 
     // 선택된 로그 데이터
     const selectedLog = devLogs.find(log => log.id === selectedLogId);
@@ -94,7 +105,12 @@ const BlackBoxModal = () => {
                         <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-cyan-950/80 to-transparent border-b border-cyan-500/20 flex items-center justify-between px-4 z-40">
                             <div className="flex items-center gap-2">
                                 <span className="text-cyan-400 font-mono text-sm">▒</span>
-                                <span className="text-cyan-300 font-mono text-xs tracking-widest">BLACK BOX :: SYSTEM ARCHIVE v2.1</span>
+                                <span className="text-cyan-300 font-mono text-xs tracking-widest">
+                                    BLACK BOX :: SYSTEM ARCHIVE v2.1
+                                    <span className="ml-2 text-[10px] opacity-70">
+                                        [{isLoading ? 'BOOTING...' : `LINK: ${source}`}]
+                                    </span>
+                                </span>
                             </div>
                             <button
                                 onClick={() => { playClick(); closeBlackBox(); }}
@@ -105,126 +121,136 @@ const BlackBoxModal = () => {
                             </button>
                         </div>
 
-                        {/* 좌측 사이드바: 로그 목록 */}
-                        <div className="w-full md:w-72 border-b md:border-b-0 md:border-r border-cyan-500/20 pt-12 pb-4 flex flex-col bg-black/50 overflow-hidden">
-                            {/* 로그 섹션 */}
-                            <div className="flex-1 overflow-y-auto px-4">
-                                <h3 className="text-cyan-400 font-mono text-xs tracking-widest mb-3 border-b border-cyan-500/20 pb-2">
-                                    ARCHIVE LOGS [{filteredLogs.length}]
-                                </h3>
-                                <div className="space-y-1">
-                                    {filteredLogs.map((log) => (
-                                        <button
-                                            key={log.id}
-                                            onClick={() => { playClick(); setSelectedLogId(log.id); }}
-                                            onMouseEnter={playHover}
-                                            className={`w-full text-left px-3 py-2 rounded border transition-all text-xs font-mono ${selectedLogId === log.id
-                                                    ? 'border-cyan-500 bg-cyan-500/10 text-cyan-300'
-                                                    : 'border-transparent hover:border-cyan-500/30 hover:bg-cyan-500/5 text-white/60 hover:text-white'
-                                                }`}
-                                        >
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-cyan-500">{selectedLogId === log.id ? '▶' : '○'}</span>
-                                                <span className="truncate">{log.title}</span>
-                                            </div>
-                                            <div className="text-[10px] text-white/40 mt-1 pl-5">{log.date}</div>
-                                        </button>
-                                    ))}
-                                </div>
+                        {/* 로딩 상태 */}
+                        {isLoading ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-cyan-500 font-mono">
+                                <div className="text-xl animate-pulse mb-4">ESTABLISHING UPLINK...</div>
+                                <div className="text-sm opacity-70">Connecting to Satellite Database</div>
                             </div>
+                        ) : (
+                            <>
+                                {/* 좌측 사이드바: 로그 목록 */}
+                                <div className="w-full md:w-72 border-b md:border-b-0 md:border-r border-cyan-500/20 pt-12 pb-4 flex flex-col bg-black/50 overflow-hidden">
+                                    {/* 로그 섹션 */}
+                                    <div className="flex-1 overflow-y-auto px-4 custom-scrollbar">
+                                        <h3 className="text-cyan-400 font-mono text-xs tracking-widest mb-3 border-b border-cyan-500/20 pb-2">
+                                            ARCHIVE LOGS [{filteredLogs.length}]
+                                        </h3>
+                                        <div className="space-y-1">
+                                            {filteredLogs.map((log) => (
+                                                <button
+                                                    key={log.id}
+                                                    onClick={() => { playClick(); setSelectedLogId(log.id); }}
+                                                    onMouseEnter={playHover}
+                                                    className={`w-full text-left px-3 py-2 rounded border transition-all text-xs font-mono group ${selectedLogId === log.id
+                                                        ? 'border-cyan-500 bg-cyan-500/10 text-cyan-300'
+                                                        : 'border-transparent hover:border-cyan-500/30 hover:bg-cyan-500/5 text-white/60 hover:text-white'
+                                                        }`}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-cyan-500">{selectedLogId === log.id ? '▶' : '○'}</span>
+                                                        <span className="truncate group-hover:text-cyan-200 transition-colors">{log.title}</span>
+                                                    </div>
+                                                    <div className="text-[10px] text-white/40 mt-1 pl-5">{log.date}</div>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
 
-                            {/* 태그 필터 */}
-                            <div className="px-4 pt-4 border-t border-cyan-500/20">
-                                <h3 className="text-cyan-400 font-mono text-xs tracking-widest mb-2">TAGS</h3>
-                                <div className="flex flex-wrap gap-1">
-                                    <button
-                                        onClick={() => { playClick(); setActiveTag(null); }}
-                                        onMouseEnter={playHover}
-                                        className={`px-2 py-0.5 text-[10px] font-mono rounded border transition-all ${activeTag === null
-                                                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                                                : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
-                                            }`}
-                                    >
-                                        ALL
-                                    </button>
-                                    {allTags.slice(0, 8).map(tag => (
-                                        <button
-                                            key={tag}
-                                            onClick={() => { playClick(); setActiveTag(tag); }}
-                                            onMouseEnter={playHover}
-                                            className={`px-2 py-0.5 text-[10px] font-mono rounded border transition-all ${activeTag === tag
+                                    {/* 태그 필터 */}
+                                    <div className="px-4 pt-4 border-t border-cyan-500/20">
+                                        <h3 className="text-cyan-400 font-mono text-xs tracking-widest mb-2">TAGS</h3>
+                                        <div className="flex flex-wrap gap-1">
+                                            <button
+                                                onClick={() => { playClick(); setActiveTag(null); }}
+                                                onMouseEnter={playHover}
+                                                className={`px-2 py-0.5 text-[10px] font-mono rounded border transition-all ${activeTag === null
                                                     ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
                                                     : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
-                                                }`}
-                                            style={activeTag === tag ? { borderColor: tagColors[tag] || '#06b6d4', color: tagColors[tag] || '#06b6d4' } : {}}
-                                        >
-                                            #{tag}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 우측: 콘텐츠 뷰어 */}
-                        <div className="flex-1 pt-12 pb-6 px-6 overflow-y-auto">
-                            {selectedLog ? (
-                                <div className="max-w-3xl mx-auto">
-                                    {/* 로그 헤더 */}
-                                    <div className="mb-6 border-b border-cyan-500/20 pb-4">
-                                        <div className="text-cyan-500 font-mono text-[10px] tracking-widest mb-2">
-                                            LOG ENTRY: {selectedLog.id.toUpperCase()}
+                                                    }`}
+                                            >
+                                                ALL
+                                            </button>
+                                            {allTags.slice(0, 10).map(tag => (
+                                                <button
+                                                    key={tag}
+                                                    onClick={() => { playClick(); setActiveTag(tag); }}
+                                                    onMouseEnter={playHover}
+                                                    className={`px-2 py-0.5 text-[10px] font-mono rounded border transition-all ${activeTag === tag
+                                                        ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
+                                                        : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                                                        }`}
+                                                    style={activeTag === tag ? { borderColor: tagColors[tag] || '#06b6d4', color: tagColors[tag] || '#06b6d4' } : {}}
+                                                >
+                                                    #{tag}
+                                                </button>
+                                            ))}
                                         </div>
-                                        <h1 className="text-2xl md:text-3xl font-bold text-white font-orbitron mb-2">
-                                            {selectedLog.title}
-                                        </h1>
-                                        <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-                                            <span className="text-white/40">DATE: <span className="text-cyan-300">{selectedLog.date}</span></span>
-                                            <div className="flex gap-1">
-                                                {selectedLog.tags.map(tag => (
-                                                    <span
-                                                        key={tag}
-                                                        className="px-2 py-0.5 rounded-full text-[10px] border"
-                                                        style={{
-                                                            borderColor: `${tagColors[tag] || '#06b6d4'}50`,
-                                                            color: tagColors[tag] || '#06b6d4',
-                                                            backgroundColor: `${tagColors[tag] || '#06b6d4'}15`
-                                                        }}
-                                                    >
-                                                        #{tag}
-                                                    </span>
-                                                ))}
+                                    </div>
+                                </div>
+
+                                {/* 우측: 콘텐츠 뷰어 */}
+                                <div className="flex-1 pt-12 pb-6 px-6 overflow-y-auto custom-scrollbar">
+                                    {selectedLog ? (
+                                        <div className="max-w-3xl mx-auto">
+                                            {/* 로그 헤더 */}
+                                            <div className="mb-6 border-b border-cyan-500/20 pb-4">
+                                                <div className="text-cyan-500 font-mono text-[10px] tracking-widest mb-2">
+                                                    LOG ENTRY: {selectedLog.id ? selectedLog.id.toUpperCase() : 'UNKNOWN'}
+                                                </div>
+                                                <h1 className="text-2xl md:text-3xl font-bold text-white font-orbitron mb-2">
+                                                    {selectedLog.title}
+                                                </h1>
+                                                <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
+                                                    <span className="text-white/40">DATE: <span className="text-cyan-300">{selectedLog.date}</span></span>
+                                                    <div className="flex gap-1">
+                                                        {selectedLog.tags && selectedLog.tags.map(tag => (
+                                                            <span
+                                                                key={tag}
+                                                                className="px-2 py-0.5 rounded-full text-[10px] border"
+                                                                style={{
+                                                                    borderColor: `${tagColors[tag] || '#06b6d4'}50`,
+                                                                    color: tagColors[tag] || '#06b6d4',
+                                                                    backgroundColor: `${tagColors[tag] || '#06b6d4'}15`
+                                                                }}
+                                                            >
+                                                                #{tag}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <p className="text-white/60 text-sm mt-3 italic">{selectedLog.summary}</p>
+                                            </div>
+
+                                            {/* 마크다운 콘텐츠 */}
+                                            <div className="prose prose-invert prose-cyan max-w-none pb-20">
+                                                <MarkdownRenderer content={selectedLog.content} />
+                                            </div>
+
+                                            {/* 네비게이션 */}
+                                            <div className="mt-8 pt-4 border-t border-cyan-500/20 flex justify-between">
+                                                <NavigationButton
+                                                    direction="prev"
+                                                    logs={devLogs}
+                                                    currentId={selectedLogId}
+                                                    onNavigate={(id) => { playClick(); setSelectedLogId(id); }}
+                                                />
+                                                <NavigationButton
+                                                    direction="next"
+                                                    logs={devLogs}
+                                                    currentId={selectedLogId}
+                                                    onNavigate={(id) => { playClick(); setSelectedLogId(id); }}
+                                                />
                                             </div>
                                         </div>
-                                        <p className="text-white/60 text-sm mt-3 italic">{selectedLog.summary}</p>
-                                    </div>
-
-                                    {/* 마크다운 콘텐츠 */}
-                                    <div className="prose prose-invert prose-cyan max-w-none">
-                                        <MarkdownRenderer content={selectedLog.content} />
-                                    </div>
-
-                                    {/* 네비게이션 */}
-                                    <div className="mt-8 pt-4 border-t border-cyan-500/20 flex justify-between">
-                                        <NavigationButton
-                                            direction="prev"
-                                            logs={devLogs}
-                                            currentId={selectedLogId}
-                                            onNavigate={(id) => { playClick(); setSelectedLogId(id); }}
-                                        />
-                                        <NavigationButton
-                                            direction="next"
-                                            logs={devLogs}
-                                            currentId={selectedLogId}
-                                            onNavigate={(id) => { playClick(); setSelectedLogId(id); }}
-                                        />
-                                    </div>
+                                    ) : (
+                                        <div className="flex items-center justify-center h-full text-white/30 font-mono text-sm">
+                                            [NO LOG SELECTED]
+                                        </div>
+                                    )}
                                 </div>
-                            ) : (
-                                <div className="flex items-center justify-center h-full text-white/30 font-mono text-sm">
-                                    [NO LOG SELECTED]
-                                </div>
-                            )}
-                        </div>
+                            </>
+                        )}
 
                         {/* CRT 글로우 효과 */}
                         <div className="absolute inset-0 pointer-events-none rounded-lg"
@@ -244,11 +270,12 @@ const BlackBoxModal = () => {
  * 헤딩, 코드 블록, 리스트, 테이블, 인라인 스타일 지원
  */
 const MarkdownRenderer = ({ content }) => {
+    if (!content) return null;
+
     const lines = content.split('\n');
     const elements = [];
     let inCodeBlock = false;
     let codeContent = [];
-    let codeLanguage = '';
     let inTable = false;
     let tableRows = [];
 
@@ -259,14 +286,13 @@ const MarkdownRenderer = ({ content }) => {
         if (line.startsWith('```')) {
             if (inCodeBlock) {
                 elements.push(
-                    <pre key={`code-${i}`} className="bg-black/50 border border-cyan-500/20 rounded-lg p-4 overflow-x-auto my-4">
-                        <code className="text-sm font-mono text-cyan-300/90">{codeContent.join('\n')}</code>
+                    <pre key={`code-${i}`} className="bg-black/50 border border-cyan-500/20 rounded-lg p-4 overflow-x-auto my-4 text-left">
+                        <code className="text-xs md:text-sm font-mono text-cyan-300/90 whitespace-pre">{codeContent.join('\n')}</code>
                     </pre>
                 );
                 codeContent = [];
                 inCodeBlock = false;
             } else {
-                codeLanguage = line.slice(3);
                 inCodeBlock = true;
             }
             continue;
@@ -289,24 +315,26 @@ const MarkdownRenderer = ({ content }) => {
             continue;
         } else if (inTable) {
             elements.push(
-                <table key={`table-${i}`} className="w-full my-4 text-sm border-collapse">
-                    <thead>
-                        <tr className="border-b border-cyan-500/30">
-                            {tableRows[0]?.map((cell, idx) => (
-                                <th key={idx} className="text-left py-2 px-3 text-cyan-400 font-mono">{cell}</th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableRows.slice(1).map((row, rowIdx) => (
-                            <tr key={rowIdx} className="border-b border-white/10">
-                                {row.map((cell, cellIdx) => (
-                                    <td key={cellIdx} className="py-2 px-3 text-white/70">{cell}</td>
+                <div key={`table-${i}`} className="overflow-x-auto">
+                    <table className="w-full my-4 text-sm border-collapse min-w-[500px]">
+                        <thead>
+                            <tr className="border-b border-cyan-500/30">
+                                {tableRows[0]?.map((cell, idx) => (
+                                    <th key={idx} className="text-left py-2 px-3 text-cyan-400 font-mono whitespace-nowrap">{cell}</th>
                                 ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {tableRows.slice(1).map((row, rowIdx) => (
+                                <tr key={rowIdx} className="border-b border-white/10 hover:bg-white/5">
+                                    {row.map((cell, cellIdx) => (
+                                        <td key={cellIdx} className="py-2 px-3 text-white/70">{cell}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             );
             inTable = false;
             tableRows = [];
@@ -351,7 +379,7 @@ const MarkdownRenderer = ({ content }) => {
         // 리스트
         if (line.match(/^(\d+)\. /)) {
             elements.push(
-                <div key={`li-${i}`} className="flex gap-2 text-white/80 my-1">
+                <div key={`li-${i}`} className="flex gap-2 text-white/80 my-1 ml-2">
                     <span className="text-cyan-500 font-mono">{line.match(/^(\d+)/)[1]}.</span>
                     <span>{renderInline(line.replace(/^\d+\. /, ''))}</span>
                 </div>
@@ -361,7 +389,7 @@ const MarkdownRenderer = ({ content }) => {
 
         if (line.startsWith('- ')) {
             elements.push(
-                <div key={`li-${i}`} className="flex gap-2 text-white/80 my-1">
+                <div key={`li-${i}`} className="flex gap-2 text-white/80 my-1 ml-2">
                     <span className="text-cyan-500">•</span>
                     <span>{renderInline(line.slice(2))}</span>
                 </div>
@@ -410,6 +438,7 @@ const renderInline = (text) => {
  * 이전/다음 로그 네비게이션 버튼
  */
 const NavigationButton = ({ direction, logs, currentId, onNavigate }) => {
+    if (!logs) return null;
     const currentIndex = logs.findIndex(log => log.id === currentId);
     const targetIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
     const targetLog = logs[targetIndex];

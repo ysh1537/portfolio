@@ -7,7 +7,7 @@
  */
 
 export const devLogs = [
-    // [ORIGINAL ARCHIVES EXPANED] - 기존 로그 확장 (log-001 ~ 006)
+    // [Phase 1: Concept & Strategy] - 12월 초반
     {
         id: "log-001",
         title: "왜 '포트폴리오'가 아닌 '멀티버스'인가",
@@ -47,7 +47,7 @@ export const devLogs = [
     {
         id: "log-002",
         title: "항성계 설계: 행성에 의미를 부여하다",
-        date: "2025-12-05",
+        date: "2025-12-03",
         tags: ["UX", "메타포", "디자인"],
         summary: "단순한 비주얼을 넘어, 기능과 형태가 일치하는 'Form Follows Function' 디자인.",
         content: `## Design Philosophy: Form Follows Function
@@ -77,7 +77,7 @@ export const devLogs = [
     {
         id: "log-003",
         title: "React Three Fiber: 왜 이 기술 스택인가",
-        date: "2025-12-08",
+        date: "2025-12-06",
         tags: ["기술", "R3F", "Three.js"],
         summary: "개발 효율성과 퍼포먼스 사이에서 내린 전략적 기술 의사결정.",
         content: `## Decision Matrix (의사결정 매트릭스)
@@ -103,10 +103,12 @@ R3F는 \`<Mesh />\`와 같이 선언적으로 코드를 작성하므로, **UI �
 
 결론적으로 R3F는 **"가장 React스러운 방식으로 3D를 다루는 도구"**였기에, 개발 속도와 유지보수성 두 마리 토끼를 잡을 수 있었다.`
     },
+
+    // [Phase 2: Implementation & Optimization] - 12월 중반
     {
         id: "log-004",
         title: "성능 최적화 전쟁: High vs Low 모드",
-        date: "2025-12-12",
+        date: "2025-12-10",
         tags: ["최적화", "사용자경험", "전략"],
         summary: "아이폰 미니부터 RTX 4090까지. 모든 사용자에게 쾌적한 여행을 제공하기 위한 이원화 전략.",
         content: `## The Bottleneck (병목 현상)
@@ -141,7 +143,7 @@ R3F는 \`<Mesh />\`와 같이 선언적으로 코드를 작성하므로, **UI �
     {
         id: "log-005",
         title: "부팅 시퀀스: 자동화된 몰입",
-        date: "2025-12-15",
+        date: "2025-12-14",
         tags: ["UX", "심리학", "브랜딩"],
         summary: "로딩 시간(Latence)을 '기다림'이 아닌 '기대감'으로 전환하는 UX 심리학.",
         content: `## User Psychology (사용자 심리)
@@ -165,39 +167,9 @@ R3F는 \`<Mesh />\`와 같이 선언적으로 코드를 작성하므로, **UI �
 기술적 한계를 스토리텔링으로 극복한 UX 기획의 승리다.`
     },
     {
-        id: "log-006",
-        title: "Cinematic Multiverse: 다음 단계",
-        date: "2025-12-22",
-        tags: ["로드맵", "비전", "확장성"],
-        summary: "이 포트폴리오는 완성품이 아니다. 끊임없이 진화하는 '베타(Beta)' 우주다.",
-        content: `## Future Roadmap
-
-이 프로젝트는 현재 **Phase 36**에 도달했다. 하지만 이것은 끝이 아니다.
-나는 이 우주를 계속해서 확장해 나갈 구체적인 청사진을 가지고 있다.
-
-### 1. Hyperspace Navigation (초공간 도약)
-- 현재의 씬 전환은 단순한 Fade-in/out이다.
-- 차기 버전에서는 스타워즈의 하이퍼스페이스처럼, 씬과 씬 사이를 웜홀을 통해 이동하는 **심리스(Seamless) 월드**를 구현할 예정이다.
-
-### 2. Multi-User Connection (멀티 유저)
-- 지금은 혼자만의 독방이지만, WebSocket을 연동하여 다른 방문자들의 마우스 궤적이나 신호를 '유령(Ghost)'처럼 시각화할 것이다.
-- "나 혼자 보고 있는 게 아니다"라는 실재감(Presence)을 부여하기 위함이다.
-
-### 3. Integrated CMS
-- 블랙박스(DevLog) 데이터를 JSON 파일이 아닌, Headless CMS(Strapi 등)와 연동하여 실시간으로 관리할 수 있도록 백엔드를 강화할 것이다.
-
-## The Director's Vision
-포트폴리오는 **'죽어있는 문서'**가 되어서는 안 된다.
-내가 새로운 기술을 배우고 새로운 경험을 할 때마다, 이 우주에는 새로운 행성이 생겨날 것이다.
-**"진화하지 않는 것은 죽은 것이다."** 
-이 문장이 나의 개발 철학이자 기획 철학이다.`
-    },
-
-    // [DIRECTOR'S ARCHIVES EXPANDED] - 신규 기획/전략 로그 확장 (log-007 ~ 009)
-    {
         id: "log-007",
         title: "The Silicon Synapse: AI와의 '공명(Resonance)'",
-        date: "2025-12-23",
+        date: "2025-12-17",
         tags: ["AI협업", "Co-Reasoning", "생산성"],
         summary: "AI를 단순한 '코드 자판기'로 쓰지 마라. 그들은 최고의 '기술 파트너'다.",
         content: `## Paradigm Shift in Development
@@ -222,6 +194,39 @@ R3F는 \`<Mesh />\`와 같이 선언적으로 코드를 작성하므로, **UI �
 AI 시대의 기획력은 **'명령(Prompting)'**이 아니라 **'대화(Communication)'**에서 나온다.
 내가 원하는 바를 논리적으로 설명할 수 있다면, AI는 그 어떤 기술적 난제도 해결해준다.
 이 프로젝트는 그 **'인간-AI 협업의 정점'**을 보여주는 사례다.`
+    },
+
+    // [Phase 3: Reflection & Vision] - 12월 후반
+    {
+        id: "log-010",
+        title: "Lab-02: '게임'인가 '포트폴리오'인가 (Identity Crisis)",
+        date: "2025-12-20",
+        tags: ["프로젝트", "고민", "밸런싱"],
+        summary: "[PROJECT] The Terrarium을 기획하며 겪은 '재미(Fun)'와 '증명(Proof)' 사이의 딜레마.",
+        content: `## The Dilemma (딜레마)
+
+Lab-02 'The Terrarium'은 크리처를 수집하고 육성하는 시뮬레이션 게임이다.
+기획 초기, 나는 심각한 고민에 빠졌다.
+
+**"포트폴리오에 게임을 넣는 게 맞나? 너무 가벼워 보이지 않을까?"**
+
+채용 담당자가 기대하는 건 '기술적 숙련도'이지, 슬라임을 키우는 재미가 아닐 것이라는 두려움이 있었다.
+자칫하면 전문성이 떨어지는 '장난감'처럼 보일 위험이 컸다.
+
+## Resolution: Gamification as a Skill (해결책)
+
+나는 이 프로젝트를 **'복잡한 상태 관리(Complex State Management)의 시각화'**로 재정의했다.
+
+- **표면(Surface)**: 귀여운 크리처 육성 게임.
+- **이면(Under the hood)**: 
+    - \`Zustand\`를 활용한 실시간 자원(Gold/Diamond) 관리 로직.
+    - 확률 기반의 가챠(Gacha) 시스템 알고리즘.
+    - 브라우저 스토리지(LocalStorage)를 활용한 데이터 지속성(Persistence).
+
+## Conclusion
+게임을 만든다는 것은, 코드로 **'규칙(Rule)'**과 **'경제(Economy)'**를 설계할 수 있다는 최고의 증명이다.
+나는 '재미'라는 당의정(Sugar-coating) 속에 '기술적 역량'이라는 약을 숨겨놓았다.
+이것은 장난감이 아니다. **고도로 설계된 인터랙티브 소프트웨어**다.`
     },
     {
         id: "log-008",
@@ -254,9 +259,63 @@ Lab-01(Prism)의 최종 디자인이 나오기까지는 3번의 뼈아픈 실패
 3단계의 진화 과정은 그 논리를 찾아가는 과정이었다.`
     },
     {
+        id: "log-011",
+        title: "Lab-04: 부서진 달의 미학 (Embracing Glitch)",
+        date: "2025-12-25",
+        tags: ["프로젝트", "실험", "태도"],
+        summary: "[PROJECT] The Glitch: 왜 완성되지 않은 '버그'를 전시하는가?",
+        content: `## The Fear of Imperfection (불완전함에 대한 공포)
+
+Lab-04는 의도적으로 부서지고, 노이즈가 끼고, 경고등이 깜빡이는 '고장 난(Glitch)' 위성이다.
+보통의 포트폴리오라면 숨기고 싶은 치부일 것이다.
+**"버그가 있는 것처럼 보이면 어떡하지?"**라는 걱정이 앞섰다.
+
+## Concept: Debugging is creating
+
+하지만 개발(Development)의 80%는 디버깅(Debugging)이다.
+완벽하게 포장된 결과물만 보여주는 것은 정직하지 않다.
+나는 **'혼돈에서 질서를 찾아가는 과정'** 자체가 나의 스킬임을 보여주고 싶었다.
+
+- **Visual Concept**: 와이어프레임이 뜯겨 나간 표면은 '구조를 파악하는 눈'을 상징한다.
+- **Sound Design**: 지직거리는 노이즈 사운드는 '문제를 감지하는 감각'을 의미한다.
+
+## The Message
+이 부서진 달은 나의 선언이다.
+**"나는 완벽하지 않다. 하지만 나는 문제를 피하지 않고 직면하며, 그 안에서 답을 찾아낼 것이다."**
+이것이 내가 프로젝트를 대하는 태도(Attitude)다.`
+    },
+    {
+        id: "log-006",
+        title: "Cinematic Multiverse: 다음 단계",
+        date: "2025-12-28",
+        tags: ["로드맵", "비전", "확장성"],
+        summary: "이 포트폴리오는 완성품이 아니다. 끊임없이 진화하는 '베타(Beta)' 우주다.",
+        content: `## Future Roadmap
+
+이 프로젝트는 현재 **Phase 36**에 도달했다. 하지만 이것은 끝이 아니다.
+나는 이 우주를 계속해서 확장해 나갈 구체적인 청사진을 가지고 있다.
+
+### 1. Hyperspace Navigation (초공간 도약)
+- 현재의 씬 전환은 단순한 Fade-in/out이다.
+- 차기 버전에서는 스타워즈의 하이퍼스페이스처럼, 씬과 씬 사이를 웜홀을 통해 이동하는 **심리스(Seamless) 월드**를 구현할 예정이다.
+
+### 2. Multi-User Connection (멀티 유저)
+- 지금은 혼자만의 독방이지만, WebSocket을 연동하여 다른 방문자들의 마우스 궤적이나 신호를 '유령(Ghost)'처럼 시각화할 것이다.
+- "나 혼자 보고 있는 게 아니다"라는 실재감(Presence)을 부여하기 위함이다.
+
+### 3. Integrated CMS
+- 블랙박스(DevLog) 데이터를 JSON 파일이 아닌, Headless CMS(Strapi 등)와 연동하여 실시간으로 관리할 수 있도록 백엔드를 강화할 것이다.
+
+## The Director's Vision
+포트폴리오는 **'죽어있는 문서'**가 되어서는 안 된다.
+내가 새로운 기술을 배우고 새로운 경험을 할 때마다, 이 우주에는 새로운 행성이 생겨날 것이다.
+**"진화하지 않는 것은 죽은 것이다."** 
+이 문장이 나의 개발 철학이자 기획 철학이다.`
+    },
+    {
         id: "log-009",
         title: "The Director: 기획자의 미래",
-        date: "2025-12-23",
+        date: "2025-12-30",
         tags: ["커리어", "비전", "정체성"],
         summary: "AI가 코딩하는 시대, 기획자는 '설계자(Architect)'이자 '지휘자(Conductor)'가 되어야 한다.",
         content: `## The Changing Landscape (변화하는 지형)
@@ -297,14 +356,18 @@ export const tagColors = {
     "PM": "#a855f7",
     "디렉팅": "#9333ea",
     "커리어": "#4f46e5",
-    "메타포": "#c026d3", // Metaphor logic
+    "메타포": "#c026d3",
+    "프로젝트": "#f59e0b", // New: Project Focus
+    "고민": "#d97706",
+    "밸런싱": "#b45309",
+    "태도": "#ef4444",
 
     // Tech & Collaboration
     "AI협업": "#06b6d4",
     "Co-Reasoning": "#22d3ee",
     "프로세스": "#67e8f9",
     "R&R": "#0891b2",
-    "생산성": "#0eaa9f", // Productivity
+    "생산성": "#0eaa9f",
     "Tech Art": "#f472b6",
     "Shader": "#fb7185",
     "Three.js": "#ffffff",
@@ -315,7 +378,7 @@ export const tagColors = {
     "사용자경험": "#16a34a",
     "심리학": "#15803d",
     "서비스기획": "#3b82f6",
-    "최적화": "#eab308", // Performance Focus
+    "최적화": "#eab308",
     "성능": "#ca8a04",
     "접근성": "#2563eb",
 
@@ -325,5 +388,6 @@ export const tagColors = {
     "세계관": "#b45309",
     "디자인": "#f43f5e",
     "시행착오": "#fda4af",
-    "문제해결": "#be123c"
+    "문제해결": "#be123c",
+    "실험": "#881337"
 };
