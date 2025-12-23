@@ -5,6 +5,7 @@ export const autoHistory = [
     "date": "2025-12-23",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🛠️ 업데이트: 배포: 인터랙션 폴리싱 + Career 줄바꿈 수정",
         "✨ 기능 구현: 인터랙션 폴리싱 (호버 스케일, 셀렉션 링, 히트박스 정밀화)",
         "🛠️ 업데이트: 📜 History 업데이트: v1.6.0~v2.0.0 (12/19~12/23) 데일리 이력 추가",
         "🛠️ 업데이트: 📝 Phase 38: Dev로그 추가 (Hyperspace + LOW 최적화), Welcome Overlay 설정 안내 추가",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "⚙️ 시스템: 업데이트 README and Docs for Phase 36 release",
         "🛠️ 업데이트: 35 & 36 Complete: Black Box Archives & Lab 01 Crystalline Redesign",
         "✨ 기능 구현: Phase 34 - Planetary Archives Modal",
-        "🎨 스타일: Optimize mobile UI (enlarge toggles, hide status overlap)",
-        "📝 문서: Translate README to Korean per user request"
+        "🎨 스타일: Optimize mobile UI (enlarge toggles, hide status overlap)"
     ]
 }
 ];

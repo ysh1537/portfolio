@@ -23,6 +23,8 @@ export const urlFor = (source) => {
 };
 
 // CMS 연결 상태 확인용 함수
+// CORS 이슈로 인해 프로덕션 환경에서 비활성화됨 (2024-12-23)
+// Sanity 대시보드에서 heoyesol.kr CORS 허용 후 재활성화 가능
 export const isCMSConfigured = () => {
-    return !!projectId;
+    return false; // 임시 비활성화
 };
