@@ -34,62 +34,46 @@ export const LORE = {
                 effect: 'transmission'
             },
             details: {
-                longDescription: "프리즘(Prism)이 백색광을 다양한 스펙트럼으로 분광하듯, 설계자의 다채로운 프로젝트 경험을 분류하여 보관하는 데이터 수장고입니다. 투명한 수정체 너머로 각 프로젝트의 핵심 데이터와 성과를 열람할 수 있습니다.",
+                longDescription: "프리즘(Prism)이 빛을 분석하듯, 복잡한 시각적 로직을 셰어더 단위로 분해하여 연구하는 실험 섹터입니다. 투명한 수정체 모듈(MeshTransmissionMaterial)을 통해 고도의 데이터 굴절과 분산 기술을 제어할 수 있습니다.",
                 features: [
-                    "실시간 굴절 및 반사 셰이더 체험",
-                    "인터랙티브 파라미터 조절 (Distort, Color, Speed)",
-                    "Transmission 머티리얼 데모",
-                    "Three.js 기반 WebGL 렌더링"
+                    "Transmission Shader (투과 및 굴절 제어)",
+                    "Chromatic Aberration (실시간 색수차 변조)",
+                    "Expansive Shell Layers (다중 레이어 분산)",
+                    "Interactive Parameter Sync (상태 동기화)"
                 ],
-                techStack: ["React Three Fiber", "Three.js", "GLSL", "Transmission Material", "PBR Shader"],
+                techStack: ["GLSL", "Transmission Material", "Shader Logic", "R3F", "GSAP"],
                 media: ["/assets/screenshots/lab01_prism.jpg"],
                 projects: [
                     {
-                        title: "Hanok-meta Architecture",
+                        title: "Archive Entry #01: Hanok-meta",
                         period: "2024.04 - 2024.12",
-                        role: "Project Leader (PL)",
-                        desc: "KOCCA R&D 과제. 한옥 BIM 데이터를 활용한 메타버스 시뮬레이션 플랫폼. 언리얼 엔진 5 기반 실시간 렌더링 및 웹 연동 설계.",
-                        metrics: ["Funding: 3.7억", "Eval: Excellent"],
+                        role: "Architecture Blueprint",
+                        desc: "고밀도 BIM 데이터를 메타버스 환경에 이식하기 위한 시각적 아키텍처 실증. 언리얼 엔진 5의 픽셀 스트리밍 기술과 웹 연동 설계.",
+                        metrics: ["3.7억 R&D", "Excellent Eval"],
                         tech: ["Unreal 5", "Pixel Streaming", "BIM"],
-                        color: "amber"
+                        color: "amber",
+                        link: "https://github.com/Yesol-Pilot"
                     },
                     {
-                        title: "GYEONGNAM Safety VR",
+                        title: "Archive Entry #02: Gyeongnam Safety",
                         period: "2023.09 - 2023.12",
-                        role: "Project Manager (PM)",
-                        desc: "경상남도 온라인 안전체험원 VR 파노라마 플랫폼. 5개 테마관, 30종 이상의 안전 교육 콘텐츠 구현. ICT 어워드 대상 수상.",
-                        metrics: ["Award: ICT Grand Prize", "Content: 30+ Types"],
+                        role: "Visual Director",
+                        desc: "광범위한 VR360 데이터셋을 활용한 인터랙티브 교육 플랫폼. 직관적인 UI/UX와 대규모 콘텐츠 렌더링 최적화 연구.",
+                        metrics: ["ICT Grand Prize", "30+ Content"],
                         tech: ["WebGL", "VR360", "React"],
-                        color: "emerald"
-                    },
-                    {
-                        title: "1o1.GG Esports Platform",
-                        period: "2021.08 - 2022.05",
-                        role: "PM / Service Lead",
-                        desc: "데이터 분석 기반 이스포츠 코칭 플랫폼. Riot Games API 연동 전적 분석 및 강사 매칭 마켓플레이스.",
-                        metrics: ["Inv: 5억 Seed", "User: Pro Gamers"],
-                        tech: ["Next.js", "AWS", "Riot API"],
-                        color: "blue"
-                    },
-                    {
-                        title: "Interactive Universe",
-                        period: "2024.12 - Present",
-                        role: "Design & Dev",
-                        desc: "R3F를 활용한 3D 웹 포트폴리오. 기획력과 구현 능력을 입증하기 위한 멀티버스 컨셉 프로젝트.",
-                        metrics: ["Scene: 4 Labs", "Stack: R3F+Zustand"],
-                        tech: ["React Three Fiber", "GLSL"],
-                        color: "purple"
+                        color: "emerald",
+                        link: "https://github.com/Yesol-Pilot"
                     }
                 ]
             }
         },
         LAB_02: {
             id: 'LAB-02',
-            name: '진화하는 데이터 생태계 (The Terrarium)',
+            name: '데이터 생태계 (The Terrarium)',
             tech: 'PHYSICS',
             type: '생명 행성 (Living Planet)',
-            description: "육성 시뮬레이션과 데이터 개체가 진화하는 세계입니다.",
-            mission: "크리처 분석 및 게임 로직 체험",
+            description: "기술적 상호작용이 생태계처럼 유기적으로 얽힌 공간입니다.",
+            mission: "물리 개체 충돌 분석 및 로직 테스트",
             status: "ACTIVE",
             visual: {
                 color: '#10b981', // Emerald
@@ -97,24 +81,36 @@ export const LORE = {
                 effect: 'pulse'
             },
             details: {
-                longDescription: "이 섹터에서는 보유한 기술 스택들이 물리 법칙에 따라 상호작용하는 '살아있는 생태계'를 체험할 수 있습니다. 각 기술은 떠다니는 구체로 시각화되며, 클릭하면 물리적 충돌 반응이 발생합니다. 무중력 전환 등 환경 변수도 조절 가능합니다.",
+                longDescription: "Cannon.js 물리 엔진을 통해 각 기술 컴포넌트들이 실제 '개체'로서 상호작용하는 테라리움 섹터입니다. 구체화된 기술 스택(Tech Bubbles)을 직접 클릭하여 물리적 충격을 가하거나, 중력장(Gravity Field)을 왜곡하여 시스템의 안정성을 테스트할 수 있습니다.",
                 features: [
-                    "기술 스택 3D 시각화",
-                    "물리 엔진 기반 상호작용",
-                    "무중력/중력 환경 전환",
-                    "실시간 충돌 시뮬레이션"
+                    "Cannon.js Physics (실시간 물리 충돌)",
+                    "Dynamic Gravity Control (중력장 변조)",
+                    "Tech Entity Interaction (기술 개체 반응)",
+                    "Instanced Mesh Rendering (대량 개체 최적화)"
                 ],
-                techStack: ["React Three Fiber", "@react-three/cannon", "Physics Simulation", "Billboard", "3D Text"],
-                media: ["/assets/screenshots/lab02_terrarium.jpg"]
+                techStack: ["@react-three/cannon", "Physics Engine", "Interactive Logic", "Billboard UI"],
+                media: ["/assets/screenshots/lab02_terrarium.jpg"],
+                projects: [
+                    {
+                        title: "Log Entry: Multiverse Creature Lab",
+                        period: "2024.11 - 2024.12",
+                        role: "Lead Engineer",
+                        desc: "AI 생명체의 유전적 조합과 성장을 시뮬레이션하는 육성 엔진. Firebase 실시간 데이터 연동 및 Zustand 기반 상태 동기화 아키텍처.",
+                        metrics: ["Real-time DB", "State Sync"],
+                        tech: ["React", "Firebase", "Zustand"],
+                        color: "emerald",
+                        link: "https://yesol-pilot.github.io/game/"
+                    }
+                ]
             }
         },
         LAB_03: {
             id: 'LAB-03',
-            name: '주파수의 폭풍 (The Resonance)',
+            name: '주파수 공명 (The Resonance)',
             tech: 'AUDIO',
             type: '가스 거성 (Gas Giant)',
-            description: "사운드 웨이브와 주파수가 휘몰아치는 공간입니다.",
-            mission: "오디오 시각화 및 반응형 기술 확인",
+            description: "소리의 파동이 시각적 입자로 변환되는 공간입니다.",
+            mission: "오디오 스펙트럼 시뮬레이션",
             status: "REACTIVE",
             visual: {
                 color: '#facc15', // Yellow
@@ -122,24 +118,24 @@ export const LORE = {
                 effect: 'waves'
             },
             details: {
-                longDescription: "이 섹터에서는 실시간 오디오 주파수에 반응하는 시각화를 체험합니다. 마이크 입력을 분석하여 파티클, 바(Bar), 와이어프레임 웨이브가 음악에 맞춰 춤을 춥니다. 데모 모드와 마이크 모드를 전환할 수 있습니다.",
+                longDescription: "Web Audio API를 통해 감지된 주파수를 실시간 시각적 데이터(FFT)로 변환하는 섹션입니다. Particle System과 Audio Analyser를 결합하여 소리의 형태를 3D 공간에 재구성합니다. 데모 파형과 실제 마이크 입력을 교차 테스트할 수 있습니다.",
                 features: [
-                    "실시간 오디오 주파수 분석",
-                    "파티클 기반 시각화",
-                    "3D 바 차트 렌더링",
-                    "마이크 입력 반응 모드"
+                    "Web Audio API (오디오 컨텍스트 제어)",
+                    "FFT Analysis (실시간 주파수 분석)",
+                    "Reactive Particle System (반응형 입자)",
+                    "Device I/O Mapping (입출력 매핑)"
                 ],
-                techStack: ["Web Audio API", "AudioAnalyser", "GLSL Particles", "FFT Analysis", "Three.js"],
+                techStack: ["Web Audio API", "AnalyserNode", "Particle Shaders", "FFT"],
                 media: ["/assets/screenshots/lab03_resonance.png"]
             }
         },
         LAB_04: {
             id: 'LAB-04',
-            name: '조각난 위성 (The Glitch)',
+            name: '비정형 기록소 (The Glitch)',
             tech: 'DEBUG',
             type: '소행성 (Asteroid)',
-            description: "시스템 오류와 글리치로 뒤덮인 불안정한 공간입니다.",
-            mission: "버그 수정 및 시스템 안정화",
+            description: "시스템의 파편화된 기록과 글리치 데이터를 보관합니다.",
+            mission: "무결성 복구 및 방명록 기록",
             status: "UNSTABLE",
             visual: {
                 color: '#ff4d4d', // Red
@@ -147,14 +143,14 @@ export const LORE = {
                 effect: 'noise'
             },
             details: {
-                longDescription: "이 섹터는 의도적인 시스템 오류와 글리치로 가득 찬 공간입니다. 사용자는 불안정한 모듈을 찾아 '패치'하여 Reality Integrity(현실 무결성)를 회복시켜야 합니다. 모든 버그가 수정되면 숨겨진 방명록이 활성화됩니다.",
+                longDescription: "불안정한 시스템 환경에서 발생하는 '비정형 데이터'와 '오류'를 기록으로 전환하는 섹터입니다. Matrix Code 시뮬레이션과 Glitch Shader를 통해 데이터의 불안정성을 표현하며, Firebase 연동 방명록(Guestbook)을 통해 방문자의 흔적을 기록합니다.",
                 features: [
-                    "매트릭스 코드 레인 효과",
-                    "글리치 텍스트 및 화면 왜곡",
-                    "인터랙티브 디버깅 미니게임",
-                    "익명 방명록 시스템 (Firebase)"
+                    "Glitch Artifact Simulation (글리치 효과)",
+                    "Matrix Digital Rain (매트릭스 렌더링)",
+                    "Firebase Guestbook (익명 방명록)",
+                    "Reality Integrity Sync (현실 무결성)"
                 ],
-                techStack: ["Glitch Shaders", "Post-processing", "Error Boundary", "Firebase Firestore", "Interactive Modules"],
+                techStack: ["Post-processing", "Firebase Firestore", "Noisy Textures", "Custom Shaders"],
                 media: ["/assets/screenshots/lab04_glitch.png"]
             }
         },

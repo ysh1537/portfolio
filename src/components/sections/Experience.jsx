@@ -1,6 +1,6 @@
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap'; // Added GSAP
 import CinematicEffects from '../effects/CinematicEffects';
 import SceneManager from '../core/SceneManager';
@@ -14,26 +14,24 @@ import { useFPSMonitor } from '../../hooks/useFPSMonitor';
 const CameraHandler = () => {
     const currentScene = useStore((state) => state.currentScene);
     const prevScene = useStore((state) => state.prevScene);
-    const isWarping = useStore((state) => state.isWarping); // Add this
+    const isWarping = useStore((state) => state.isWarping);
+    const missionModalData = useStore((state) => state.missionModalData);
     const { camera, gl, controls } = useThree();
 
-    // Auto-Performance Tuning (Drop to Low if FPS < 35 for 3s)
+    const focusTarget = useRef(new THREE.Vector3());
+    const isFocused = useRef(false);
+
+    // Auto-Performance Tuning
     useFPSMonitor(35, 4000);
 
+    // 1. Initial Scene Transitions
     useEffect(() => {
-        // CRITICAL: Do NOT reset camera/controls while warping!
-        // WarpController is actively animating them.
-        if (isWarping) {
-            console.log("[CameraHandler] Warping active, skipping reset.");
-            return;
-        }
+        if (isWarping) return;
 
-        // Kill existing tweens on camera to prevent conflicts
         gsap.killTweensOf(camera.position);
 
         if (currentScene === 'hub') {
-            const defaultPos = new THREE.Vector3(0, 50, 60); // Zoomed out to see Black Box at [28, 10, -20]
-
+            const defaultPos = new THREE.Vector3(0, 50, 60);
             const spawnPoints = {
                 'lab01': new THREE.Vector3(4, 2, 10),
                 'lab02': new THREE.Vector3(6, 3, 13),
@@ -44,30 +42,22 @@ const CameraHandler = () => {
             if (prevScene && spawnPoints[prevScene]) {
                 camera.position.copy(spawnPoints[prevScene]);
                 camera.lookAt(0, 0, 0);
-
                 gsap.to(camera.position, {
-                    x: defaultPos.x,
-                    y: defaultPos.y,
-                    z: defaultPos.z,
-                    duration: 3.5,
-                    ease: "power2.out",
+                    x: defaultPos.x, y: defaultPos.y, z: defaultPos.z,
+                    duration: 3.5, ease: "power2.out",
                     onUpdate: () => camera.lookAt(0, 0, 0)
                 });
             } else {
                 camera.position.copy(defaultPos);
             }
-
         } else if (currentScene === 'boot') {
             camera.position.set(0, 0, 12);
         } else if (currentScene.startsWith('lab')) {
             camera.position.set(0, 0, 14);
         } else if (currentScene === 'contact') {
             camera.position.set(0, 0, 12);
-        } else {
-            camera.position.set(0, 0, 5);
         }
 
-        // Reset controls target ONLY when NOT warping
         if (controls) {
             controls.target.set(0, 0, 0);
             controls.update();
@@ -76,10 +66,83 @@ const CameraHandler = () => {
         if (currentScene !== 'hub' || !prevScene) {
             camera.lookAt(0, 0, 0);
         }
-
         camera.updateProjectionMatrix();
+    }, [currentScene, prevScene, camera, gl, controls, isWarping]);
 
-    }, [currentScene, prevScene, camera, gl, controls, isWarping]); // Add isWarping to deps
+    // 2. Cinematic Planetary Focus (Phase 2)
+    useEffect(() => {
+        if (currentScene !== 'hub' || isWarping) return;
+
+        if (missionModalData) {
+            isFocused.current = true;
+
+            // Get Planet Position
+            const planetPos = new THREE.Vector3(...missionModalData.warpPos);
+
+            // Calculate a point "outside" the planet looking in
+            // Use a fixed offset for consistent zoom scale across all planets
+            const direction = planetPos.clone().normalize();
+            const zoomDist = 15; // Fixed distance from planet center
+            const cameraTargetPos = planetPos.clone().add(direction.multiplyScalar(zoomDist)).add(new THREE.Vector3(0, 5, 0));
+
+            // Kill any ongoing animations to prevent jitter
+            gsap.killTweensOf(camera.position);
+            if (controls) gsap.killTweensOf(controls.target);
+
+            // Animate camera to new position
+            gsap.to(camera.position, {
+                x: cameraTargetPos.x,
+                y: cameraTargetPos.y,
+                z: cameraTargetPos.z,
+                duration: 1.5,
+                ease: "expo.out",
+                onUpdate: () => {
+                    camera.lookAt(planetPos);
+                }
+            });
+
+            // Animate controls focus
+            if (controls) {
+                controls.enabled = false;
+                gsap.to(controls.target, {
+                    x: planetPos.x,
+                    y: planetPos.y,
+                    z: planetPos.z,
+                    duration: 1.5,
+                    ease: "expo.out"
+                });
+            }
+        } else {
+            if (isFocused.current) {
+                isFocused.current = false;
+
+                gsap.killTweensOf(camera.position);
+                if (controls) {
+                    gsap.killTweensOf(controls.target);
+                    controls.enabled = true;
+                    gsap.to(controls.target, { x: 0, y: 0, z: 0, duration: 1.5, ease: "power2.inOut" });
+                }
+
+                gsap.to(camera.position, {
+                    x: 0, y: 50, z: 60,
+                    duration: 2,
+                    ease: "power2.inOut",
+                    onUpdate: () => {
+                        camera.lookAt(0, 0, 0);
+                    }
+                });
+            }
+        }
+    }, [missionModalData, currentScene, isWarping, camera, controls]);
+
+    // 3. Frame-by-frame focus tracking
+    useFrame(() => {
+        if (isFocused.current && missionModalData && !isWarping) {
+            // Ensure camera stays locked during focus
+            const planetPos = new THREE.Vector3(...missionModalData.warpPos);
+            camera.lookAt(planetPos);
+        }
+    });
 
     return null;
 };

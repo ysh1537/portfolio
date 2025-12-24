@@ -5,13 +5,13 @@ import * as THREE from 'three';
 
 // 💎 Lab 01: The Prism (lab01)
 // 특징: 2중 굴절 구조 (내부 코어 + 외부 팔면체 쉘)
-const CrystalPlanet = ({ color, isActive }) => {
+const CrystalPlanet = ({ color, isActive, timeRef }) => {
     const groupRef = useRef();
     const coreRef = useRef();
     const shellRef = useRef();
 
     useFrame((state, delta) => {
-        const t = state.clock.getElapsedTime();
+        const t = (timeRef?.current !== undefined) ? timeRef.current : state.clock.getElapsedTime();
 
         // Hover Scale Effect
         const targetScale = isActive ? 1.6 : 1;
@@ -69,13 +69,13 @@ const CrystalPlanet = ({ color, isActive }) => {
 
 // 🌿 Lab 02: The Node Network (lab02)
 // 특징: 맥동하는 데이터 노드 + 신경망 구조
-const OrganicPlanet = ({ color, isActive }) => {
+const OrganicPlanet = ({ color, isActive, timeRef }) => {
     const groupRef = useRef();
     const nodesRef = useRef();
     const nodePulse = useMemo(() => Array.from({ length: 42 }).map(() => Math.random() * Math.PI * 2), []);
 
     useFrame((state, delta) => {
-        const t = state.clock.getElapsedTime();
+        const t = (timeRef?.current !== undefined) ? timeRef.current : state.clock.getElapsedTime();
 
         // Hover Scale Effect
         const targetScale = isActive ? 1.6 : 1;
@@ -129,7 +129,7 @@ const OrganicPlanet = ({ color, isActive }) => {
 
 // 🔊 Lab 03: The Resonance (lab03)
 // 특징: 고밀도 선형 링 시스템 + 대기 아우라
-const GasGiant = ({ color, isActive }) => {
+const GasGiant = ({ color, isActive, timeRef }) => {
     const groupRef = useRef();
     const stormRef = useRef();
     const ringsRef = useRef();
@@ -142,7 +142,7 @@ const GasGiant = ({ color, isActive }) => {
     })), []);
 
     useFrame((state, delta) => {
-        const t = state.clock.getElapsedTime();
+        const t = (timeRef?.current !== undefined) ? timeRef.current : state.clock.getElapsedTime();
 
         // Hover Scale Effect
         const targetScale = isActive ? 1.6 : 1;
@@ -190,7 +190,7 @@ const GasGiant = ({ color, isActive }) => {
 
 // 🚧 Lab 04: The Glitch (lab04)
 // 특징: 비선형 스냅 움직임 (진짜 디지철 오류)
-const GlitchMoon = ({ color, isActive }) => {
+const GlitchMoon = ({ color, isActive, timeRef }) => {
     const groupRef = useRef();
     const fragmentsRef = useRef();
     const [glitchOffset, setGlitchOffset] = useState([0, 0, 0]);
@@ -204,7 +204,7 @@ const GlitchMoon = ({ color, isActive }) => {
     })), []);
 
     useFrame((state, delta) => {
-        const t = state.clock.getElapsedTime();
+        const t = (timeRef?.current !== undefined) ? timeRef.current : state.clock.getElapsedTime();
         groupRef.current.rotation.y = t * 0.2;
 
         if (Math.random() > 0.96) {
@@ -259,12 +259,12 @@ const GlitchMoon = ({ color, isActive }) => {
     );
 };
 
-const PlanetFactory = ({ type, color, isActive }) => {
+const PlanetFactory = ({ type, color, isActive, timeRef }) => {
     switch (type) {
-        case 'lab01': return <CrystalPlanet color={color} isActive={isActive} />;
-        case 'lab02': return <OrganicPlanet color={color} isActive={isActive} />;
-        case 'lab03': return <GasGiant color={color} isActive={isActive} />;
-        case 'lab04': return <GlitchMoon color={color} isActive={isActive} />;
+        case 'lab01': return <CrystalPlanet color={color} isActive={isActive} timeRef={timeRef} />;
+        case 'lab02': return <OrganicPlanet color={color} isActive={isActive} timeRef={timeRef} />;
+        case 'lab03': return <GasGiant color={color} isActive={isActive} timeRef={timeRef} />;
+        case 'lab04': return <GlitchMoon color={color} isActive={isActive} timeRef={timeRef} />;
         default: return <Sphere args={[1]}><meshStandardMaterial color={color} /></Sphere>;
     }
 };

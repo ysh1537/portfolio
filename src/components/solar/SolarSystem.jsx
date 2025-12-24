@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo, memo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { LORE } from '../../data/lore';
 import { useStore } from '../../hooks/useStore';
@@ -59,7 +59,7 @@ const TextLabel = ({ korName, engName, color, hovered }) => {
     );
 };
 
-const PlanetaryOrbit = ({ lab, config, activeScene }) => {
+const PlanetaryOrbit = memo(({ lab, config, activeScene, timeRef }) => {
     const groupRef = useRef();
     const planetRef = useRef();
     const { playClick, playHover } = useSoundFX();
@@ -75,8 +75,8 @@ const PlanetaryOrbit = ({ lab, config, activeScene }) => {
         return () => unregisterPlanet(config.target);
     }, [config.target]);
 
-    useFrame((state) => {
-        const t = state.clock.getElapsedTime() * config.speedOffset;
+    useFrame(() => {
+        const t = (timeRef?.current || 0) * config.speedOffset;
         const x = Math.cos(t) * config.xRadius;
         const z = Math.sin(t) * config.zRadius;
         planetRef.current.position.set(x, 0, z);
@@ -124,7 +124,7 @@ const PlanetaryOrbit = ({ lab, config, activeScene }) => {
                 </mesh>
 
                 {/* 3. Planet Visual Core */}
-                <PlanetFactory type={config.target} color={config.color} isActive={isActive} />
+                <PlanetFactory type={config.target} color={config.color} isActive={isActive} timeRef={timeRef} />
 
                 {/* 4. Selection Ring (Hover Effect) - Dynamic Size */}
                 <mesh visible={isActive} rotation={[-Math.PI / 2, 0, 0]}>
@@ -143,13 +143,23 @@ const PlanetaryOrbit = ({ lab, config, activeScene }) => {
             </group>
         </group>
     );
-};
+});
 
 const SolarSystem = () => {
     const activeScene = useStore((state) => state.currentScene);
+    const missionModalData = useStore(state => state.missionModalData);
     const [isCoreHovered, setIsCoreHovered] = useState(false);
 
-    const planets = [
+    // Global clock that can be paused
+    const timeRef = useRef(0);
+
+    useFrame((state, delta) => {
+        if (!missionModalData) {
+            timeRef.current += delta;
+        }
+    });
+
+    const planets = useMemo(() => [
         {
             lab: LORE.SECTORS.LAB_01,
             config: { target: 'lab01', color: LORE.SECTORS.LAB_01.visual.color, xRadius: 18, zRadius: 18, inclination: [0, 0, 0], speedOffset: 0.6, korName: "셰이더 랩", engName: "THE PRISM" }
@@ -166,7 +176,7 @@ const SolarSystem = () => {
             lab: LORE.SECTORS.LAB_04,
             config: { target: 'lab04', color: LORE.SECTORS.LAB_04.visual.color, xRadius: 54, zRadius: 54, inclination: [Math.PI / 10, 0, Math.PI / 20], speedOffset: 0.15, korName: "방명록", engName: "GUESTBOOK" }
         },
-    ];
+    ], []);
 
     return (
         <group>
@@ -176,7 +186,7 @@ const SolarSystem = () => {
                 onPointerEnter={() => { setIsCoreHovered(true); document.body.style.cursor = 'pointer'; }}
                 onPointerLeave={() => { setIsCoreHovered(false); document.body.style.cursor = 'auto'; }}
             >
-                <CoreSun isActive={isCoreHovered} />
+                <CoreSun isActive={isCoreHovered} timeRef={timeRef} />
 
                 {/* ID Collider (Optimized) */}
                 <mesh>
@@ -211,6 +221,7 @@ const SolarSystem = () => {
                     lab={p.lab}
                     config={p.config}
                     activeScene={activeScene}
+                    timeRef={timeRef}
                 />
             ))}
         </group>

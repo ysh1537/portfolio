@@ -1,12 +1,12 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Sphere, Sparkles, MeshDistortMaterial, Billboard, Html } from '@react-three/drei';
+import { Sphere, MeshDistortMaterial, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
-import { LORE } from '../../data/lore';
 import useSoundFX from '../../hooks/useSoundFX';
 import { useStore } from '../../hooks/useStore';
+import { LORE } from '../../data/lore';
 
-const CoreSun = ({ isActive }) => {
+const CoreSun = React.memo(({ isActive, timeRef }) => {
     const groupRef = useRef();
     const meshRef = useRef();
     const glowRef = useRef();
@@ -16,7 +16,7 @@ const CoreSun = ({ isActive }) => {
     const isHovered = isActive !== undefined ? isActive : hovered;
 
     useFrame((state, delta) => {
-        const t = state.clock.getElapsedTime();
+        const t = (timeRef?.current !== undefined) ? timeRef.current : state.clock.getElapsedTime();
 
         // Scale Animation
         if (groupRef.current) {
@@ -111,6 +111,6 @@ const CoreSun = ({ isActive }) => {
             <Sparkles count={40} scale={15} size={35} speed={0.8} opacity={0.4} color="#ffffff" noise={2} />
         </group >
     );
-};
+});
 
 export default CoreSun;

@@ -38,6 +38,7 @@ class BloomErrorBoundary extends Component {
  */
 const CinematicEffects = () => {
     const isWarping = useStore((state) => state.isWarping);
+    const missionModalData = useStore((state) => state.missionModalData);
     const blurRef = useRef();
     const vignetteRef = useRef();
     const warpTimeRef = useRef(0);
@@ -54,18 +55,24 @@ const CinematicEffects = () => {
             blurRef.current.strength = blurProgress * 0.7;
 
             // 2. Dip to Black (Vignette Darkness): 0.4 → 10.0 (1.2초 ~ 1.5초 사이 급격히)
-            // 1.2초 시점부터 어두워지기 시작
             const darkProgress = Math.max(0, (warpTimeRef.current - 1.0) / 0.5);
             vignetteRef.current.darkness = 0.4 + darkProgress * 10.0;
+            vignetteRef.current.offset = 0.4; // Reset offset if it was changed by focus
 
+        } else if (missionModalData) {
+            // Focus Mode: Increase vignette darkness and offset smoothly
+            vignetteRef.current.darkness = THREE.MathUtils.lerp(vignetteRef.current.darkness, 1.2, delta * 2.0);
+            vignetteRef.current.offset = THREE.MathUtils.lerp(vignetteRef.current.offset, 0.6, delta * 2.0);
+            blurRef.current.strength = THREE.MathUtils.lerp(blurRef.current.strength, 0.1, delta * 2.0); // Subtle blur in corners
         } else {
             warpTimeRef.current = 0;
 
             // Blur & Darkness Fade Out
             blurRef.current.strength *= 0.95;
 
-            // Vignette Darkness: 복귀 (Lerp to 0.4)
+            // Vignette: Restore to original (0.4, 0.4)
             vignetteRef.current.darkness = THREE.MathUtils.lerp(vignetteRef.current.darkness, 0.4, delta * 3.0);
+            vignetteRef.current.offset = THREE.MathUtils.lerp(vignetteRef.current.offset, 0.4, delta * 3.0);
         }
     });
 
