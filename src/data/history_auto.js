@@ -2,9 +2,10 @@
 export const autoHistory = [
     {
     "version": "Recent Dev Stream",
-    "date": "2025-12-23",
+    "date": "2025-12-24",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "✨ 기능 구현: 방명록 기능 추가 (Giscus, 디버깅 완료 후 해금)",
         "🔧 수정: Sanity CMS 비활성화 (CORS 에러 해결)",
         "🛠️ 업데이트: 배포: 인터랙션 폴리싱 + Career 줄바꿈 수정",
         "✨ 기능 구현: 인터랙션 폴리싱 (호버 스케일, 셀렉션 링, 히트박스 정밀화)",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "🛠️ 업데이트: ✨ Phase 38: Hub UX 개선, LOW 모드 최적화, Hyperspace 연출 통합, Lab04 디버깅 경험",
         "🛠️ 업데이트: 업데이트: Expanded Black Box 로그s with strategic depth and Director persona",
         "⚙️ 시스템: 업데이트 README and Docs for Phase 36 release",
-        "🛠️ 업데이트: 35 & 36 Complete: Black Box Archives & Lab 01 Crystalline Redesign",
-        "✨ 기능 구현: Phase 34 - Planetary Archives Modal"
+        "🛠️ 업데이트: 35 & 36 Complete: Black Box Archives & Lab 01 Crystalline Redesign"
     ]
 }
 ];

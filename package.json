@@ -22,6 +22,7 @@
     "@sanity/image-url": "^2.0.2",
     "@types/three": "^0.168.0",
     "autoprefixer": "^10.4.22",
+    "firebase": "^12.7.0",
     "framer-motion": "^12.23.25",
     "framer-motion-3d": "^12.4.13",
     "gsap": "^3.14.1",

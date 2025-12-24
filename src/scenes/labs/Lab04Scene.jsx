@@ -11,7 +11,7 @@ import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Text, Html, Float, Billboard, Sparkles } from '@react-three/drei';
 import useSoundFX from '../../hooks/useSoundFX';
-import Giscus from '@giscus/react';
+import AnonymousGuestbook from '../../components/ui/AnonymousGuestbook';
 import * as THREE from 'three';
 
 // --- Matrix Rain Shader Material ---
@@ -300,23 +300,7 @@ const Lab04Scene = () => {
                         border: '1px solid rgba(6, 182, 212, 0.3)',
                         padding: '16px'
                     }}>
-                        <div className="text-center mb-4">
-                            <h3 className="text-cyan-400 font-bold text-lg mb-2">📝 GUESTBOOK UNLOCKED</h3>
-                            <p className="text-gray-400 text-sm">섹터 안정화에 성공하셨군요! 방명록을 남겨주세요.</p>
-                        </div>
-                        <Giscus
-                            repo="ysh1537/portfolio"
-                            repoId="R_kgDOM6zw0A"
-                            category="Guestbook"
-                            categoryId="DIC_kwDOM6zw0M4ClTkL"
-                            mapping="pathname"
-                            strict="0"
-                            reactionsEnabled="1"
-                            emitMetadata="0"
-                            inputPosition="top"
-                            theme="dark_dimmed"
-                            lang="ko"
-                        />
+                        <AnonymousGuestbook />
                     </Html>
                 )}
             </group>
