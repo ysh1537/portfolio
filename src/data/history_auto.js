@@ -5,6 +5,7 @@ export const autoHistory = [
     "date": "2025-12-24",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🔧 수정: Frozen 태양계 시스템 Animations and 최적화",
         "⚙️ 시스템: 추가 ads.txt for AdSense verification",
         "🔧 수정: restore portfolio to heoyesol.kr domain",
         "🔧 수정: 업데이트 schema.org github link to Yesol-Pilot",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "✨ 기능 구현: 프로필 Projects 섹션 추가 및 문서 아카이빙",
         "🔧 수정: Lab 라벨/설명을 실제 씬 콘텐츠에 맞게 수정",
         "✨ 기능 구현: Firebase 익명 방명록 (Giscus → Firestore)",
-        "✨ 기능 구현: 방명록 기능 추가 (Giscus, 디버깅 완료 후 해금)",
-        "🔧 수정: Sanity CMS 비활성화 (CORS 에러 해결)"
+        "✨ 기능 구현: 방명록 기능 추가 (Giscus, 디버깅 완료 후 해금)"
     ]
 }
 ];

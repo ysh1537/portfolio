@@ -416,6 +416,69 @@ Lab-04는 의도적으로 부서지고, 노이즈가 끼고, 경고등이 깜빡
 접근성(Accessibility)은 시각장애인만의 문제가 아니다.
 **느린 기기를 사용하는 사람도 내 콘텐츠를 경험할 권리가 있다.**
 이것이 진정한 포용적 디자인(Inclusive Design)이다.`
+    },
+    {
+        id: "log-014",
+        title: "Lab-02: 중력과 별자리의 이중주 (Hybrid System)",
+        date: "2025-12-31",
+        tags: ["세계관", "시스템", "UX"],
+        summary: "현실의 기반(Gravity)과 창의적 연결(Constellation). 두 가치를 공존시키기 위한 하이브리드 설계.",
+        content: `## The Conflict (충돌)
+
+Lab-02를 리뉴얼하며 두 가지 상충하는 니즈가 충돌했다.
+1. **Engineering (현실)**: 기술은 탄탄한 기초 위에 쌓아올려야 한다. (중력, 낙하, 안정감)
+2. **Creativity (이상)**: 기술은 별자리처럼 서로 자유롭게 연결되어야 한다. (무중력, 부유, 연결선)
+
+기존 물리 엔진(Physics)은 1번은 충족했지만, 2번(자유로운 배치)을 방해했다.
+반대로 물리 엔진을 끄면 1번(물리적 실재감)이 사라졌다.
+
+## The Hybrid Solution (공존)
+
+나는 **"선택권(Switch)"**을 사용자에게 넘기는 것으로 해결했다.
+
+### 1. Mode A: Grounded (Gravity ON)
+- **메타포**: "Applied Engineering" (적용된 공학)
+- **동작**: 노드들이 바닥에 떨어져 쌓인다. 이는 내가 쌓아온 **단단한 기반(Foundation)**을 의미한다.
+- **분위기**: 안정적인 녹색(Emerald) 테마. 숲과 대지의 느낌.
+
+### 2. Mode B: Constellation (Zero-G)
+- **메타포**: "Creative Flux" (창의적 유동)
+- **동작**: 버튼을 누르면 중력이 해제되고, 노드들이 각자의 카테고리(별자리) 위치로 날아간다.
+- **연결**: 이때 비로소 **연결선(Line)**이 드러난다. 흩어져 있던 기술들이 서로 관계를 맺는 순간이다.
+- **분위기**: 신비로운 보라색(Purple) 테마. 심우주(Deep Space)의 느낌.
+
+## Insight
+이분법적 사고를 버려라.
+안정과 자유, 현실과 이상은 **동시에** 존재할 수 있다.
+사용자에게 그 **전환(Transition)의 쾌감**을 선물하는 것이 기획자의 몫이다.`
+    },
+    {
+        id: "log-015",
+        title: "Digital Twin: 나를 대신하는 홀로그램 (AI Persona)",
+        date: "2026-01-01",
+        tags: ["AI", "페르소나", "RAG"],
+        summary: "단순한 챗봇이 아니다. 나의 기억과 경험을 가진 '디지털 자아'를 복제하다.",
+        content: `## The Concept: 도슨트(Docent)의 부재
+
+3D 포트폴리오는 정보 밀도가 높아서 방문자가 길을 잃기 쉽다.
+옆에서 누가 "이건 React로 만든 거예요"라고 설명해주면 좋겠지만, 나는 24시간 깨어있을 수 없다.
+
+그래서 **나의 복제인간(Digital Twin)**을 만들었다.
+
+## Implementation: RAG (Retrieval-Augmented Generation)
+
+단순히 Gemini API를 연결한 게 아니다. **"나의 뇌"**를 이식했다.
+
+1.  **Memory Injection**: 내 포트폴리오의 모든 기술 스택, 프로젝트 설명, 개발 철학을 텍스트로 구조화하여 System Prompt에 주입했다.
+2.  **Persona Styling**: "저는 허예솔 님의 Digital Twin입니다."라는 정체성을 부여하고, 내가 평소 사용하는 말투(Tone & Manner)를 학습시켰다.
+3.  **Visual Immersion**:
+    - **Hologram Shader**: 단순한 프로필 사진이 아니다. Canvas API로 스캔라인(Scanline)과 글리치(Glitch) 효과를 실시간으로 렌더링했다.
+    - **Reactive Animation**: AI가 생각을 하거나 말을 할 때 홀로그램이 빛나며 반응한다.
+
+## The Meaning
+이제 이 포트폴리오는 주인이 잠든 시간에도 깨어있다.
+방문자가 "너의 주력 기술이 뭐야?"라며 묻면, 나의 디지털 자아가 밤새워 대답할 것이다.
+이것은 가장 **개인적(Personal)**이면서도 가장 **확장된(Scalable)** 소통 방식이다.`
     }
 ];
 
@@ -464,5 +527,9 @@ export const tagColors = {
     "디자인": "#f43f5e",
     "시행착오": "#fda4af",
     "문제해결": "#be123c",
-    "실험": "#881337"
+    "실험": "#881337",
+    "시스템": "#3b82f6", // New
+    "페르소나": "#8b5cf6", // New
+    "RAG": "#10b981", // New
+    "AI": "#06b6d4" // New
 };

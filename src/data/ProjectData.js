@@ -59,13 +59,40 @@ export const projects = [
 ];
 
 export const techStackNodes = [
-    { name: "React", color: "#61dafb", type: "frontend" },
-    { name: "Three.js", color: "#ffffff", type: "frontend" },
-    { name: "TypeScript", color: "#3178c6", type: "language" },
-    { name: "Unity", color: "#ffffff", type: "engine" },
-    { name: "Metaverse", color: "#06b6d4", type: "platform" },
-    { name: "XR/VR", color: "#7c3aed", type: "platform" },
-    { name: "ZEP", color: "#00c73c", type: "platform" },
-    { name: "Blockchain", color: "#f7931a", type: "technology" }
+    // Frontend Ecosystem
+    { name: "React", color: "#61dafb", type: "frontend", level: "Expert", desc: "컴포넌트 기반 아키텍처 설계 및 최적화 경험 보유." },
+    { name: "Three.js", color: "#ffffff", type: "frontend", level: "Advanced", desc: "WebGL 기반 3D 인터랙션 및 Shader 효과 구현 가능." },
+    { name: "Next.js", color: "#000000", type: "frontend", level: "Advanced", desc: "SSR/SSG 하이브리드 웹 애플리케이션 구축 및 배포." },
+    { name: "TypeScript", color: "#3178c6", type: "language", level: "Advanced", desc: "정적 타입을 통한 안정적인 대규모 코드베이스 관리." },
+    { name: "Tailwind", color: "#38bdf8", type: "style", level: "Expert", desc: "Utility-first CSS를 활용한 신속한 UI 런칭." },
+    { name: "Framer", color: "#0055ff", type: "frontend", level: "Intermediate", desc: "생동감 있는 마이크로 인터랙션 및 제스처 구현." },
+    { name: "Zustand", color: "#453a33", type: "state", level: "Expert", desc: "가볍고 직관적인 전역 상태 관리 로직 설계." },
+    { name: "Vite", color: "#646cff", type: "tool", level: "Advanced", desc: "초고속 번들링 및 개발 환경 세팅 최적화." },
+
+    // Backend / Infra
+    { name: "Node.js", color: "#339933", type: "backend", level: "Intermediate", desc: "REST API 서버 구축 및 비동기 프로세스 처리." },
+    { name: "Firebase", color: "#ffca28", type: "backend", level: "Advanced", desc: "실시간 DB 연동 및 Serverless 인증 시스템 구현." },
+    { name: "Supabase", color: "#3ecf8e", type: "backend", level: "Intermediate", desc: "PostgreSQL 기반의 오픈소스 BaaS 활용." },
+    { name: "AWS", color: "#ff9900", type: "infra", level: "Basic", desc: "EC2, S3를 활용한 기본적인 클라우드 인프라 운영." },
+    { name: "Vercel", color: "#000000", type: "infra", level: "Advanced", desc: "CI/CD 자동화 및 Edge Function 활용 배포." },
+    { name: "Docker", color: "#2496ed", type: "infra", level: "Basic", desc: "컨테이너 기반의 일관된 개발/배포 환경 구성." },
+    { name: "K8s", color: "#326ce5", type: "infra", level: "Basic", desc: "쿠버네티스 클러스터 기본 개념 이해 및 운영." },
+
+    // AI & Data
+    { name: "OpenAI", color: "#10a37f", type: "ai", level: "Advanced", desc: "GPT API를 활용한 대화형 에이전트 서비스 개발." },
+    { name: "Python", color: "#3776ab", type: "language", level: "Intermediate", desc: "데이터 분석 및 업무 자동화 스크립트 작성." },
+    { name: "TensorFlow", color: "#ff6f00", type: "ai", level: "Basic", desc: "기본적인 머신러닝 모델 학습 및 구조 이해." },
+    { name: "PyTorch", color: "#ee4c2c", type: "ai", level: "Basic", desc: "딥러닝 파이프라인 구성 및 모델 튜닝 기초." },
+    { name: "RAG", color: "#ff00ff", type: "ai", level: "Intermediate", desc: "검색 증강 생성을 통한 지능형 정보 처리 구현." },
+    { name: "LlamaIndex", color: "#ffffff", type: "ai", level: "Basic", desc: "LLM 데이터 인덱싱 및 지식 베이스 구축." },
+
+    // Metaverse / Immersive
+    { name: "Unity", color: "#000000", type: "engine", level: "Advanced", desc: "C# 스크립팅 및 물리 엔진을 활용한 게임 개발." },
+    { name: "Unreal", color: "#0e1128", type: "engine", level: "Basic", desc: "블루프린트 활용 및 고품질 리얼타임 렌더링 이해." },
+    { name: "Blender", color: "#f5792a", type: "tool", level: "Intermediate", desc: "3D 에셋 모델링, UV 매핑 및 간단한 애니메이션." },
+    { name: "WebGL", color: "#990000", type: "core", level: "Expert", desc: "로우레벨 그래픽스 API 이해 및 최적화." },
+    { name: "WebGPU", color: "#00ff00", type: "core", level: "Basic", desc: "차세대 웹 그래픽스 파이프라인 연구 및 실습." },
+    { name: "ZEP", color: "#00c73c", type: "platform", level: "Expert", desc: "ZEP 스크립트(ZEM)를 활용한 메타버스 맵/게임 제작." },
+    { name: "Roblox", color: "#cd201f", type: "platform", level: "Intermediate", desc: "Lua 스크립팅을 이용한 로블록스 게임 로직 구현." }
 ];
 
