@@ -27,7 +27,7 @@ export default defineConfig({
           // 애니메이션 라이브러리
           animation: ['framer-motion', 'gsap'],
           // 외부 서비스 (필요 시 로드)
-          firebase: ['firebase'],
+          firebase: ['firebase/app', 'firebase/firestore'],
           sanity: ['@sanity/client', '@sanity/image-url'],
           // AI 서비스
           ai: ['@google/generative-ai'],

@@ -1,4 +1,4 @@
-import{r as s,x as c,o as u,a2 as f,n as p,C as r,j as e,ac as v,a3 as d}from"./three-C3NlESEC.js";import"./vendor-CqO7gtIP.js";const i={uniforms:{uColorInner:{value:new r("#ffaa00")},uColorOuter:{value:new r("#00ffff")}},vertexShader:`
+import{t as s,w as c,n as u,a2 as f,m as p,C as r,z as e,ac as v,a3 as d}from"./three-DS91w7Dj.js";import"./vendor-CqO7gtIP.js";const i={uniforms:{uColorInner:{value:new r("#ffaa00")},uColorOuter:{value:new r("#00ffff")}},vertexShader:`
         varying vec2 vUv;
         varying vec3 vPosition;
         void main() {

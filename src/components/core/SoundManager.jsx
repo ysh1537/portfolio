@@ -20,31 +20,59 @@ const SoundManager = () => {
     };
 
     const playTrack = async (scene) => {
-        let trackPath = bgmTracks[scene] || bgmTracks['hub'];
+        let trackPath = bgmTracks['hub']; // Default
 
         // Detailed Scene Logic
-        if (scene.startsWith('lab01')) trackPath = bgmTracks['lab01'];
+        if (scene === 'boot') trackPath = bgmTracks['boot'];
+        else if (scene.startsWith('lab01')) trackPath = bgmTracks['lab01'];
         else if (scene.startsWith('lab02')) trackPath = bgmTracks['lab02'];
         else if (scene.startsWith('lab03')) trackPath = bgmTracks['lab03'];
         else if (scene.startsWith('lab04')) trackPath = bgmTracks['lab04'];
+        else if (scene === 'profile') trackPath = bgmTracks['profile'];
+        else if (scene === 'contact') trackPath = bgmTracks['contact'];
 
         // If track is already playing, do nothing
         if (currentTrackRef.current === trackPath) return;
 
-        // Fade out current
+        console.log(`[SoundManager] Cross-fading to: ${trackPath}`);
+
+        // 1. Fade Out Current Track
         if (audioRef.current) {
             const oldAudio = audioRef.current;
-            oldAudio.pause();
+            // GSAP Volume Fade Out
+            import('gsap').then(({ default: gsap }) => {
+                gsap.to(oldAudio, {
+                    volume: 0,
+                    duration: 2.0,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        oldAudio.pause();
+                        oldAudio.currentTime = 0;
+                    }
+                });
+            });
         }
 
+        // 2. Setup New Track
         currentTrackRef.current = trackPath;
         const newAudio = new Audio(trackPath);
         newAudio.loop = true;
-        newAudio.volume = isMuted ? 0 : 0.4;
+        newAudio.volume = 0; // Start at 0 for Fade In
 
         try {
             await newAudio.play();
             audioRef.current = newAudio;
+
+            // 3. Fade In New Track
+            import('gsap').then(({ default: gsap }) => {
+                const targetVolume = isMuted ? 0 : 0.4;
+                gsap.to(newAudio, {
+                    volume: targetVolume,
+                    duration: 2.5, // Slightly longer fade-in for smoothness
+                    ease: "power2.out"
+                });
+            });
+
         } catch (e) {
             console.warn("Audio Autoplay blocked, waiting for interaction", e);
         }
@@ -55,10 +83,18 @@ const SoundManager = () => {
         playTrack(currentScene);
     }, [currentScene]);
 
-    // Handle Mute State
+    // Handle Mute State with Smooth Transition
     useEffect(() => {
         if (audioRef.current) {
-            audioRef.current.volume = isMuted ? 0 : 0.4;
+            import('gsap').then(({ default: gsap }) => {
+                const targetVolume = isMuted ? 0 : 0.4;
+                gsap.to(audioRef.current, {
+                    volume: targetVolume,
+                    duration: 0.8,
+                    ease: "power2.inOut"
+                });
+            });
+
             if (!isMuted && audioRef.current.paused) {
                 audioRef.current.play().catch(e => console.warn("Play failed", e));
             }

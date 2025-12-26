@@ -62,8 +62,10 @@ export default function HyperspaceTunnel() {
                 z
             );
 
-            // Stretch in Z direction (line effect)
-            const stretch = 1.0 + (isWarping ? 30.0 * stretchProgress : 0.0);
+            // Stretch in Z direction (Exponential for 'Light Speed' feel)
+            // Phase 1 Upgrade: Linear(30.0) -> Exponential(Pow 3)
+            const warpFactor = isWarping ? Math.pow(stretchProgress, 3) * 50.0 : 0.0;
+            const stretch = 1.0 + warpFactor;
             dummyRef.current.scale.set(0.08, 0.08, stretch);
             dummyRef.current.rotation.x = Math.PI / 2;
 
@@ -79,7 +81,7 @@ export default function HyperspaceTunnel() {
             <meshBasicMaterial
                 color={"#a5f3fc"}
                 transparent
-                opacity={0.6}
+                opacity={0.8}
                 blending={THREE.AdditiveBlending}
                 depthWrite={false}
             />

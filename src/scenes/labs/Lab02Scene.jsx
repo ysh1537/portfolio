@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { techStackNodes, projects } from '../../data/ProjectData';
 import { useFrame } from '@react-three/fiber';
 import AIChatTerminal from '../../components/ui/AIChatTerminal';
+import CinematicHologramChat from '../../components/ui/CinematicHologramChat';
 
 // 🌌 Lab02: Tech Constellation - Dual Mode (Gravity / Zero-G)
 
@@ -269,6 +270,7 @@ const Lab02Scene = () => {
     const setConfig = useStore(state => state.setLab02Config);
     const nodeRefs = useRef({});
     const [selectedNode, setSelectedNode] = useState(null);
+    const [isCinematicMode, setIsCinematicMode] = useState(false);
 
     const isZeroG = config.zeroG || false;
 
@@ -314,10 +316,19 @@ const Lab02Scene = () => {
             <Html fullscreen style={{ pointerEvents: 'none', zIndex: 20 }}>
                 <div className="w-full h-full pointer-events-none">
                     <div className="pointer-events-auto">
-                        <AIChatTerminal />
+                        <AIChatTerminal onExpand={() => setIsCinematicMode(true)} />
                     </div>
                 </div>
             </Html>
+
+            {/* 시네마틱 홀로그램 모드 */}
+            {isCinematicMode && (
+                <Html fullscreen style={{ pointerEvents: 'none', zIndex: 100 }}>
+                    <div className="pointer-events-auto">
+                        <CinematicHologramChat onClose={() => setIsCinematicMode(false)} />
+                    </div>
+                </Html>
+            )}
 
             {/* Dynamic atmosphere based on mode */}
             <color attach="background" args={[isZeroG ? '#050510' : '#0a0f0a']} />

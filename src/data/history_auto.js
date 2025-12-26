@@ -2,9 +2,10 @@
 export const autoHistory = [
     {
     "version": "Recent Dev Stream",
-    "date": "2025-12-25",
+    "date": "2025-12-26",
     "title": "DEVELOPER LOG (LIVE)",
     "changes": [
+        "🚀 성능 최적화: 코드 스플리팅 세분화 및 접근성 개선",
         "🛠️ 업데이트: 🔧 디버깅: 로컬 환경 테스트 파일 추가",
         "🔧 수정: Frozen 태양계 시스템 Animations and 최적화",
         "⚙️ 시스템: 추가 ads.txt for AdSense verification",
@@ -13,8 +14,7 @@ export const autoHistory = [
         "✨ 기능 구현: 추가 cinematic profile header and readme",
         "⚙️ 시스템: 개인정보 보호를 위해 원본 문서 Git 추적 제외 (docs/raw)",
         "✨ 기능 구현: 프로필 Projects 섹션 추가 및 문서 아카이빙",
-        "🔧 수정: Lab 라벨/설명을 실제 씬 콘텐츠에 맞게 수정",
-        "✨ 기능 구현: Firebase 익명 방명록 (Giscus → Firestore)"
+        "🔧 수정: Lab 라벨/설명을 실제 씬 콘텐츠에 맞게 수정"
     ]
 }
 ];

@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { generateAIResponse } from '../../utils/aiService';
 import { useStore } from '../../hooks/useStore';
-import HoloAvatar from './HoloAvatar';
+import Holo3DAvatar from '../3d/Holo3DAvatar';
 
-const AIChatTerminal = () => {
+const AIChatTerminal = ({ onExpand }) => {
     const config = useStore(state => state.lab02Config);
     const isZeroG = config.zeroG || false;
 
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { role: 'system', text: 'SYSTEM: AI LINK ESTABLISHED...' },
-        { role: 'model', text: '안녕하세요. 허예솔님의 Digital Twin, [AI NAVIGATOR]입니다. 포트폴리오에 대해 궁금한 점을 물어보세요.' }
+        { role: 'system', text: 'SYSTEM: HOLOGRAM LINK ESTABLISHED...' },
+        { role: 'model', text: '안녕하세요, 허예솔입니다. 제 포트폴리오 우주에 오신 것을 환영해요! 궁금한 점이 있으시면 뭐든 물어보세요.' }
     ]);
     const [input, setInput] = useState('');
     const [isThinking, setIsThinking] = useState(false);
@@ -88,18 +88,29 @@ const AIChatTerminal = () => {
             {/* Header */}
             <div className={`flex justify-between items-center p-4 border-b ${theme.border} bg-white/5`}>
                 <div className="flex items-center gap-4">
-                    <HoloAvatar isSpeaking={isThinking} />
+                    <Holo3DAvatar isSpeaking={isThinking} />
                     <div className="flex flex-col justify-center">
                         <div className={`text-xs font-bold tracking-widest ${theme.accent}`}>AI NAVIGATOR</div>
                         <div className="text-[10px] text-white/40 font-mono">STATUS: ONLINE</div>
                     </div>
                 </div>
-                <button
-                    onClick={() => setIsOpen(false)}
-                    className="text-white/50 hover:text-white transition-colors"
-                >
-                    _MINIMIZE
-                </button>
+                <div className="flex items-center gap-2">
+                    {onExpand && (
+                        <button
+                            onClick={onExpand}
+                            className={`${theme.accent} hover:text-white transition-colors text-xs font-mono`}
+                            title="시네마틱 모드로 확장"
+                        >
+                            ⬡ EXPAND
+                        </button>
+                    )}
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="text-white/50 hover:text-white transition-colors"
+                    >
+                        _MINIMIZE
+                    </button>
+                </div>
             </div>
 
             {/* Messages Area */}

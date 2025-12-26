@@ -18,23 +18,24 @@ const WarpController = () => {
     const targetRef = useRef(new THREE.Vector3());
     const timelineRef = useRef(null);
 
+    const currentScene = useStore((state) => state.currentScene); // Need to track scene change
+
     useEffect(() => {
-        if (isWarping && warpTargetPosition) {
-            // Disable orbit controls during warp
+        if (!isWarping) return;
+
+        // Phase 1: Departure (Hub -> Planet)
+        if (warpTargetPosition && currentScene === 'hub') {
+            // ... existing departure logic ...
             if (controls) controls.enabled = false;
 
             const targetPos = new THREE.Vector3(...warpTargetPosition);
             targetRef.current.copy(targetPos);
 
-            // Kill any existing animation
             if (timelineRef.current) timelineRef.current.kill();
-
-            // Create smooth camera animation
             timelineRef.current = gsap.timeline();
 
-            // Phase 1: Quick approach to planet (1.5s)
             timelineRef.current.to(camera.position, {
-                x: targetPos.x * 0.15, // Very close to planet center
+                x: targetPos.x * 0.15,
                 y: targetPos.y * 0.15,
                 z: targetPos.z * 0.15,
                 duration: 1.5,
@@ -43,13 +44,29 @@ const WarpController = () => {
                     camera.lookAt(targetRef.current);
                 }
             });
-
-            return () => {
-                if (timelineRef.current) timelineRef.current.kill();
-                if (controls) controls.enabled = true;
-            };
         }
-    }, [isWarping, camera, warpTargetPosition, controls]);
+        // Phase 2: Arrival (Planet -> Lab)
+        else if (currentScene !== 'hub') {
+            // Reset Camera for new scene entry
+            if (timelineRef.current) timelineRef.current.kill();
+
+            // "Pop" out of the warp
+            // Start very close (Zoomed in) and pull back
+            camera.position.set(0, 0, 2);
+            camera.lookAt(0, 0, 0);
+
+            timelineRef.current = gsap.timeline();
+            timelineRef.current.to(camera.position, {
+                z: 14, // Standard Lab Distance
+                duration: 2.0, // Deceleration
+                ease: "power2.out"
+            });
+        }
+
+        return () => {
+            // Cleanup only if warping is fully done (handled by store)
+        };
+    }, [isWarping, camera, warpTargetPosition, currentScene, controls]);
 
     // Continuously look at target during warp
     useFrame(() => {
